@@ -55,7 +55,6 @@ create table shipPoint(
  sptel varchar(20),  --配送点电话
   spemail  varchar(50),  --联系邮件
   spaddress  varchar(50)  ,--配送点地址
- sptype int ,    --配送点类型 (0配送点, 1代理点)
  sppersonTel varchar(20),   --联系人电话
  spfax varchar(100),   --配送点传真
 sparea   varchar(100),   --配送点范围
