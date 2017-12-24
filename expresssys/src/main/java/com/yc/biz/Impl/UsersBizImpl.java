@@ -5,23 +5,23 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.yc.bean.Admin;
-import com.yc.biz.AdminBiz;
-import com.yc.dao.AdminDao;
+import com.yc.bean.Users;
+import com.yc.biz.UsersBiz;
+import com.yc.dao.UsersDao;
 
 @Service
 @Transactional
-public class AdminBizImpl implements AdminBiz {
-	private AdminDao adminDao;
+public class UsersBizImpl implements UsersBiz {
+	private UsersDao adminDao;
 	
-	@Resource(name="adminDaoImpl")
-	public void setAdminDao(AdminDao adminDao) {
+	@Resource(name="usersDaoImpl")
+	public void setAdminDao(UsersDao adminDao) {
 		this.adminDao = adminDao;
 	}
 
 
 	@Override
-	public Admin login(Admin admin) {
+	public Users adminlogin(Users admin) {
 		
 		return this.adminDao.login(admin);
 	}

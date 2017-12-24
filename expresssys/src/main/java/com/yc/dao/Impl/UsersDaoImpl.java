@@ -5,11 +5,11 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.yc.bean.Admin;
-import com.yc.dao.AdminDao;
+import com.yc.bean.Users;
+import com.yc.dao.UsersDao;
 
 @Repository
-public class AdminDaoImpl implements AdminDao {
+public class UsersDaoImpl implements UsersDao {
 
 	@Resource(name = "sqlSession")
 	private SqlSessionTemplate sqlSession;
@@ -19,8 +19,8 @@ public class AdminDaoImpl implements AdminDao {
 	}
 	
 	@Override
-	public Admin login(Admin admin) {
-		return this.sqlSession.selectOne("com.yc.bean.AdminMapper.Login",admin);
+	public Users login(Users admin) {
+		return this.sqlSession.selectOne("com.yc.beans.users.adminLogin",admin);
 	}
 
 }
