@@ -22,7 +22,7 @@
 		</div>
 		<div class="wu-header-right">
 			<p>
-				<strong class="easyui-tooltip" title="2条未读消息">admin</strong>，欢迎您！
+				<strong class="easyui-tooltip" title="2条未读消息" id="uname">admin</strong>，欢迎您！
 			</p>
 			<p>
 				<a href="#">网站首页</a>|<a href="#">支持论坛</a>|<a href="#">帮助中心</a>|<a

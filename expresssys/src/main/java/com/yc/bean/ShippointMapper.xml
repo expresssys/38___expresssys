@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shippoint" >
+  <resultMap id="BaseResultMap" type="com.yc.bean.Shippoint" >
+    <id column="spid" property="spid" jdbcType="INTEGER" />
+    <result column="spname" property="spname" jdbcType="VARCHAR" />
+    <result column="spperson" property="spperson" jdbcType="VARCHAR" />
+    <result column="sptel" property="sptel" jdbcType="VARCHAR" />
+    <result column="spemail" property="spemail" jdbcType="VARCHAR" />
+    <result column="spaddress" property="spaddress" jdbcType="VARCHAR" />
+    <result column="sppersonTel" property="sppersontel" jdbcType="VARCHAR" />
+    <result column="spfax" property="spfax" jdbcType="VARCHAR" />
+    <result column="sparea" property="sparea" jdbcType="VARCHAR" />
+    <result column="spremark" property="spremark" jdbcType="VARCHAR" />
+    <result column="res1" property="res1" jdbcType="VARCHAR" />
+    <result column="res2" property="res2" jdbcType="VARCHAR" />
+    <result column="res3" property="res3" jdbcType="VARCHAR" />
+    <result column="res4" property="res4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    spid, spname, spperson, sptel, spemail, spaddress, sppersonTel, spfax, sparea, spremark, 
+    res1, res2, res3, res4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shippoint
+    where spid = #{spid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shippoint
+    where spid = #{spid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yc.bean.Shippoint" >
+    insert into shippoint (spid, spname, spperson, 
+      sptel, spemail, spaddress, 
+      sppersonTel, spfax, sparea, 
+      spremark, res1, res2, 
+      res3, res4)
+    values (#{spid,jdbcType=INTEGER}, #{spname,jdbcType=VARCHAR}, #{spperson,jdbcType=VARCHAR}, 
+      #{sptel,jdbcType=VARCHAR}, #{spemail,jdbcType=VARCHAR}, #{spaddress,jdbcType=VARCHAR}, 
+      #{sppersontel,jdbcType=VARCHAR}, #{spfax,jdbcType=VARCHAR}, #{sparea,jdbcType=VARCHAR}, 
+      #{spremark,jdbcType=VARCHAR}, #{res1,jdbcType=VARCHAR}, #{res2,jdbcType=VARCHAR}, 
+      #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yc.bean.Shippoint" >
+    insert into shippoint
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="spid != null" >
+        spid,
+      </if>
+      <if test="spname != null" >
+        spname,
+      </if>
+      <if test="spperson != null" >
+        spperson,
+      </if>
+      <if test="sptel != null" >
+        sptel,
+      </if>
+      <if test="spemail != null" >
+        spemail,
+      </if>
+      <if test="spaddress != null" >
+        spaddress,
+      </if>
+      <if test="sppersontel != null" >
+        sppersonTel,
+      </if>
+      <if test="spfax != null" >
+        spfax,
+      </if>
+      <if test="sparea != null" >
+        sparea,
+      </if>
+      <if test="spremark != null" >
+        spremark,
+      </if>
+      <if test="res1 != null" >
+        res1,
+      </if>
+      <if test="res2 != null" >
+        res2,
+      </if>
+      <if test="res3 != null" >
+        res3,
+      </if>
+      <if test="res4 != null" >
+        res4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="spid != null" >
+        #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="spname != null" >
+        #{spname,jdbcType=VARCHAR},
+      </if>
+      <if test="spperson != null" >
+        #{spperson,jdbcType=VARCHAR},
+      </if>
+      <if test="sptel != null" >
+        #{sptel,jdbcType=VARCHAR},
+      </if>
+      <if test="spemail != null" >
+        #{spemail,jdbcType=VARCHAR},
+      </if>
+      <if test="spaddress != null" >
+        #{spaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sppersontel != null" >
+        #{sppersontel,jdbcType=VARCHAR},
+      </if>
+      <if test="spfax != null" >
+        #{spfax,jdbcType=VARCHAR},
+      </if>
+      <if test="sparea != null" >
+        #{sparea,jdbcType=VARCHAR},
+      </if>
+      <if test="spremark != null" >
+        #{spremark,jdbcType=VARCHAR},
+      </if>
+      <if test="res1 != null" >
+        #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="res4 != null" >
+        #{res4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Shippoint" >
+    update shippoint
+    <set >
+      <if test="spname != null" >
+        spname = #{spname,jdbcType=VARCHAR},
+      </if>
+      <if test="spperson != null" >
+        spperson = #{spperson,jdbcType=VARCHAR},
+      </if>
+      <if test="sptel != null" >
+        sptel = #{sptel,jdbcType=VARCHAR},
+      </if>
+      <if test="spemail != null" >
+        spemail = #{spemail,jdbcType=VARCHAR},
+      </if>
+      <if test="spaddress != null" >
+        spaddress = #{spaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sppersontel != null" >
+        sppersonTel = #{sppersontel,jdbcType=VARCHAR},
+      </if>
+      <if test="spfax != null" >
+        spfax = #{spfax,jdbcType=VARCHAR},
+      </if>
+      <if test="sparea != null" >
+        sparea = #{sparea,jdbcType=VARCHAR},
+      </if>
+      <if test="spremark != null" >
+        spremark = #{spremark,jdbcType=VARCHAR},
+      </if>
+      <if test="res1 != null" >
+        res1 = #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        res2 = #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        res3 = #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="res4 != null" >
+        res4 = #{res4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where spid = #{spid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Shippoint" >
+    update shippoint
+    set spname = #{spname,jdbcType=VARCHAR},
+      spperson = #{spperson,jdbcType=VARCHAR},
+      sptel = #{sptel,jdbcType=VARCHAR},
+      spemail = #{spemail,jdbcType=VARCHAR},
+      spaddress = #{spaddress,jdbcType=VARCHAR},
+      sppersonTel = #{sppersontel,jdbcType=VARCHAR},
+      spfax = #{spfax,jdbcType=VARCHAR},
+      sparea = #{sparea,jdbcType=VARCHAR},
+      spremark = #{spremark,jdbcType=VARCHAR},
+      res1 = #{res1,jdbcType=VARCHAR},
+      res2 = #{res2,jdbcType=VARCHAR},
+      res3 = #{res3,jdbcType=VARCHAR},
+      res4 = #{res4,jdbcType=VARCHAR}
+    where spid = #{spid,jdbcType=INTEGER}
+  </update>
+</mapper>
