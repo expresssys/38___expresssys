@@ -1,6 +1,8 @@
 package com.yc.biz.Impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -23,13 +25,24 @@ public class ShippointBizImpl implements ShippointBiz {
 	}
 
 	@Override
-	public List<Shippoint> findAll() {
-		return this.shipDao.findAll();
+	public Map<String, Object> findAll(Integer start, Integer pagesize) {
+		Map<String, Object> result=new  HashMap<String, Object>();
+		List<Shippoint> rows= this.shipDao.findAll(start,pagesize);
+		System.out.println(rows);
+		int total=this.shipDao.total(null);
+		result.put("rows", rows);
+		result.put("total", total);
+		return result;
 	}
 
 	@Override
-	public Shippoint findById(Shippoint s) {
-		return this.shipDao.findById(s);
+	public Map<String, Object> findById(Map<String, String> map,Integer start, Integer pagesize) {
+		Map<String, Object> result=new  HashMap<String, Object>();
+		List<Shippoint> rows=this.shipDao.findById(map,start,pagesize);
+		int total=this.shipDao.total(map);
+		result.put("rows", rows);
+		result.put("total", total);
+		return result;			
 	}
 
 	@Override

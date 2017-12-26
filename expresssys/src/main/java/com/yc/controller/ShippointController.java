@@ -1,6 +1,7 @@
 package com.yc.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import com.yc.biz.ShippointBiz;
 
 @Controller
 @Scope(value="prototype")
+@RequestMapping(value="Admin/point/")
 public class ShippointController {
 	@Resource(name="shippointBizImpl")
 	private ShippointBiz pointBiz;
@@ -27,11 +29,15 @@ public class ShippointController {
 		this.pointBiz = pointBiz;
 	}
 
-	@RequestMapping(value="point/findAll.action")
-	public @ResponseBody List Login(HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+	@RequestMapping(value="findAll.action")
+	public @ResponseBody Map<String,Object> findAll(int rows,int page,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
 		//查询所有配送点
 		JsonModel jm=new JsonModel();
-		List<Shippoint> s=this.pointBiz.findAll();
+		System.out.println(rows);
+		System.out.println(page);
+		Map<String,Object> s=this.pointBiz.findAll(page-1,rows);
+		
+		
 		try{
 			jm.setCode(3);
 			jm.setObj(s);	
@@ -42,5 +48,41 @@ public class ShippointController {
 		session.setAttribute("AllshipPoint", s);
 		return s;
 	}
+	//添加配送点
+	@RequestMapping(value="add.action")
+	public @ResponseBody int add(Shippoint s,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+	
+		int result=0;
+		JsonModel jm=new JsonModel();
+		this.pointBiz.add(s);
+		result=1;
+	
+		return result;
+	}
+	
+	//修改配送点
+	@RequestMapping(value="update.action")
+	public @ResponseBody int update(Shippoint s,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+	
+		int result=0;
+		JsonModel jm=new JsonModel();
+		this.pointBiz.update(s);
+		result=1;
+	
+		return result;
+	}
+	
+	//删除配送点
+	@RequestMapping(value="delete.action")
+	public @ResponseBody int delete(Shippoint s,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+		
+		int result=0;
+		JsonModel jm=new JsonModel();
+		this.pointBiz.delete(s);
+		result=1;
+	
+		return result;
+	}
+
 
 }

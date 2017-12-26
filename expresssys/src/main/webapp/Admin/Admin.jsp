@@ -26,7 +26,7 @@
 			</p>
 			<p>
 				<a href="#">网站首页</a>|<a href="#">支持论坛</a>|<a href="#">帮助中心</a>|<a
-					href="loginout.action">安全退出</a>
+					href="#">安全退出</a>
 			</p>
 		</div>
 	</div>
@@ -35,181 +35,132 @@
 	<div class="wu-sidebar"
 		data-options="region:'west',split:true,border:true,title:'物流平台导航菜单'">
 		<div class="easyui-accordion" data-options="border:false,fit:true">
-
-			<div title="人员管理" data-options="iconCls:'icon-users'">
-
-			<div title="物流管理" data-options="iconCls:'icon-application-cascade'">
+			<div title="人员管理" data-options="iconCls:'icon-users'"
+				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-user"><a href="javascript:void(0)"
-						data-icon="icon-user" data-link="manage/people/adminManage.html" iframe="0">管理员管理</a></li>
+						data-icon="icon-user" data-link="manage/people/adminManage.html"
+						iframe="0">管理员管理</a></li>
 					<li iconCls="icon-group"><a href="javascript:void(0)"
 						data-icon="icon-group" data-link="manage/people/userManage.html"
 						iframe="0">用户管理</a></li>
-					<li iconCls="icon-map"><a href="javascript:void(0)"
-						data-icon="icon-map" data-link="manage/lineManage.html" iframe="0">线路管理</a></li>
-					<li iconCls="icon-lorry"><a href="javascript:void(0)"
-						data-icon="icon-lorry" data-link="manage/pointManage.html"
-						iframe="0">配送点管理</a></li>
-					<li iconCls="icon-money"><a href="javascript:void(0)"
-						data-icon="icon-money" data-link="manage/priceManage.html"
-						iframe="0">价格管理</a></li>
-					<!-- <li iconCls="icon-application-osx-error"><a
-						href="javascript:void(0)" data-icon="icon-application-osx-error"
-						data-link="temp/layout-3.html" iframe="0">操作日志</a></li> -->
 				</ul>
 			</div>
-			
-			<div title="车辆管理" data-options="iconCls:'icon-application-cascade'"
-				style="padding: 5px;">
-				<ul class="easyui-tree wu-side-tree">
-					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/carManage.html" iframe="0">车辆查询</a>
-					</li>
-					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/lineManage.html" iframe="0">车辆修改</a></li>
-				</ul>
-			</div>
-			
-			<div title="配送点管理" data-options="iconCls:'icon-application-cascade'"
-				style="padding: 5px;">
-				<ul class="easyui-tree wu-side-tree">
-					<li iconCls="icon-map"><a href="javascript:void(0)"
-						data-icon="icon-map" data-link="manage/lineManage.html" iframe="0">配送点管理</a></li>
-					<li iconCls="icon-map"><a href="javascript:void(0)"
-						data-icon="icon-map" data-link="manage/pointManage.html"
-						iframe="0">配送点管理</a></li>
-					<li iconCls="icon-map"><a href="javascript:void(0)"
-						data-icon="icon-map" data-link="manage/priceManage.html"
-						iframe="0">配送点管理</a></li>
-				</ul>
-			</div>
-			
-			<div title="路线管理" data-options="iconCls:'icon-rgb'">
 
-			<div title="用户管理" data-options="iconCls:'icon-wrench'">
+			<div title="路线管理" data-options="iconCls:'icon-rgb'"
+				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-search"><a href="javascript:void(0)"
-						data-icon="icon-search" data-link="manage/line/linesearch.html" iframe="0">路线查询</a></li>
-					<li iconCls="icon-map"><a href="javascript:void(0)"
-						data-icon="icon-map" data-link="manage/line/lineupdate.html"
-						iframe="0">路线修改</a></li>
-					<li iconCls="icon-user"><a href="javascript:void(0)"
-						data-icon="icon-user" data-link="manage/userManage.html"
-						iframe="0">管理员管理</a></li>
-					<li iconCls="icon-user"><a href="javascript:void(0)"
-						data-icon="icon-user" data-link="manage/userManage.html"
-						iframe="0">用户管理</a></li>
-					<li iconCls="icon-lock"><a href="javascript:void(0)"
-						data-icon="icon-lock" data-link="manage/quanxianManage.html"
-						iframe="0">权限管理</a></li>
+						data-icon="icon-search" data-link="manage/line/linemanage.html"
+						iframe="0">路线管理</a></li>
+
 				</ul>
 			</div>
 
-			<div title="报表管理" data-options="iconCls:'icon-wrench'"
-				style="padding: 5px;">
-				<ul class="easyui-tree wu-side-tree">
-					<li iconCls="icon-application"><a href="javascript:void(0)"
-						data-icon="icon-page_white_picture"
-						data-link="manage/reportManage.html" iframe="0">报表管理</a></li>
-				</ul>
-			</div>
-			
 			<div title="配送点管理" data-options="iconCls:'icon-note'"
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-search"><a href="javascript:void(0)"
-						data-icon="icon-search" data-link="manage/point/pointsearch.html" iframe="0">配送点查询</a></li>
-					<li iconCls="icon-map"><a href="javascript:void(0)"
-						data-icon="icon-map" data-link="manage/point/pointupdate.html"
-						iframe="0">配送点修改</a></li>
+						data-icon="icon-search" data-link="manage/point/pointmanage.html"
+						iframe="0">配送点管理</a></li>
 				</ul>
 			</div>
-			
-			
+
+
+			<div title="代理点管理" data-options="iconCls:'icon-note'"
+				style="padding: 5px;">
+				<ul class="easyui-tree wu-side-tree">
+					<li iconCls="icon-search"><a href="javascript:void(0)"
+						data-icon="icon-search" data-link="manage/proxy/proxymanage.html"
+						iframe="0">代理点管理</a></li>
+				</ul>
+			</div>
+
+
 			<div title="司机管理" data-options="iconCls:'icon-contrast'"
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-search"><a href="javascript:void(0)"
-						data-icon="icon-search" data-link="manage/driver/driversearch.html" iframe="0">司机查询</a></li>
-					<li iconCls="icon-map"><a href="javascript:void(0)"
-						data-icon="icon-map" data-link="manage/driver/driverupdate.html"
-						iframe="0">司机修改</a></li>
+						data-icon="icon-search"
+						data-link="manage/driver/drivermanage.html" iframe="0">司机管理</a></li>
+
 				</ul>
 			</div>
-			
+
 			<div title="报表管理" data-options="iconCls:'icon-layout'"
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-map"><a href="javascript:void(0)"
-						data-icon="icon-map" data-link="manage/form/yearform.html" iframe="0">年收入汇总表</a></li>
+						data-icon="icon-map" data-link="manage/form/yearform.html"
+						iframe="0">年收入汇总表</a></li>
 					<li iconCls="icon-map"><a href="javascript:void(0)"
 						data-icon="icon-map" data-link="manage/form/pointform.html"
 						iframe="0">配送点年收入汇总表</a></li>
 				</ul>
 			</div>
-			
+
 			<div title="订单管理" data-options="iconCls:'icon-textfield'"
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/order/orderadd.html" iframe="0">订单添加</a>
-					</li>
+						data-icon="icon-car" data-link="manage/order/ordermanage.html"
+						iframe="0">订单管理</a></li>
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/order/ordersearch.html" iframe="0">订单查询</a></li>
+						data-icon="icon-car" data-link="manage/order/shouhuo.html"
+						iframe="0">收货查询</a></li>
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/order/shouhuo.html" iframe="0">收货查询</a></li>
+						data-icon="icon-car" data-link="manage/order/maintenance.html"
+						iframe="0">新增订单维护</a></li>
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/order/maintenance.html" iframe="0">新增订单维护</a></li>
-					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/order/count.html" iframe="0">订单统计</a></li>
+						data-icon="icon-car" data-link="manage/order/count.html"
+						iframe="0">订单统计</a></li>
 				</ul>
 			</div>
-			
+
 			<div title="车辆管理" data-options="iconCls:'icon-car'"
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/car/carsearch.html" iframe="0">车辆查询</a>
-					</li>
-					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/car/carupdate.html" iframe="0">车辆修改</a></li>
+						data-icon="icon-car" data-link="manage/car/carmanage.html"
+						iframe="0">车辆查询</a></li>
 				</ul>
 			</div>
-			
+
 			<div title="交接单管理" data-options="iconCls:'icon-cart'"
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/handover/handoversearch.html" iframe="0">交接单查询</a>
+						data-icon="icon-car"
+						data-link="manage/handover/handovermanage.html" iframe="0">交接单管理</a>
 					</li>
-					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/handover/handoverupdate.html" iframe="0">交接单修改</a></li>
 				</ul>
 			</div>
-			
-			
+
+
 			<div title="权限管理" data-options="iconCls:'icon-key'"
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/authority/role.html" iframe="0">角色管理</a>
-					</li>
+						data-icon="icon-car" data-link="manage/authority/role.html"
+						iframe="0">角色管理</a></li>
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/authority/authority.html" iframe="0">权限管理</a></li>
+						data-icon="icon-car" data-link="manage/authority/authority.html"
+						iframe="0">权限管理</a></li>
 				</ul>
 			</div>
-			
+
 			<div title="系统设置" data-options="iconCls:'icon-cog'"
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/system/assign.html" iframe="0">分配设置</a>
-					</li>
+						data-icon="icon-car" data-link="manage/system/assign.html"
+						iframe="0">分配设置</a></li>
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/system/category.html" iframe="0">类别设置</a></li>
+						data-icon="icon-car" data-link="manage/system/category.html"
+						iframe="0">类别设置</a></li>
 				</ul>
 			</div>
-			
+
 		</div>
 	</div>
 	<!-- end of sidebar -->

@@ -1,15 +1,16 @@
 package com.yc.biz;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yc.bean.Shippoint;
 
 public interface ShippointBiz {
 	//查询所有配送点
-		public List<Shippoint> findAll();
+		public Map<String, Object> findAll(Integer start, Integer pagesize);
 		
 		//根据id查询
-		public Shippoint findById(Shippoint s);
+		public Map<String, Object> findById(Map<String, String> map,Integer start, Integer pagesize);
 		
 		//添加配送点
 		public int add(Shippoint s);

@@ -22,22 +22,44 @@
     res1, res2, res3, res4
   </sql>
   <!-- 查询所有 -->
-   <select id="findAll" resultMap="BaseResultMap" >
+   <select id="findAll" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
     <include refid="Base_Column_List" />
-    from shippoint
+    from shippoint 
+    
+    where  res1=0
+    limit ${start},${pagesize} 
   </select>
   
   <!-- 通过id查询 -->
-  <select id="selectById" resultMap="BaseResultMap" >
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.util.Map">
     select 
     <include refid="Base_Column_List" />
-    from shippoint
-    where spid = #{spid}
+    from shippoint  
+    where  res1=0
+   
+    <where>
+     <if test="shippoint.spid != null" >
+   		 and spid = ${shitpoint.spid}
+    </if>
+    <if test="shippoint.spname != null" >
+        and spname = ${shippoint.spname,jdbcType=VARCHAR},
+      </if>
+     <if test="shippoint.spaddress != null" >
+        and ${shippoint.spaddress,jdbcType=VARCHAR},
+      </if>
+    </where>
+    limit ${start},${pagesize} 
   </select>
   
+  <!-- 总条数 -->
+  <select id="selectTotal" resultType="java.lang.Integer">
+	select count(spid) from shippoint
+  </select>
+  
+  
   <delete id="deleteByPrimaryKey"  >
-    delete from shippoint
+    update set res1=1 from shippoint
     where spid = #{spid}
   </delete>
   
@@ -50,7 +72,7 @@
     values ( #{spname,jdbcType=VARCHAR}, #{spperson,jdbcType=VARCHAR}, 
       #{sptel,jdbcType=VARCHAR}, #{spemail,jdbcType=VARCHAR}, #{spaddress,jdbcType=VARCHAR}, 
       #{sppersontel,jdbcType=VARCHAR}, #{spfax,jdbcType=VARCHAR}, #{sparea,jdbcType=VARCHAR}, 
-      #{spremark,jdbcType=VARCHAR}, #{res1,jdbcType=VARCHAR}, #{res2,jdbcType=VARCHAR}, 
+      #{spremark,jdbcType=VARCHAR}, 0, #{res2,jdbcType=VARCHAR}, 
       #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yc.bean.Shippoint" useGeneratedKeys="true" keyColumn="spid" keyProperty="spid">
@@ -185,7 +207,7 @@
     </set>
     where spid = #{spid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Shippoint" >
+  <update id="update" parameterType="com.yc.bean.Shippoint" >
     update shippoint
     set spname = #{spname,jdbcType=VARCHAR},
       spperson = #{spperson,jdbcType=VARCHAR},

@@ -1,7 +1,14 @@
 package com.yc.bean;
 
-public class Shippoint {
-    private Integer spid;
+import java.io.Serializable;
+
+public class Shippoint implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer spid;
 
     private String spname;
 
