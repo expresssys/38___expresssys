@@ -1,0 +1,37 @@
+<<<<<<< HEAD
+<table id="point_manager" data-options="fit:true"></table>
+
+<script type="text/javascript">
+	var pointObj = $('#point_manager').datagrid({
+		url : "../../point/findAll.action",
+		fitColumns : true,
+		striped : true,//交替显示行背景
+		loadMsg : '数据加载中',
+		rownumbers : true,
+		pagination : true,
+		pageNumber : 1,
+		pageSize : 5,
+		pageList : [ 5, 10, 20, 30, 40, 50 ],
+		sortName:'spid',//根据哪一列来排序
+		remoteSort:false,
+		columns:[[   
+		        {checkbox:true},      
+		        {field:'spid',title:'配送点编号',width:100,align:'center',sortable:true},   
+		        {field:'pname',title:'配送点名称',width:100,align:'center'},   
+		        {field:'spperson',title:'联系人姓名',width:100,align:'center'},
+		        {field:'sptel',title:'配送点电话',width:100,align:'center',sortable:true},   
+		        {field:'spemail',title:'联系邮箱',width:100,align:'center'},   
+		        {field:'spaddress',title:'配送点地址',width:100,align:'center'},
+		        {field:'sppersonTel',title:'联系人电话',width:100,align:'center'},
+		        {field:'spfax',title:'配送点传真',width:100,align:'center'},
+		        
+		    ]],
+
+	});
+</script>
+
+
+=======
+<meta charset="UTF-8">
+閰嶉�佺偣绠＄悊
+>>>>>>> branch 'master' of git@github.com:expresssys/38___expresssys.git

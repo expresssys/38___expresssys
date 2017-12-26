@@ -2,21 +2,23 @@
 
 --用户
 create table users(
-usId int primary key auto_increment,   --用户id
-uname varchar(20),   --用户账号
-upwd varchar(50), --密码
-urealName varchar(20),   --真实姓名
-uaddress  varchar(50) ,--地址
-uphone varchar(20),  --手机
-utel  varchar(20),--   电话
-uemail   varchar(50),    --邮箱
-ustatus int ,	--角色       0-用户  1-管理员    
-res1  varchar(2000),  --备用字段
- res2  varchar(2000),   --备用字段
- res3  varchar(200),  --备用字段
- res4  varchar(2000)    --备用字段
-
+usId int primary key auto_increment,  
+uname varchar(20),   
+upwd varchar(50), 
+urealName varchar(20),   
+uaddress  varchar(50) ,
+uphone varchar(20),  
+utel  varchar(20),--   
+uemail   varchar(50),    
+ustatus int ,	  
+res1  varchar(2000),  
+ res2  varchar(2000),   
+ res3  varchar(200),  
+ res4  varchar(2000)  
 )
+
+select * from users;
+insert into users(uname,upwd) values('yc','123');
 
 --运输车辆信息
 create table car(
@@ -55,7 +57,6 @@ create table shipPoint(
  sptel varchar(20),  --配送点电话
   spemail  varchar(50),  --联系邮件
   spaddress  varchar(50)  ,--配送点地址
- sptype int ,    --配送点类型 (0配送点, 1代理点)
  sppersonTel varchar(20),   --联系人电话
  spfax varchar(100),   --配送点传真
 sparea   varchar(100),   --配送点范围

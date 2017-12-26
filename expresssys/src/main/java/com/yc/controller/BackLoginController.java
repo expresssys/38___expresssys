@@ -1,5 +1,6 @@
 package com.yc.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,21 +15,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yc.bean.Admin;
 import com.yc.bean.JsonModel;
-import com.yc.biz.AdminBiz;
+import com.yc.bean.Users;
+import com.yc.biz.UsersBiz;
 
 @Controller
 @Scope(value="prototype")
 public class BackLoginController {
-	@Resource(name="adminBizImpl")
-	private AdminBiz ad;
+	@Resource(name="usersBizImpl")
+	private UsersBiz ad;
 	
-	@RequestMapping(value="/login.action",method=RequestMethod.POST)
-	public @ResponseBody JsonModel Login(Admin admin,String code,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+	@RequestMapping(value="/login.action")
+	public @ResponseBody JsonModel Login(Users admin,String code,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
 		//从application中取出所有tag 
 		JsonModel jm=new JsonModel();
-		Admin c=this.ad.login(admin);
+		Users c=this.ad.adminlogin(admin);
 		
 		String codes=String.valueOf(session.getAttribute("rand"));
 		if(!code.equals(codes)){
@@ -43,7 +44,21 @@ public class BackLoginController {
 				jm.setMsg(e.getMessage());
 			}
 		}
+		session.setAttribute("user", c);
 		return jm;
+	}
+	
+	@RequestMapping(value="Admin/loginout.action")
+	public void LoginOut(Users admin,String code,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+		
+		session.removeAttribute("user");
+		try {
+			resp.sendRedirect("../back/login.html");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 

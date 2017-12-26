@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="car" >
+  <resultMap id="BaseResultMap" type="com.yc.bean.Car" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="cnumber" property="cnumber" jdbcType="VARCHAR" />
+    <result column="ctype" property="ctype" jdbcType="VARCHAR" />
+    <result column="cbuyDay" property="cbuyday" jdbcType="DATE" />
+    <result column="crunNum" property="crunnum" jdbcType="VARCHAR" />
+    <result column="cvolume" property="cvolume" jdbcType="DOUBLE" />
+    <result column="cton" property="cton" jdbcType="DOUBLE" />
+    <result column="cstatus" property="cstatus" jdbcType="INTEGER" />
+    <result column="cisbox" property="cisbox" jdbcType="INTEGER" />
+    <result column="spid" property="spid" jdbcType="INTEGER" />
+    <result column="cremark" property="cremark" jdbcType="VARCHAR" />
+    <result column="res1" property="res1" jdbcType="VARCHAR" />
+    <result column="res2" property="res2" jdbcType="VARCHAR" />
+    <result column="res3" property="res3" jdbcType="VARCHAR" />
+    <result column="res4" property="res4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cid, cnumber, ctype, cbuyDay, crunNum, cvolume, cton, cstatus, cisbox, spid, cremark, 
+    res1, res2, res3, res4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from car
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from car
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yc.bean.Car" >
+    insert into car (cid, cnumber, ctype, 
+      cbuyDay, crunNum, cvolume, 
+      cton, cstatus, cisbox, 
+      spid, cremark, res1, 
+      res2, res3, res4)
+    values (#{cid,jdbcType=INTEGER}, #{cnumber,jdbcType=VARCHAR}, #{ctype,jdbcType=VARCHAR}, 
+      #{cbuyday,jdbcType=DATE}, #{crunnum,jdbcType=VARCHAR}, #{cvolume,jdbcType=DOUBLE}, 
+      #{cton,jdbcType=DOUBLE}, #{cstatus,jdbcType=INTEGER}, #{cisbox,jdbcType=INTEGER}, 
+      #{spid,jdbcType=INTEGER}, #{cremark,jdbcType=VARCHAR}, #{res1,jdbcType=VARCHAR}, 
+      #{res2,jdbcType=VARCHAR}, #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yc.bean.Car" >
+    insert into car
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="cnumber != null" >
+        cnumber,
+      </if>
+      <if test="ctype != null" >
+        ctype,
+      </if>
+      <if test="cbuyday != null" >
+        cbuyDay,
+      </if>
+      <if test="crunnum != null" >
+        crunNum,
+      </if>
+      <if test="cvolume != null" >
+        cvolume,
+      </if>
+      <if test="cton != null" >
+        cton,
+      </if>
+      <if test="cstatus != null" >
+        cstatus,
+      </if>
+      <if test="cisbox != null" >
+        cisbox,
+      </if>
+      <if test="spid != null" >
+        spid,
+      </if>
+      <if test="cremark != null" >
+        cremark,
+      </if>
+      <if test="res1 != null" >
+        res1,
+      </if>
+      <if test="res2 != null" >
+        res2,
+      </if>
+      <if test="res3 != null" >
+        res3,
+      </if>
+      <if test="res4 != null" >
+        res4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="cnumber != null" >
+        #{cnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="ctype != null" >
+        #{ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="cbuyday != null" >
+        #{cbuyday,jdbcType=DATE},
+      </if>
+      <if test="crunnum != null" >
+        #{crunnum,jdbcType=VARCHAR},
+      </if>
+      <if test="cvolume != null" >
+        #{cvolume,jdbcType=DOUBLE},
+      </if>
+      <if test="cton != null" >
+        #{cton,jdbcType=DOUBLE},
+      </if>
+      <if test="cstatus != null" >
+        #{cstatus,jdbcType=INTEGER},
+      </if>
+      <if test="cisbox != null" >
+        #{cisbox,jdbcType=INTEGER},
+      </if>
+      <if test="spid != null" >
+        #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="cremark != null" >
+        #{cremark,jdbcType=VARCHAR},
+      </if>
+      <if test="res1 != null" >
+        #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="res4 != null" >
+        #{res4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Car" >
+    update car
+    <set >
+      <if test="cnumber != null" >
+        cnumber = #{cnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="ctype != null" >
+        ctype = #{ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="cbuyday != null" >
+        cbuyDay = #{cbuyday,jdbcType=DATE},
+      </if>
+      <if test="crunnum != null" >
+        crunNum = #{crunnum,jdbcType=VARCHAR},
+      </if>
+      <if test="cvolume != null" >
+        cvolume = #{cvolume,jdbcType=DOUBLE},
+      </if>
+      <if test="cton != null" >
+        cton = #{cton,jdbcType=DOUBLE},
+      </if>
+      <if test="cstatus != null" >
+        cstatus = #{cstatus,jdbcType=INTEGER},
+      </if>
+      <if test="cisbox != null" >
+        cisbox = #{cisbox,jdbcType=INTEGER},
+      </if>
+      <if test="spid != null" >
+        spid = #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="cremark != null" >
+        cremark = #{cremark,jdbcType=VARCHAR},
+      </if>
+      <if test="res1 != null" >
+        res1 = #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        res2 = #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        res3 = #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="res4 != null" >
+        res4 = #{res4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Car" >
+    update car
+    set cnumber = #{cnumber,jdbcType=VARCHAR},
+      ctype = #{ctype,jdbcType=VARCHAR},
+      cbuyDay = #{cbuyday,jdbcType=DATE},
+      crunNum = #{crunnum,jdbcType=VARCHAR},
+      cvolume = #{cvolume,jdbcType=DOUBLE},
+      cton = #{cton,jdbcType=DOUBLE},
+      cstatus = #{cstatus,jdbcType=INTEGER},
+      cisbox = #{cisbox,jdbcType=INTEGER},
+      spid = #{spid,jdbcType=INTEGER},
+      cremark = #{cremark,jdbcType=VARCHAR},
+      res1 = #{res1,jdbcType=VARCHAR},
+      res2 = #{res2,jdbcType=VARCHAR},
+      res3 = #{res3,jdbcType=VARCHAR},
+      res4 = #{res4,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>
