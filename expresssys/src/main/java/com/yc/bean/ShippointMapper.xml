@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="shippoint" >
+<mapper namespace="com.yc.bean.shippoint" >
   <resultMap id="BaseResultMap" type="com.yc.bean.Shippoint" >
     <id column="spid" property="spid" jdbcType="INTEGER" />
     <result column="spname" property="spname" jdbcType="VARCHAR" />
@@ -21,34 +21,42 @@
     spid, spname, spperson, sptel, spemail, spaddress, sppersonTel, spfax, sparea, spremark, 
     res1, res2, res3, res4
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <!-- 查询所有 -->
+   <select id="findAll" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
     from shippoint
-    where spid = #{spid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  
+  <!-- 通过id查询 -->
+  <select id="selectById" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from shippoint
+    where spid = #{spid}
+  </select>
+  
+  <delete id="deleteByPrimaryKey"  >
     delete from shippoint
-    where spid = #{spid,jdbcType=INTEGER}
+    where spid = #{spid}
   </delete>
-  <insert id="insert" parameterType="com.yc.bean.Shippoint" >
-    insert into shippoint (spid, spname, spperson, 
+  
+  <insert id="insert" parameterType="com.yc.bean.Shippoint" useGeneratedKeys="true" keyColumn="spid" keyProperty="spid">
+    insert into shippoint (spname, spperson, 
       sptel, spemail, spaddress, 
       sppersonTel, spfax, sparea, 
       spremark, res1, res2, 
       res3, res4)
-    values (#{spid,jdbcType=INTEGER}, #{spname,jdbcType=VARCHAR}, #{spperson,jdbcType=VARCHAR}, 
+    values ( #{spname,jdbcType=VARCHAR}, #{spperson,jdbcType=VARCHAR}, 
       #{sptel,jdbcType=VARCHAR}, #{spemail,jdbcType=VARCHAR}, #{spaddress,jdbcType=VARCHAR}, 
       #{sppersontel,jdbcType=VARCHAR}, #{spfax,jdbcType=VARCHAR}, #{sparea,jdbcType=VARCHAR}, 
       #{spremark,jdbcType=VARCHAR}, #{res1,jdbcType=VARCHAR}, #{res2,jdbcType=VARCHAR}, 
       #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.yc.bean.Shippoint" >
+  <insert id="insertSelective" parameterType="com.yc.bean.Shippoint" useGeneratedKeys="true" keyColumn="spid" keyProperty="spid">
     insert into shippoint
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="spid != null" >
-        spid,
-      </if>
+      
       <if test="spname != null" >
         spname,
       </if>
@@ -90,9 +98,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="spid != null" >
-        #{spid,jdbcType=INTEGER},
-      </if>
+      
       <if test="spname != null" >
         #{spname,jdbcType=VARCHAR},
       </if>
