@@ -1,5 +1,6 @@
 package com.yc.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -24,7 +25,7 @@ public class BackLoginController {
 	@Resource(name="usersBizImpl")
 	private UsersBiz ad;
 	
-	@RequestMapping(value="/login.action",method=RequestMethod.POST)
+	@RequestMapping(value="/login.action")
 	public @ResponseBody JsonModel Login(Users admin,String code,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
 		//从application中取出所有tag 
 		JsonModel jm=new JsonModel();
@@ -43,7 +44,21 @@ public class BackLoginController {
 				jm.setMsg(e.getMessage());
 			}
 		}
+		session.setAttribute("user", c);
 		return jm;
+	}
+	
+	@RequestMapping(value="Admin/loginout.action")
+	public void LoginOut(Users admin,String code,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+		
+		session.removeAttribute("user");
+		try {
+			resp.sendRedirect("../back/login.html");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 
