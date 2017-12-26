@@ -1,37 +1,124 @@
-<<<<<<< HEAD
+
 <table id="point_manager" data-options="fit:true"></table>
+
+<div id="point_update" class="easyui-dialog" title="添加配送点信息" style="width:500px;height:300px;align:center"
+		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
+	<form id="point_update_point">
+		<ul>
+		
+			<li>
+				<label>配送点名称：</label>
+				<input type="text" name="spname" id="point_update_spname" class="point_input"/>
+			</li>
+			<li>
+				<label>联系人：</label>
+				<input type="text" name="spperson" id="point_update_spperson" class="point_input"/>
+			</li>
+			<li>
+				<label>配送点电话：</label>
+				<input type="text" name="sptel" id="point_update_sptel" class="point_input"/>
+			</li>
+			<li>
+				<label>联系邮件：</label>
+				<input type="text" name="spemail" id="point_update_spemail" class="point_input"/>
+			</li>
+			
+			<li>
+				<label>配送点地址：</label>
+				<input type="text" name="spaddress" id="point_update_spaddress" class="point_input"/>
+			</li>
+			<li>
+				<label>联系人电话：</label>
+				<input type="text" name="sppersonTel" id="point_update_sppersonTel" class="point_input"/>
+			</li>
+			<li>
+				<label>配送点传真：</label>
+				<input type="text" name="spfax" id="point_update_spfax" />
+			</li>
+			
+			
+		</ul>
+	</form>
+</div>
 
 <script type="text/javascript">
 	var pointObj = $('#point_manager').datagrid({
-		url : "../../point/findAll.action",
+		url : "http://localhost:8080/expresssys/point/findAll.action",
 		fitColumns : true,
-		striped : true,//������ʾ�б���
-		loadMsg : '���ݼ�����',
+		striped : true,//������ʾ�б���
+		loadMsg : '数据加载中...',
 		rownumbers : true,
 		pagination : true,
 		pageNumber : 1,
 		pageSize : 5,
 		pageList : [ 5, 10, 20, 30, 40, 50 ],
-		sortName:'spid',//������һ��������
+		sortName:'spid',//������һ��������
 		remoteSort:false,
 		columns:[[   
 		        {checkbox:true},      
-		        {field:'spid',title:'���͵���',width:100,align:'center',sortable:true},   
-		        {field:'pname',title:'���͵�����',width:100,align:'center'},   
-		        {field:'spperson',title:'��ϵ������',width:100,align:'center'},
-		        {field:'sptel',title:'���͵�绰',width:100,align:'center',sortable:true},   
-		        {field:'spemail',title:'��ϵ����',width:100,align:'center'},   
-		        {field:'spaddress',title:'���͵��ַ',width:100,align:'center'},
-		        {field:'sppersonTel',title:'��ϵ�˵绰',width:100,align:'center'},
-		        {field:'spfax',title:'���͵㴫��',width:100,align:'center'},
+		        {field:'spid',title:'配送id',width:100,align:'center',sortable:true},   
+		        {field:'spname',title:'配送点名称',width:100,align:'center'},   
+		        {field:'spperson',title:'联系人',width:100,align:'center'},
+		        {field:'sptel',title:'配送点电话',width:100,align:'center',sortable:true},   
+		        {field:'spemail',title:'联系邮件',width:100,align:'center'},   
+		        {field:'spaddress',title:'配送点地址ַ',width:100,align:'center'},
+		        {field:'sppersonTel',title:'联系人电话',width:100,align:'center'},
+		        {field:'spfax',title:'配送点传真',width:100,align:'center'},
 		        
 		    ]],
 
 	});
+	
+	
+	function point_showAddpoint(){
+		$("#point_update_point")[0].reset();
+		$('#point_update').dialog({
+			title:"添加配送点信息",
+			iconCls:'icon-user-add',
+			buttons:[{
+				text:'确定',
+				iconCls:'icon-user-add',
+				handler:function(){
+				
+					var spname=$.trim( $("#point_update_spname").val() );
+					var spperson=$.trim( $("#point_update_spperson").val() );
+					var sptel=$.trim( $("#point_update_sptel").val() );
+					var spemail=$.trim( $("#point_update_spemail").val() );
+					var spaddress=$.trim( $("#point_update_spaddress").val() );
+					var sppersonTel=$.trim( $("#point_update_sppersonTel").val() );
+					var spfax=$.trim( $("#point_update_spfax").val() );
+				
+					if(sname==""){
+						return;
+					}
+					$.ajaxFileUpload({
+						url:"../../pointServlet?op=addpoint",
+						secureuri:false,
+						dataType:"text",
+						data:{spname:spname,spperson:spperson,sptel:sptel,spemail:spemail,spaddress:spaddress,sppersonTel:sppersonTel,spfax:spfax},
+						success:function(data,status){
+							data=parseInt($.trim(data));
+							if(data>0){
+								pointObject.datagrid("reload");
+								$("#point_update_point")[0].reset();
+								$.messager.show({title:"成功提示",msg:"配送点信息添加成功...",timeout:2000,showType:"slide"});
+								$('#point_update').dialog("close");
+							}else{
+								$.messager.alert("失败提示","配送点信息添加失败...","error");
+							}
+							
+						},
+						error:function(data,status,e){
+							$.messager.alert("失败提示","配送点信息添加失败...\n"+e,"error");
+						}
+					});
+				}
+			}]
+		});
+		$('#point_update').dialog("open");
+	}
 </script>
 
 
-=======
+
 <meta charset="UTF-8">
-配送点管理
->>>>>>> branch 'master' of git@github.com:expresssys/38___expresssys.git
