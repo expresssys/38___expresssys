@@ -74,7 +74,7 @@ create table proxy(
  prtime   varchar(50),  --工作时间
  prprice  double(10,2),    --价格
  prremark  varchar(5000),   --备注
-spid int ,--所属单位id                                         --
+ spid int ,--所属单位id                                         --
  res1  varchar(2000),    --备用字段
  res2  varchar(2000),    --备用字段
  res3  varchar(2000)    --备用字段
