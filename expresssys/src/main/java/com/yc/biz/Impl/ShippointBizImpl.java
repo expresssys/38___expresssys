@@ -12,7 +12,6 @@ import com.yc.biz.ShippointBiz;
 import com.yc.dao.ShipPointDao;
 
 @Service
-@Transactional
 public class ShippointBizImpl implements ShippointBiz {
 	@Resource(name="shippointDaoImpl")
 	private ShipPointDao shipDao;
@@ -46,7 +45,6 @@ public class ShippointBizImpl implements ShippointBiz {
 
 	@Override
 	public int delete(Shippoint s) {
-		// TODO Auto-generated method stub
 		return this.shipDao.delete(s);
 	}
 

@@ -1,10 +1,8 @@
 package com.yc.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,11 +19,27 @@ import com.yc.biz.UsersBiz;
 
 @Controller
 @Scope(value="prototype")
-public class BackLoginController {
+@RequestMapping("Admin/")
+public class UsersController {
 	@Resource(name="usersBizImpl")
 	private UsersBiz ad;
 	
-	@RequestMapping(value="/login.action")
+	@RequestMapping(name="update.action",method=RequestMethod.POST)
+	public @ResponseBody JsonModel update(Users users){
+		JsonModel jm=new JsonModel();
+		int result = this.ad.update(users);
+		
+		if(result>0){
+			jm.setCode(1);
+			jm.setObj(users);
+		}else{
+			jm.setCode(0);
+			jm.setMsg("更新错误");
+		}
+		return jm;
+	}
+	
+	@RequestMapping(value="../login.action")
 	public @ResponseBody JsonModel Login(Users admin,String code,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
 		//从application中取出所有tag 
 		JsonModel jm=new JsonModel();
@@ -49,7 +63,7 @@ public class BackLoginController {
 	}
 	
 	@RequestMapping(value="Admin/loginout.action")
-	public void LoginOut(Users admin,String code,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+	public void LoginOut(Users users,String code,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
 		
 		session.removeAttribute("user");
 		try {
@@ -60,6 +74,16 @@ public class BackLoginController {
 		
 		
 	}
-
-
+	
+	public @ResponseBody JsonModel findAll(Users users,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+		JsonModel jm = new JsonModel();
+		
+		int page = (int) request.getAttribute("page");
+		int pagesize = (int) request.getAttribute("pagesize");
+		
+		
+		
+		return jm;
+	}
+	
 }

@@ -1,5 +1,8 @@
 package com.yc.dao.Impl;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -19,8 +22,18 @@ public class UsersDaoImpl implements UsersDao {
 	}
 	
 	@Override
-	public Users login(Users admin) {
-		return this.sqlSession.selectOne("com.yc.beans.users.adminLogin",admin);
+	public Users login(Users users) {
+		return this.sqlSession.selectOne("com.yc.beans.users.adminLogin",users);
+	}
+
+	@Override
+	public int update(Users users) {
+		return this.sqlSession.update("com.yc.beans.users.updateByPrimaryKeySelective", users);
+	}
+
+	@Override
+	public List<Users> findBy(Map map) {
+		return this.sqlSession.selectList("com.yc.beans.users.findAll", map);
 	}
 
 }

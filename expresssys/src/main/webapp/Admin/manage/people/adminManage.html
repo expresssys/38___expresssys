@@ -1,19 +1,17 @@
 <meta charset="UTF-8">
-<table id="admin_data" data-options="fit:true"></table>
+<table id="user_data" data-options="fit:true"></table>
 
 <script type="text/javascript">
 var adminEditRow=undefined;
 var adminOp;
 var adminFlag;
-var adminObject=$('#admin_data').datagrid({   
-    url:'../../adminServlet',
-    queryParams:{op:"find"},
+var adminObject=$('#user_data').datagrid({   
+    url:'findAll.action',
     fitColumns:true,
     pagination:true,	//设置true将在数据表格底部显示分页工具栏。
     striped:true,	//交替显示行背景
     loadMesg:'数据加载中',
     rownumbers:true,
-    //singleSelect:true,
     pageNumber:1,
     pageSize:5,
     pageList:[5,10,20,30,40,50],
@@ -21,9 +19,14 @@ var adminObject=$('#admin_data').datagrid({
     remoteSort:false,	//升序降序排列
     columns:[[   
         {checkbox:true},
-        {field:'aid',title:'管理员编号',width:100,align:'center',sortable:true},   
-        {field:'aname',title:'管理员姓名',width:100,align:'center',editor:{type:"text",options:{required:true}}},   
-        {field:'pwd',title:'管理员密码',width:100,align:'center',editor:{type:"text",options:{required:true}}}   
+        {field:'usId',title:'管理员编号',width:100,align:'center',sortable:true},   
+        {field:'uname',title:'管理员姓名',width:100,align:'center',editor:{type:"text",options:{required:true}}},   
+        {field:'upwd',title:'管理员密码',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'urealName',title:'真实姓名',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'uaddress',title:'地址',width:100,align:'center',editor:{type:"text",options:{required:true}}},   
+        {field:'uphone',title:'手机',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'utel',title:'电话',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'uemail',title:'邮箱',width:100,align:'center',editor:{type:"text",options:{required:true}}}
     ]],
     toolbar: [{
     	text:"添加",

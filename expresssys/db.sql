@@ -10,8 +10,8 @@ uaddress  varchar(50) ,
 uphone varchar(20),  
 utel  varchar(20),--   
 uemail   varchar(50),    
-ustatus int ,	  
-res1  varchar(2000),  
+ustatus int ,	  --用户状态  1-在职   0-离职
+res1  varchar(2000),  --用户身份  
  res2  varchar(2000),   
  res3  varchar(200),  
  res4  varchar(2000)  
