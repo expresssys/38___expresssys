@@ -1,6 +1,8 @@
 package com.yc.dao.Impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -19,14 +21,21 @@ public class ShippointDaoImpl implements ShipPointDao {
 	}
 	
 	@Override
-	public List<Shippoint> findAll() {
-		
-		return this.sqlSession.selectList("com.yc.bean.shippoint.findAll");
+	public List<Shippoint> findAll(Integer start, Integer pagesize) {
+		Map<String,Object> m=new HashMap<String,Object>();
+		m.put("start", start);
+		m.put("pagesize", pagesize);
+		System.out.println(m);
+		return this.sqlSession.selectList("com.yc.bean.shippoint.findAll",m);
 	}
 
 	@Override
-	public Shippoint findById(Shippoint s) {
-		return this.sqlSession.selectOne("com.yc.bean.shippoint.selectById",s);
+	public List<Shippoint> findById(Map<String, String> map,Integer start, Integer pagesize) {
+		Map<String,Object> m=new HashMap<String,Object>();
+		m.put("start", start);
+		m.put("pagesize", pagesize);
+		m.put("shippoint", map.get("shippoint"));
+		return this.sqlSession.selectOne("com.yc.bean.shippoint.selectById",m);
 	}
 
 	@Override
@@ -38,13 +47,18 @@ public class ShippointDaoImpl implements ShipPointDao {
 	@Override
 	public int update(Shippoint s) {
 		
-		return 0;
+		return this.sqlSession.insert("com.yc.bean.shippoint.update",s);
 	}
 
 	@Override
 	public int delete(Shippoint s) {
 		
 		return this.sqlSession.delete("com.yc.bean.shippoint.deleteByPrimaryKey",s);
+	}
+
+	@Override
+	public int total(Map<String, String> map) {
+		 return this.sqlSession.selectOne("com.yc.bean.shippoint.selectTotal",map);
 	}
 
 }

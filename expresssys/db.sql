@@ -61,13 +61,14 @@ create table shipPoint(
  spfax varchar(100),   --配送点传真
 sparea   varchar(100),   --配送点范围
 spremark   varchar(5000),   --备注
-res1 varchar(5000),   --备用字段
+res1 varchar(5000),   --状态   0-可用  1：已删除
 res2 varchar(5000),
 res3  varchar(2000),    --备用字段
 res4  varchar(2000)    --备用字段
 
 )
-
+select count(spid) from shippoint
+select * from shipPoint
 --代理
 create table proxy(
  prid int primary key auto_increment,   --id
