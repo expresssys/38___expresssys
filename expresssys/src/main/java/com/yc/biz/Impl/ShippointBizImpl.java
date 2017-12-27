@@ -16,10 +16,10 @@ import com.yc.dao.ShipPointDao;
 @Service
 @Transactional
 public class ShippointBizImpl implements ShippointBiz {
-	@Resource(name="shippointDaoImpl")
+	
 	private ShipPointDao shipDao;
 	
-
+	@Resource(name="shippointDaoImpl")
 	public void setShipDao(ShipPointDao shipDao) {
 		this.shipDao = shipDao;
 	}
@@ -28,7 +28,7 @@ public class ShippointBizImpl implements ShippointBiz {
 	public Map<String, Object> findAll(Integer start, Integer pagesize) {
 		Map<String, Object> result=new  HashMap<String, Object>();
 		List<Shippoint> rows= this.shipDao.findAll(start,pagesize);
-		System.out.println(rows);
+
 		int total=this.shipDao.total(null);
 		result.put("rows", rows);
 		result.put("total", total);
@@ -36,10 +36,10 @@ public class ShippointBizImpl implements ShippointBiz {
 	}
 
 	@Override
-	public Map<String, Object> findById(Map<String, String> map,Integer start, Integer pagesize) {
+	public Map<String, Object> findById(Shippoint s,Integer start, Integer pagesize) {
 		Map<String, Object> result=new  HashMap<String, Object>();
-		List<Shippoint> rows=this.shipDao.findById(map,start,pagesize);
-		int total=this.shipDao.total(map);
+		List<Shippoint> rows=this.shipDao.findById(s,start,pagesize);
+		int total=this.shipDao.total(s);
 		result.put("rows", rows);
 		result.put("total", total);
 		return result;			

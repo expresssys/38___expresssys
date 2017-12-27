@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yc.bean.shippoint" >
+<mapper namespace="com.yc.bean.Shippoint" >
   <resultMap id="BaseResultMap" type="com.yc.bean.Shippoint" >
     <id column="spid" property="spid" jdbcType="INTEGER" />
     <result column="spname" property="spname" jdbcType="VARCHAR" />
@@ -36,17 +36,18 @@
     select 
     <include refid="Base_Column_List" />
     from shippoint  
-    where  res1=0
    
     <where>
-     <if test="shippoint.spid != null" >
-   		 and spid = ${shitpoint.spid}
+    	res1=0
+     <if test="shippoint.spid != null and shippoint.spid!=''" >
+   		 and spid = ${shippoint.spid}
     </if>
-    <if test="shippoint.spname != null" >
-        and spname = ${shippoint.spname,jdbcType=VARCHAR},
+    <if test="shippoint.spname != null and shippoint.spname!=''" >
+        and spname = #{shippoint.spname,javaType=String}
+     
       </if>
      <if test="shippoint.spaddress != null" >
-        and ${shippoint.spaddress,jdbcType=VARCHAR},
+        and spaddress like  #{shippoint.spaddress,javaType=String}
       </if>
     </where>
     limit ${start},${pagesize} 

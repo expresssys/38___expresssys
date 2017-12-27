@@ -26,7 +26,7 @@
 			</p>
 			<p>
 				<a href="#">网站首页</a>|<a href="#">支持论坛</a>|<a href="#">帮助中心</a>|<a
-					href="#">安全退出</a>
+					href="loginout.action">安全退出</a>
 			</p>
 		</div>
 	</div>
