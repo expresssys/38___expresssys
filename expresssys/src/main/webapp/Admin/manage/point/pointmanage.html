@@ -135,6 +135,7 @@
 var pointEditRow=undefined;
 var pointOp;
 var pointFlag;
+var pointmark="";
 	var pointObject = $('#point_manager').datagrid({
 		url : "point/findAll.action",
 		fitColumns : true,
@@ -143,8 +144,8 @@ var pointFlag;
 		rownumbers : true,
 		pagination : true,
 		pageNumber : 1,
-		pageSize : 5,
-		pageList : [ 5, 10, 20, 30, 40, 50 ],
+		pageSize : 10,
+		pageList : [  10, 20, 30, 40, 50 ],
 		sortName:'spid',//������һ��������
 		remoteSort:false,
 		columns:[[   
@@ -185,7 +186,7 @@ var pointFlag;
 					var spaddress=$.trim( $("#point_update_spaddress").val() );
 					var sppersontel=$.trim( $("#point_update_sppersontel").val() );
 					var spfax=$.trim( $("#point_update_spfax").val() );
-				
+					var spremark=$.trim( $("#point_update_spremark").val() );
 					if(spname==""){
 						return;
 					}
@@ -193,7 +194,7 @@ var pointFlag;
 						url:"point/add.action",
 						secureuri:false,
 						dataType:"text",
-						data:{spname:spname,spperson:spperson,sptel:sptel,spemail:spemail,spaddress:spaddress,sppersontel:sppersontel,spfax:spfax},
+						data:{spname:spname,spperson:spperson,sptel:sptel,spemail:spemail,spaddress:spaddress,sppersontel:sppersontel,spfax:spfax,spremark:spremark},
 						success:function(data,status){
 							console.info(data);
 							if(data>0){
@@ -222,6 +223,7 @@ var pointFlag;
 			$.messager.show({title:"温馨提示",msg:"请选择您要修改的配送点信息...",timeout:2000,showType:"slide"});
 		}else{
 			var row=rows[0];
+			point_findpoint(row.spid);
 			$("#point_update_spname").val(row.spname);
 			$("#point_update_spperson").val(row.spperson);
 			$("#point_update_sptel").val(row.sptel);
@@ -229,7 +231,7 @@ var pointFlag;
 			$("#point_update_spaddress").val(row.spaddress);
 			$("#point_update_sppersontel").val(row.sppersontel);
 			$("#point_update_spfax").val(row.spfax);
-			
+			$("#point_update_spremark").val(pointmark);
 
 		$('#point_update').dialog({
 			title:"修改配送点信息",
@@ -245,7 +247,7 @@ var pointFlag;
 					var spaddress=$.trim( $("#point_update_spaddress").val() );
 					var sppersontel=$.trim( $("#point_update_sppersontel").val() );
 					var spfax=$.trim( $("#point_update_spfax").val() );
-				
+					var spremark=$.trim( $("#point_update_spremark").val() );
 					if(spname==""){
 						return;
 					}
@@ -253,7 +255,7 @@ var pointFlag;
 						url:"../point/update.action",
 						secureuri:false,
 						dataType:"text",
-						data:{spname:spname,spperson:spperson,sptel:sptel,spemail:spemail,spaddress:spaddress,sppersontel:sppersontel,spfax:spfax},
+						data:{spname:spname,spperson:spperson,sptel:sptel,spemail:spemail,spaddress:spaddress,sppersontel:sppersontel,spfax:spfax,spremark:spremark},
 						success:function(data,status){
 							data=parseInt($.trim(data));
 							if(data>0){
@@ -280,7 +282,7 @@ var pointFlag;
 
 	//删除配送点
 	function point_delpoint(spid){
-		$.post("point/delete.action",{op:"delpoint",spid:spid},function(data){
+		$.post("point/delete.action",{spid:spid},function(data){
 			data=parseInt($.trim(data));
 			if(data>0){
 				$.messager.show({title:"成功提示",msg:"配送点信息删除成功...",timeout:2000,showType:"slide"});
@@ -294,19 +296,19 @@ var pointFlag;
 
 	//详情查询
 	function point_findpoint(spid){
-		
+		$.post("point/findByCondition.action",{spid:spid},function(data){
+			pointmark=data.rows[0].spremark;
+		})
 	}
 	
 	//条件查询
 	function point_searchpoint(){
-		var singerId=$.trim( $("#point_search_singerId").val() );
-		var languages=$.trim( $("#point_search_languages").val() );
-		var style=$.trim( $("#point_search_style").val() );
-		var sname=$.trim( $("#point_search_sname").val() );
+		var spname=$.trim( $("#point_search_spname").val() );
+		var spaddress=$.trim( $("#point_search_spaddress").val() );
 		
-		$('#point_data').datagrid({
-			url:"point/searchById.action",
-			queryParams:{op:"search",singerId:singerId,languages:languages,style:style,sname:sname}
+		$('#point_manager').datagrid({
+			url:"point/findByCondition.action",
+			queryParams:{op:"search",spname:spname,spaddress:spaddress}
 		});
 		
 	}
