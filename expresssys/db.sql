@@ -51,20 +51,20 @@ foreign key(spid) references shipPoint(spid);
 
 --配送单位
 create table shipPoint(
- spid  int primary key auto_increment,   --配送id
- spname varchar(100)   ,   --配送点名称
- spperson varchar(20),   --联系人
- sptel varchar(20),  --配送点电话
-  spemail  varchar(50),  --联系邮件
-  spaddress  varchar(50)  ,--配送点地址
- sppersonTel varchar(20),   --联系人电话
- spfax varchar(100),   --配送点传真
-sparea   varchar(100),   --配送点范围
-spremark   varchar(5000),   --备注
-res1 varchar(5000),   --状态   0-可用  1：已删除
+ spid  int primary key auto_increment,   
+ spname varchar(100)   ,   
+ spperson varchar(20),   
+ sptel varchar(20),  
+  spemail  varchar(50),  
+  spaddress  varchar(50)  ,
+ sppersonTel varchar(20),   
+ spfax varchar(100),   
+sparea   varchar(100),   
+spremark   varchar(5000),   
+res1 varchar(5000),   
 res2 varchar(5000),
-res3  varchar(2000),    --备用字段
-res4  varchar(2000)    --备用字段
+res3  varchar(2000),   
+res4  varchar(2000)    
 
 )
 select count(spid) from shippoint
