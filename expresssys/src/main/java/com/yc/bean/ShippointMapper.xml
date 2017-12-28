@@ -73,7 +73,7 @@
   
   
   <delete id="deleteByPrimaryKey"  >
-    update set res1=1 from shippoint
+    update shippoint set res1='1' 
     where spid = #{spid}
   </delete>
   
