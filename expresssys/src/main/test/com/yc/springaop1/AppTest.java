@@ -36,10 +36,10 @@ public class AppTest {
 	@Test
 	public void test1() throws Exception {
 		Shippoint s=new Shippoint();
-		s.setSpaddress("45");
+		s.setSpid(7);
 		
 		System.out.println(this.cb.findAll(0, 5));
-		System.out.println(this.cb.findById(s, 0, 5).get("rows"));
+		System.out.println(this.cb.findById(s, 0, 5));
 	}
 	
 	

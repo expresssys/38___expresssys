@@ -28,8 +28,8 @@ public class ShippointBizImpl implements ShippointBiz {
 	public Map<String, Object> findAll(Integer start, Integer pagesize) {
 		Map<String, Object> result=new  HashMap<String, Object>();
 		List<Shippoint> rows= this.shipDao.findAll(start,pagesize);
-
-		int total=this.shipDao.total(null);
+		Shippoint s=new Shippoint();
+		int total=this.shipDao.total(s);
 		result.put("rows", rows);
 		result.put("total", total);
 		return result;
@@ -38,6 +38,10 @@ public class ShippointBizImpl implements ShippointBiz {
 	@Override
 	public Map<String, Object> findById(Shippoint s,Integer start, Integer pagesize) {
 		Map<String, Object> result=new  HashMap<String, Object>();
+		//模糊查询  判断地址是否为空不为空则加%
+		if(s.getSpaddress()!=null&&s.getSpaddress()!=""){
+			s.setSpaddress("%"+s.getSpaddress()+"%");
+		}
 		List<Shippoint> rows=this.shipDao.findById(s,start,pagesize);
 		int total=this.shipDao.total(s);
 		result.put("rows", rows);
