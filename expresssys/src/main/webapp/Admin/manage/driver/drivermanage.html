@@ -1,2 +1,349 @@
 <meta charset="UTF-8">
-司机管理
+
+<table id="driver_manager" data-options="fit:true"></table>
+<div id="driver_search">
+	<a id="btn" href="javascript:driver_showAdddriver()" class="easyui-linkbutton" data-options="iconCls:'icon-script-add',plain:true" style="float:left">添加</a>  
+	<div class="datagrid-btn-separator"></div>
+	<a id="btn" href="javascript:driver_showUpdatedriver()" class="easyui-linkbutton" data-options="iconCls:'icon-server-edit',plain:true" style="float:left">修改</a>  
+	<div class="datagrid-btn-separator"></div>
+	
+	<label>所属单位：</label>
+	<select name="spid" id="driver_search_spid">
+		<option value="">--全部--</option>
+	</select>
+	
+	<a href="javascript:driver_searchdriver()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+</div>
+<div id="driver_update" class="easyui-dialog" title="添加司机信息" style="width:500px;height:300px;align:center"
+		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
+	<form id="driver_update_driver">
+		<ul>
+		
+			<li>
+				<label>司机名称：</label>
+				<input type="text" name="dname" id="driver_update_dname" class="driver_input"/>
+			</li>
+			<li>
+				<label>驾驶证号：</label>
+				<input type="text" name="dnumber" id="driver_update_dnumber" class="driver_input"/>
+			</li>
+			<li>
+				<label>联系电话：</label>
+				<input type="text" name="dphone" id="driver_update_dphone" class="driver_input"/>
+			</li>
+			<li>
+				<label>身份证：</label>
+				<input type="text" name="didcard" id="driver_update_didcard" class="driver_input"/>
+			</li>
+			
+			<li>
+				<label>驾龄：</label>
+				<input type="text" name="ddage" id="driver_update_ddage" class="driver_input"/>
+			</li>
+			<li>
+				<label>所属单位：</label>
+				<select name="spid" id="driver_update_spid" >
+				</select>
+			</li>
+			
+			
+		</ul>
+	</form>
+</div>
+<style>
+#driver_search label{
+	margin-left:20px;
+}
+
+#driver_update li{
+	list-style-type:none;
+	margin-top:20px;
+}
+
+#driver_update .driver_input{
+	width:160px;
+	border:1px solid #95B8E7;
+	line-height:20px;
+}
+
+.driver_delpic_show{
+	width:100px;
+	height:100px;
+	overflow:hidden;
+	position:relative;
+	float:left;
+	border:1px solid #fff;
+}
+
+.driver_delpic_show>span{
+	margin:0px;
+	padding:0px;
+	background:url(../../images/cancel.png) no-repeat; center center;
+	width:16px;
+	height:16px;
+	display:none;
+	position:absolute;
+	top:2px;
+	right:2px;
+}
+
+.driver_delpic_show:hover{
+	border-color:#f63;
+}
+
+.driver_delpic_show:hover span{
+	display:block;
+	cursor:driverer;
+}
+
+.driver_delsaddr_show{
+	width:300px;
+	height:30px;
+	overflow:hidden;
+	position:relative;
+	float:left;
+	border:1px solid #fff;
+}
+.driver_delsaddr_show>span{
+	margin:0px;
+	padding:0px;
+	background:url(../../images/cancel.png) no-repeat; center center;
+	width:16px;
+	height:16px;
+	display:none;
+	position:absolute;
+	top:2px;
+	right:2px;
+}
+.driver_delsaddr_show:hover{
+	border-color:#f63;
+}
+
+.driver_delsaddr_show:hover span{
+	display:block;
+	cursor:driverer;
+}
+</style>
+<script type="text/javascript">
+var driverEditRow=undefined;
+var driverObject;
+var shippointList;
+
+$(function(){
+	var shippointStr="";
+	var shippointTypeStr="";
+	$.get("point/findAll.action",{rows:20,page:1},function(data){
+		var str="";
+	
+		shippointList=data.rows;
+		console.info(shippointList);
+		$.each(shippointList,function(index,item){
+			shippointStr+="<option value='"+item.spid+"'>"+item.spname+"</option>";
+		});
+		$("#driver_search_spid").append($(shippointStr));
+		$("#driver_update_spid").append($(shippointStr));
+		
+		driverObject = $('#driver_manager').datagrid({
+			url : "driver/findAll.action",
+			fitColumns : true,
+			striped : true,//������ʾ�б���
+			loadMsg : '数据加载中...',
+			rownumbers : true,
+			pagination : true,
+			pageNumber : 1,
+			pageSize : 10,
+			pageList : [  10, 20, 30, 40, 50 ],
+			sortName:'did',//������һ��������
+			remoteSort:false,
+			columns:[[   
+			        {checkbox:true},      
+			        {field:'did',title:'配送id',width:100,align:'center',sortable:true},   
+			        {field:'dname',title:'司机名称',width:100,align:'center'},   
+			        {field:'dnumber',title:'驾驶证号',width:100,align:'center'},
+			        {field:'dphone',title:'联系电话',width:100,align:'center',sortable:true},   
+			        {field:'didcard',title:'身份证ַ',width:100,align:'center'},
+			        {field:'dstatus',title:'司机状态',width:100,align:'center',formatter:function(val,row,index){
+			        	
+			        		if(val==0){
+			        			
+			        			return '空闲';
+			        		}else if(val==1){
+			        			return '正忙';
+			        		}
+			        	
+			        }},
+			        {field:'ddage',title:'驾龄ַ',width:100,align:'center'},
+			        {field:'spid',title:'所属单位',width:100,align:'center',formatter:function(val,row,index){
+			        	
+			        	for(var i=0;i<shippointList.length;i++){
+			        		if(val==shippointList[i].spid){
+			        			
+			        			return shippointList[i].spname;
+			        		}
+			        	}
+			        }},
+			        {field:'_operate',title:'操作',width:100,align:'center',formatter:function(val,row,index){
+			        	return "<a href='javascript:driver_finddriver("+row.did+")'> 详情</a><a href='javascript:driver_deldriver("+row.did+")'> 删除</a>"  //司机详情查看
+			        }}
+			    ]],
+			    toolbar:"#driver_search"
+	
+	
+		});
+		
+	},"json");
+	
+});
+
+	function driver_showAdddriver(){
+		$("#driver_update_driver")[0].reset();
+		$('#driver_update').dialog({
+			title:"添加司机信息",
+			iconCls:'icon-user-add',
+			buttons:[{
+				text:'确定',
+				iconCls:'icon-user-add',
+				handler:function(){
+				
+					var dname=$.trim( $("#driver_update_dname").val() );
+					var dnumber=$.trim( $("#driver_update_dnumber").val() );
+					var dphone=$.trim( $("#driver_update_dphone").val() );
+					var didcard=$.trim( $("#driver_update_didcard").val() );
+					var ddage=$.trim( $("#driver_update_ddage").val() );
+					var spid=$.trim( $("#driver_update_spid").val() );
+					if(dname==""){
+						return;
+					}
+					$.ajax({
+						url:"driver/add.action",
+						secureuri:false,
+						dataType:"text",
+						data:{dname:dname,dnumber:dnumber,dphone:dphone,didcard:didcard,ddage:ddage,spid:spid},
+						success:function(data,status){
+							console.info(data);
+							if(data>0){
+								driverObject.datagrid("reload");
+								$("#driver_update_driver")[0].reset();
+								$.messager.show({title:"成功提示",msg:"司机信息添加成功...",timeout:2000,showType:"slide"});
+								$('#driver_update').dialog("close");
+							}else{
+								$.messager.alert("失败提示","司机信息添加失败...","error");
+							}
+							
+						},
+						error:function(data,status,e){
+							$.messager.alert("失败提示","司机信息添加失败...\n"+e,"error");
+						}
+					});
+				}
+			}]
+		});
+		$('#driver_update').dialog("open");
+	}
+	
+	function driver_showUpdatedriver(){
+		var rows=$('#driver_manager').datagrid("getChecked");
+		if(rows.length<=0){
+			$.messager.show({title:"温馨提示",msg:"请选择您要修改的司机信息...",timeout:2000,showType:"slide"});
+		}else{
+			var row=rows[0];
+			var did=row.did;
+			$.post("driver/findByID.action",{did:did},function(data){
+				
+				drivermark=data.rows[0].spremark;
+				$("#driver_update_dname").val(data.rows[0].dname);
+				$("#driver_update_dnumber").val(data.rows[0].dnumber);
+				$("#driver_update_dphone").val(data.rows[0].dphone);
+				$("#driver_update_didcard").val(data.rows[0].didcard);
+				$("#driver_update_ddage").val(data.rows[0].ddage);
+				$("#driver_update_spid").val(data.rows[0].spid);
+				
+			})
+			
+		$('#driver_update').dialog({
+			title:"修改司机信息",
+			iconCls:'icon-user-edit',
+			buttons:[{
+				text:'修改',
+				iconCls:'icon-user-edit',
+				handler:function(){
+					var dname=$.trim( $("#driver_update_dname").val() );
+					var dnumber=$.trim( $("#driver_update_dnumber").val() );
+					var dphone=$.trim( $("#driver_update_dphone").val() );
+					var didcard=$.trim( $("#driver_update_didcard").val() );
+					var ddage=$.trim( $("#driver_update_ddage").val() );
+					var spid=$.trim( $("#driver_update_spid").val() );
+					if(dname==""){
+						return;
+					}
+					$.ajax({
+						url:"driver/update.action",
+						secureuri:false,
+						dataType:"text",
+						data:{did:did,dname:dname,dnumber:dnumber,dphone:dphone,didcard:didcard,ddage:ddage,spid:spid},
+						success:function(data,status){
+							data=parseInt($.trim(data));
+							if(data>0){
+								$.messager.show({title:"成功提示",msg:"司机信息修改成功...",timeout:2000,showType:"slide"});
+								$('#driver_update').dialog("close");
+								driverObject.datagrid("reload");
+							}else{
+								$.messager.alert("失败提示","司机信息修改失败...","error");
+							}
+							
+						},
+						error:function(data,status,e){
+							$.messager.alert("失败提示","司机信息添加失败...\n"+e,"error");
+						}
+					});
+				
+				}
+			}]
+		})
+		$('#driver_update').dialog("open");
+		}
+	}
+
+
+	//删除司机
+	function driver_deldriver(did){
+		$.post("driver/delete.action",{did:did},function(data){
+			data=parseInt($.trim(data));
+			if(data>0){
+				$.messager.show({title:"成功提示",msg:"司机信息删除成功...",timeout:2000,showType:"slide"});
+				driverObject.datagrid("reload");
+			}else{
+				$.messager.alert("失败提示","司机信息删除失败...","error");
+				driverObject.datagrid("reload");
+			}
+		})
+	}
+
+	//详情查询
+	function driver_finddriver(did){
+
+		$.post("driver/findByID.action",{did:did},function(data){
+			
+			drivermark=data.rows[0].spremark;
+			
+		})
+	}
+	
+	//条件查询
+	function driver_searchdriver(){
+		var spid=$.trim( $("#driver_search_spid").val() );
+	
+		$('#driver_manager').datagrid({
+			url:"driver/findByCondition.action",
+			queryParams:{spid:spid}
+		});
+		
+		$("#driver_search_spid").val("");//查到以后清空输入框
+	}
+
+
+</script>
+
+
+
+<meta charset="UTF-8">
