@@ -39,10 +39,10 @@
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-user"><a href="javascript:void(0)"
-						data-icon="icon-user" data-link="manage/people/adminManage.html"
+						data-icon="icon-user" data-link="manage/users/adminManage.html"
 						iframe="0">管理员管理</a></li>
 					<li iconCls="icon-group"><a href="javascript:void(0)"
-						data-icon="icon-group" data-link="manage/people/userManage.html"
+						data-icon="icon-group" data-link="manage/users/userManage.html"
 						iframe="0">用户管理</a></li>
 				</ul>
 			</div>

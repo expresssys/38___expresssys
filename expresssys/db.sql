@@ -18,7 +18,10 @@ res1  varchar(2000),  --用户身份
 )
 
 select * from users;
+update users set ustatus=0 where usid=4
+delete from users where uname !="1";
 insert into users(uname,upwd) values('yc','123');
+insert into users(uname,upwd) values('y','123');
 
 --运输车辆信息
 create table car(

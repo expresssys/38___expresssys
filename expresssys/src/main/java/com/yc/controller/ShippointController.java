@@ -35,14 +35,6 @@ public class ShippointController {
 		System.out.println(page);
 		Map<String,Object> s=this.pointBiz.findAll(page-1,rows);
 		
-		
-		try{
-			jm.setCode(3);
-			jm.setObj(s);	
-		} catch (Exception e) {
-			jm.setCode(2);
-			jm.setMsg(e.getMessage());
-		}
 		session.setAttribute("AllshipPoint", s);
 		return s;
 	}
@@ -56,13 +48,6 @@ public class ShippointController {
 		Map<String,Object> m=this.pointBiz.findById(s, page-1, rows);
 		System.out.println(s);
 		
-		try{
-			jm.setCode(3);
-			jm.setObj(s);	
-		} catch (Exception e) {
-			jm.setCode(2);
-			jm.setMsg(e.getMessage());
-		}
 		session.setAttribute("AllshipPoint", s);
 		return m;
 	}

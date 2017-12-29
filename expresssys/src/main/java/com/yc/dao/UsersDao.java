@@ -17,4 +17,10 @@ public interface UsersDao {
 	
 	//管理查询  分页
 	public List<Users> findBy(Map map);
+
+	//查询总数
+	public int total(Users users);
+	
+	//添加
+	public int add(Users users);
 }

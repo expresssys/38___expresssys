@@ -13,10 +13,12 @@ public interface UsersBiz {
 
 	
 	//信息更新
-	public int update(Users users);
+	public int updateUsers(Users users);
 	
 	
 	//条件查询  分页
-	public List<Users> findBy(Map map);	
+	public Map<String,Object> findBy(Map map);	
 
+	//添加
+	public int addUsers(Users users);
 }

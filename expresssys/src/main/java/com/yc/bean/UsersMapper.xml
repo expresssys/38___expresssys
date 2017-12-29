@@ -194,31 +194,52 @@
 		where usId = #{usid,jdbcType=INTEGER}
 	</update>
 
+	<select id="selectTotal" resultType="java.lang.Integer" parameterType="com.yc.bean.Users">
+		select count(*) from users
+		<where>
+			1=1
+			<if test="uname != null and uname != '' ">
+				and uname like CONCAT('%', #{uname,jdbcType=VARCHAR},'%') 
+			</if>
+			<if test="urealname != null and urealname != '' ">
+				and urealname like CONCAT('%', #{urealname,jdbcType=VARCHAR},'%') 
+			</if>
+			<if test="uaddress != null and uaddress != '' ">
+				and uaddress like CONCAT('%', #{uaddress,jdbcType=VARCHAR},'%') 
+			</if>
+			<if test="ustatus != null">
+				and ustatus = #{ustatus,jdbcType=VARCHAR}
+			</if>
+			<if test="res1 != null and res1 != '' ">
+				and res1 = #{res1,jdbcType=VARCHAR}
+			</if>
+		</where>
+  	</select>
+
 
 	<!-- 条件查询   -->
-	<select id="findBy" parameterType="com.yc.bean.Users">
-		select * from users
-		where 1=1
-		<choose>
-			<when test="uname != null">
-				and uname = #{uname,jdbcType=VARCHAR}
-			</when>
-			<when test="uname != null">
-				and urealName = #{urealName,jdbcType=VARCHAR}
-			</when>
-			<when test="uname != null">
-				and uaddress = #{uaddress,jdbcType=VARCHAR}
-			</when>
-			<when test="ustatus != null">
-				and ustatus = #{ustatus,jdbcType=INTEGER}
-			</when>
-			<when test="ustatus != null">
-				and res1 = #{res1,jdbcType=VARCHAR}
-			</when>
-			<otherwise>
-			</otherwise>
-		</choose>
-		limit ${page},${pagesize}
+	<select id="findBy" resultMap="BaseResultMap" parameterType="java.util.Map" >
+		select  *
+		from users 
+		<where>
+			1=1
+			<if test="users.uname != null and users.uname != '' ">
+				and uname like CONCAT('%', #{users.uname,jdbcType=VARCHAR},'%') 
+			</if>
+			<if test="users.urealname != null and users.urealname != '' ">
+				and urealname like CONCAT('%', #{users.urealname,jdbcType=VARCHAR},'%') 
+			</if>
+			<if test="users.uaddress != null and users.uaddress != '' ">
+				and uaddress like CONCAT('%', #{users.uaddress,jdbcType=VARCHAR},'%') 
+			</if>
+			<if test="users.ustatus != null">
+				and ustatus = #{users.ustatus,jdbcType=VARCHAR} 
+			</if>
+			<if test="users.res1 != null and users.res1 != '' ">
+				and res1 = #{users.res1,jdbcType=VARCHAR}
+			</if>
+		</where>
+		limit ${start},${pagesize} 
 	</select>
 
 </mapper>

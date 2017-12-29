@@ -33,7 +33,17 @@ public class UsersDaoImpl implements UsersDao {
 
 	@Override
 	public List<Users> findBy(Map map) {
-		return this.sqlSession.selectList("com.yc.beans.users.findAll", map);
+		return this.sqlSession.selectList("com.yc.beans.users.findBy", map);
+	}
+
+	@Override
+	public int total(Users users) {
+		return this.sqlSession.selectOne("com.yc.beans.users.selectTotal", users);
+	}
+
+	@Override
+	public int add(Users users) {
+		return this.sqlSession.insert("com.yc.beans.users.insertSelective", users);
 	}
 
 }
