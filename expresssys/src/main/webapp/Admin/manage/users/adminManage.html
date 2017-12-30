@@ -1,6 +1,5 @@
 <meta charset="UTF-8">
 
-
 <table id="table_users_manager" data-options="fit:true" ></table>
 <div id="users_search">
 	<a id="btn" href="javascript:users_showAddusers()" class="easyui-linkbutton" data-options="iconCls:'icon-script-add',plain:true" style="float:left">添加</a>  
@@ -26,42 +25,42 @@
 	<a href="javascript:users_searchusers(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查看已离职员工</a>
 </div>
 
-<div id="users_update" class="easyui-dialog" title="添加管理员信息" style="width:500px;height:300px;align:center"
+<div id="users_update" class="easyui-dialog" title="添加管理员信息" style="width:400px;height:500px;align:center"
 		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
 	<form id="form_users_update">
 		<input type="hidden"  name="usid" id="users_update_usid"  />
 		<ul>
 			<li>
-				<label>管理员名称：</label>
+				<label>管理员名称<span></span></label>
 				<input type="text" name="uname" id="users_update_uname" class="users_input"/>
 			</li>
 			<li>
-				<label>密码：</label>
+				<label>密码<span></span></label>
 				<input type="password" name="upwd" id="users_update_upwd" class="users_input"/>
 			</li>
 			<li>
-				<label>真实姓名：</label>
+				<label>真实姓名<span></span></label>
 				<input type="text" name="urealname" id="users_update_urealname" class="users_input"/>
 			</li>
 			<li>
-				<label>电话：</label>
+				<label>电话<span></span></label>
 				<input type="text" name="utel" id="users_update_utel" class="users_input"/>
 			</li>
 			<li>
-				<label>手机：</label>
+				<label>手机<span></span></label>
 				<input type="text" name="uphone" id="users_update_uphone" class="users_input"/>
 			</li>
 			
 			<li>
-				<label>地址：</label>
+				<label>地址<span></span></label>
 				<input type="text" name="uaddress" id="users_update_uaddress" class="users_input"/>
 			</li>
 			<li>
-				<label>邮箱：</label>
+				<label>邮箱<span></span></label>
 				<input type="text" name="uemail" id="users_update_uemail" class="users_input"/>
 			</li>
 			<li>
-				<label>身份：</label>
+				<label>身份<span></span></label>
 				<select id="users_update_res1" name="res1">
 					<option value="0">--请选择--</optionv>
 					<option value="1">物流公司管理员</option>
@@ -72,16 +71,25 @@
 	</form>
 </div>
 <style>
-ul{
-	height:200px;
-}
+
 #users_search label{
 	margin-left:20px;
 }
 
+#users_update label{
+	display:inline-block;
+	width:66px;	
+	text-align:justify;
+	margin-top: 15px;
+	margin-right: 10px;
+}
+#users_update label span{
+  display:inline-block;
+  width:100%;
+}
+
 #users_update li{
 	list-style-type:none;
-	margin-top:20px;
 }
 
 #users_update .users_input{

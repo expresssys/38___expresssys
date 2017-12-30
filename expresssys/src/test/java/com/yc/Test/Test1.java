@@ -15,7 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.yc.Util.MD5Encryption;
+import com.yc.bean.Goods;
 import com.yc.bean.Users;
+import com.yc.biz.GoodsBiz;
 import com.yc.biz.UsersBiz;
 
 @RunWith(SpringJUnit4ClassRunner.class) 
@@ -30,6 +32,9 @@ public class Test1 {
 	
 	@Resource(name="usersBizImpl")
 	private UsersBiz ub;
+	
+	@Resource(name="goodsBizImpl")
+	private GoodsBiz gb;
 	
 	//查询
 	@Test
@@ -66,4 +71,12 @@ public class Test1 {
 		System.out.println(ub.updateUsers(users));
 	}
 	
+	@Test
+	public void test4(){
+		Goods goods = new Goods();
+		goods.setGname("123");
+		goods.setGtype("日用品");
+		
+		System.out.println(gb.addGoods(goods));
+	}
 }

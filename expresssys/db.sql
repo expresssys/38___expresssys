@@ -122,7 +122,6 @@ create table driver(
     res3  varchar(2000),    --备用字段
     res4  varchar(2000)    --备用字段
 
-
 )
 
 
@@ -135,7 +134,7 @@ foreign key(spid) references shipPoint(spid);
 --商品信息
 create table goods(
      gid int primary key auto_increment,    --货物编号
-     gname varchar(50),   --货物名称
+     gname varchar(50),   
      gcount int ,    --货物数量
      gunit  varchar(50),   --单位
      gprice  double(16,2) ,--货物价值
@@ -145,7 +144,7 @@ create table goods(
      gremark varchar(5000),   --备注
                                                      --
 
-     res1  varchar(5000),   --备用字段
+     res1  varchar(5000),   --备用字段   货物状态
      res2    varchar(5000), --备用字段
      res3  varchar(2000),    --备用字段
      res4  varchar(2000)    --备用字段
@@ -263,8 +262,6 @@ create table price(
     res3 varchar(2000),
     res4  varchar(2000)
 
-
-
 )
 
 
@@ -274,7 +271,6 @@ create table orderInfo(
   osid  int,           --
   gid  int ,               --
   res1 varchar(2000)
-
 
 )
 alter table order

@@ -122,7 +122,16 @@
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-car"><a href="javascript:void(0)"
 						data-icon="icon-car" data-link="manage/car/carmanage.html"
-						iframe="0">车辆查询</a></li>
+						iframe="0">车辆管理</a></li>
+				</ul>
+			</div>
+			
+			<div title="货物管理" data-options="iconCls:'icon-car'"
+				style="padding: 5px;">
+				<ul class="easyui-tree wu-side-tree">
+					<li iconCls="icon-car"><a href="javascript:void(0)"
+						data-icon="icon-car" data-link="manage/goods/goodsmanage.html"
+						iframe="0">货物管理</a></li>
 				</ul>
 			</div>
 

@@ -30,26 +30,7 @@
 		and upwd=#{upwd}
 	</select>
 
-
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from users
-		where usId = #{usid,jdbcType=INTEGER}
-	</delete>
-	<insert id="insert" parameterType="com.yc.bean.Users">
-		insert into users (usId, uname, upwd,
-		urealName, uaddress, uphone,
-		utel, uemail, ustatus,
-		res1, res2, res3, res4
-		)
-		values (#{usid,jdbcType=INTEGER}, #{uname,jdbcType=VARCHAR},
-		#{upwd,jdbcType=VARCHAR},
-		#{urealname,jdbcType=VARCHAR}, #{uaddress,jdbcType=VARCHAR}, #{uphone,jdbcType=VARCHAR},
-		#{utel,jdbcType=VARCHAR}, #{uemail,jdbcType=VARCHAR},
-		#{ustatus,jdbcType=INTEGER},
-		#{res1,jdbcType=VARCHAR}, #{res2,jdbcType=VARCHAR}, #{res3,jdbcType=VARCHAR},
-		#{res4,jdbcType=VARCHAR}
-		)
-	</insert>
+	
 	<insert id="insertSelective" parameterType="com.yc.bean.Users">
 		insert into users
 		<trim prefix="(" suffix=")" suffixOverrides=",">

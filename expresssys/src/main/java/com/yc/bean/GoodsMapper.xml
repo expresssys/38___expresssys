@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.bean.goods" >
+  <resultMap id="BaseResultMap" type="com.yc.bean.Goods" >
+    <id column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="gname" property="gname" jdbcType="VARCHAR" />
+    <result column="gcount" property="gcount" jdbcType="INTEGER" />
+    <result column="gunit" property="gunit" jdbcType="VARCHAR" />
+    <result column="gprice" property="gprice" jdbcType="DOUBLE" />
+    <result column="gweight" property="gweight" jdbcType="DOUBLE" />
+    <result column="gvolume" property="gvolume" jdbcType="DOUBLE" />
+    <result column="gtype" property="gtype" jdbcType="VARCHAR" />
+    <result column="gremark" property="gremark" jdbcType="VARCHAR" />
+    <result column="res1" property="res1" jdbcType="VARCHAR" />
+    <result column="res2" property="res2" jdbcType="VARCHAR" />
+    <result column="res3" property="res3" jdbcType="VARCHAR" />
+    <result column="res4" property="res4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    gid,gname,gcount,gunit,gprice,gweight,gvolume,gtype,gremark, res1, res2, res3,res4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where gid = #{gid,jdbcType=INTEGER}
+  </select>
+
+
+  <insert id="insertSelective" parameterType="com.yc.bean.Goods" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="gname != null" >
+        gname,
+      </if>
+      <if test="gcount != null" >
+        gcount,
+      </if>
+      <if test="gunit != null" >
+        gunit,
+      </if>
+      <if test="gprice != null" >
+        gprice,
+      </if>
+      <if test="gweight != null" >
+        gweight,
+      </if>
+      <if test="gtype != null" >
+        gtype,
+      </if>
+      <if test="gremark != null" >
+        gremark,
+      </if>
+      <if test="res1 != null" >
+        res1,
+      </if>
+      <if test="res2 != null" >
+        res2,
+      </if>
+      <if test="res3 != null" >
+        res3,
+      </if>
+      <if test="res4 != null" >
+        res4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="gname != null" >
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="gcount != null" >
+        #{gcount,jdbcType=INTEGER},
+      </if>
+      <if test="gunit != null" >
+        #{gunit,jdbcType=VARCHAR},
+      </if>
+      <if test="gprice != null" >
+        #{gprice,jdbcType=DOUBLE},
+      </if>
+      <if test="gweight != null" >
+        #{gweight,jdbcType=DOUBLE},
+      </if>
+      <if test="gvolume != null" >
+        #{gvolume,jdbcType=DOUBLE},
+      </if>
+      <if test="gtype != null" >
+        #{gtype,jdbcType=VARCHAR},
+      </if>
+       <if test="gremark != null" >
+        #{gremark,jdbcType=VARCHAR},
+      </if>
+      <if test="res1 != null" >
+        #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="res4 != null" >
+        #{res4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Goods" >
+    update goods
+    <set >
+      <if test="gname != null" >
+        gname = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="gcount != null" >
+        gcount = #{gcount,jdbcType=INTEGER},
+      </if>
+       <if test="gunit != null" >
+        gunit = #{gunit,jdbcType=INTEGER},
+      </if>
+      <if test="gprice != null" >
+        gprice = #{gprice,jdbcType=DOUBLE},
+      </if>
+      <if test="gweight != null" >
+        gweight = #{gweight,jdbcType=DOUBLE},
+      </if>
+      <if test="gvolume != null" >
+        gvolume = #{gvolume,jdbcType=DOUBLE},
+      </if>
+      <if test="gtype != null" >
+        gtype = #{gtype,jdbcType=VARCHAR},
+      </if>
+      <if test="gremark != null" >
+        gremark = #{gremark,jdbcType=VARCHAR},
+      </if>
+      <if test="res1 != null" >
+        res1 = #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        res2 = #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        res3 = #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="res4 != null" >
+        res4 = #{res4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+  <select id="selectTotal" resultType="java.lang.Integer" parameterType="com.yc.bean.Goods">
+  	select count(*) from goods
+  	<where>
+  		1=1
+  		<if test="gname != null and uname != '' ">
+  			and gname like CONCAT('%',#{pname,jdbcType=VARCHAR},'%')
+  		</if>
+  		<if test="gtype != null and gtype != '' ">
+  			and gtype like CONCAT('%',#{gtype,jdbcType=VARCHAR},'%')
+  		</if>
+  	</where>
+  </select>
+  
+  <!-- 条件查询  -->
+  <select id="findBy" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select *
+  	from goods
+  	<where>
+  		1=1
+  		<if test="gname != null and uname != '' ">
+  			and gname like CONCAT('%',#{pname,jdbcType=VARCHAR},'%')
+  		</if>
+  		<if test="gtype != null and gtype != '' ">
+  			and gtype like CONCAT('%',#{gtype,jdbcType=VARCHAR},'%')
+  		</if>
+  	</where>
+  	limit ${start},${pagesize} 
+  </select>
+  
+  
+</mapper>

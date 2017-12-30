@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yc.Util.MD5Encryption;
-import com.yc.bean.Shippoint;
 import com.yc.bean.Users;
 import com.yc.biz.UsersBiz;
 import com.yc.dao.UsersDao;
