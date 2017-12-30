@@ -9,9 +9,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.yc.bean.Proxy;
-import com.yc.bean.Users;
+
 import com.yc.dao.ProxyDao;
-import com.yc.dao.UsersDao;
 
 @Repository
 public class ProxyDaoImpl implements ProxyDao {
