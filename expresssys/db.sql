@@ -202,24 +202,24 @@ foreign key(rid) references route(rid);
 
 --订单表
 
-create table order(
+create table orders(
      osid  int primary key auto_increment,   --订单编号
      osendName varchar(20),   --寄件人姓名
      osendTel  varchar(20) , --寄件人电话
      osendAddress  varchar(50),  --寄件人地址
-     orecName varchar(20)   --收件人姓名
+     orecName varchar(20),   --收件人姓名
      orecTel  varchar(20),   --收件人电话
       orecAddress varchar(50),   --收件人地址
       orecCode varchar(20)  ,--收件人邮编
-      orecPhone  varchar(20),   --收件人手机号码
+      orecPhone  varchar(20),   --备用字段
       otime Date ,   --订单日期
       oprice   double(10,2),   --配送费
-       oinsurePrice  doouble(10,2),    --保价金额
+       oinsurePrice  double(10,2),    --保价金额
       otype  int ,  --订单类型(0快件, 1慢件,  2大宗)
-      ostatus  int ,--订单状态(0未发件, 1已发件, 2已送达)
+      ostatus  int ,--订单状态(0未发件, 1已发件, 2已送达,3 已取消)
       ostartTime  Date,   --要求启程时间
       oendTime  Date,    --要求到达时间
-      orecSpname   varchar(50),   --接件单位（配送点名)
+      orecSpname   varchar(50),   --备用字段
       oremark  varchar(5000),  --备注
 
       usId  int,  --用户id                                            --
@@ -231,7 +231,7 @@ create table order(
 
 
 )
-
+select * from orders;
 
 
 alter table order

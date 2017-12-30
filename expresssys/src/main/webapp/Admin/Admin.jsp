@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" isELIgnored="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +16,7 @@
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
 </head>
 <body class="easyui-layout">
+<input type="hidden" value="${SessionScope.user.usid}" name="usid" id="order_usid"/>
 	<!-- begin of header -->
 	<div class="wu-header"
 		data-options="region:'north',border:false,split:true">
