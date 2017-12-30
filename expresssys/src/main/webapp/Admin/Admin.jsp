@@ -11,6 +11,8 @@
 <script type="text/javascript" src="easyui/js/jquery-1.12.4.js"></script>
 <script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="easyui/js/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="easyui/js/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
 </head>
 <body class="easyui-layout">

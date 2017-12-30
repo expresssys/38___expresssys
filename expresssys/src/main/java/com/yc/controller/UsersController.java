@@ -49,7 +49,6 @@ public class UsersController {
 	public @ResponseBody JsonModel updateUsers(Users users,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
 		JsonModel jm = new JsonModel();
 		Users u = (Users) session.getAttribute("user");
-		System.out.println(users.getUsid() + " " + u.getUsid() );
 		if(users.getUsid()==u.getUsid() && users.getUstatus()==0){
 			jm.setCode(0);
 			jm.setMsg("更新失败");

@@ -23,22 +23,22 @@ public class GoodsDaoImpl implements GoodsDao {
 
 	@Override
 	public int addGoods(Goods goods) {
-		return this.sqlSession.insert("com.yc.bean.good.insertSelective", goods);
+		return this.sqlSession.insert("com.yc.bean.Goods.insertSelective", goods);
 	}
 
 	@Override
 	public int updateGoods(Goods goods) {
-		return this.sqlSession.update("com.yc.bean.good.updateByPrimaryKeySelective", goods);
+		return this.sqlSession.update("com.yc.bean.Goods.updateByPrimaryKeySelective", goods);
 	}
 
 	@Override
 	public List<Goods> findBy(Map map) {
-		return this.sqlSession.selectList("com.yc.bean.good.findBy", map);
+		return this.sqlSession.selectList("com.yc.bean.Goods.findBy", map);
 	}
 
 	@Override
 	public int total(Goods goods) {
-		return this.sqlSession.selectOne("com.yc.bean.good.selectTotal", goods);
+		return this.sqlSession.selectOne("com.yc.bean.Goods.selectTotal", goods);
 		
 	}
 	

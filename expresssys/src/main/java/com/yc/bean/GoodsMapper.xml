@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yc.bean.goods" >
+<mapper namespace="com.yc.bean.Goods" >
   <resultMap id="BaseResultMap" type="com.yc.bean.Goods" >
     <id column="gid" property="gid" jdbcType="INTEGER" />
     <result column="gname" property="gname" jdbcType="VARCHAR" />
@@ -47,6 +47,9 @@
       </if>
       <if test="gweight != null" >
         gweight,
+      </if>
+      <if test="gvolume != null" >
+        gvolume,
       </if>
       <if test="gtype != null" >
         gtype,
@@ -155,11 +158,17 @@
   	select count(*) from goods
   	<where>
   		1=1
-  		<if test="gname != null and uname != '' ">
-  			and gname like CONCAT('%',#{pname,jdbcType=VARCHAR},'%')
+  		<if test="gname != null and gname != '' ">
+  			and gname like CONCAT('%',#{gname,jdbcType=VARCHAR},'%')
   		</if>
   		<if test="gtype != null and gtype != '' ">
   			and gtype like CONCAT('%',#{gtype,jdbcType=VARCHAR},'%')
+  		</if>
+  		<if test="res1 != null and res1 != '' ">
+  			and res1 like CONCAT('%',#{res1,jdbcType=VARCHAR},'%')
+  		</if>
+  		<if test="gid != null and gid != '' ">
+  			and gid = #{gid,jdbcType=INTEGER}
   		</if>
   	</where>
   </select>
@@ -170,11 +179,17 @@
   	from goods
   	<where>
   		1=1
-  		<if test="gname != null and uname != '' ">
-  			and gname like CONCAT('%',#{pname,jdbcType=VARCHAR},'%')
+  		<if test="goods.gname != null and goods.gname != '' ">
+  			and gname like CONCAT('%',#{goods.gname,jdbcType=VARCHAR},'%')
   		</if>
-  		<if test="gtype != null and gtype != '' ">
-  			and gtype like CONCAT('%',#{gtype,jdbcType=VARCHAR},'%')
+  		<if test="goods.gtype != null and goods.gtype != '' ">
+  			and gtype like CONCAT('%',#{goods.gtype,jdbcType=VARCHAR},'%')
+  		</if>
+  		<if test="goods.res1 != null and goods.res1 != '' ">
+  			and res1 like CONCAT('%',#{goods.res1,jdbcType=VARCHAR},'%')
+  		</if>
+  		<if test="goods.gid != null and goods.gid != '' ">
+  			and gid = #{goods.gid,jdbcType=INTEGER}
   		</if>
   	</where>
   	limit ${start},${pagesize} 

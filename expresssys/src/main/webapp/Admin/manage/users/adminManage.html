@@ -100,9 +100,6 @@
 </style>
 
 <script type="text/javascript">
-var userEditRow=undefined;
-var userOp;
-var userFlag;
 var usersObject=$('#table_users_manager').datagrid({   
     url:'users/find.action',
     fitColumns:true,
@@ -116,7 +113,7 @@ var usersObject=$('#table_users_manager').datagrid({
     sortName:'usid',
     remoteSort:false,	//升序降序排列
     columns:[[   
-        {checkbox:true},
+		{checkbox:true},  
         {field:'usid',title:'管理员编号',width:100,align:'center',sortable:true},   
         {field:'uname',title:'管理员姓名',width:100,align:'center'},   
         {field:'urealname',title:'真实姓名',width:100,align:'center'},
@@ -245,9 +242,7 @@ function users_showUpdateusers(){
 								$.messager.alert("失败提示","管理员信息修改失败...","error");
 							}
 						},
-						
 					})
-					
 					
 				}
 			}]

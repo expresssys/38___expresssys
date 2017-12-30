@@ -18,8 +18,66 @@ public class Proxy {
     private String res2;
 
     private String res3;
+    
+    private String spname;
+    
+    private String stime;
+    
+    private String etime;
+    
+	public Proxy() {
+		super();
+	}
 
-    public Integer getPrid() {
+	public Proxy(Integer prid, String prname, String prtime, Double prprice, String prremark, Integer spid, String res1,
+			String res2, String res3, String spname, String stime, String etime) {
+		super();
+		this.prid = prid;
+		this.prname = prname;
+		this.prtime = prtime;
+		this.prprice = prprice;
+		this.prremark = prremark;
+		this.spid = spid;
+		this.res1 = res1;
+		this.res2 = res2;
+		this.res3 = res3;
+		this.spname = spname;
+		this.stime = stime;
+		this.etime = etime;
+	}
+
+	@Override
+	public String toString() {
+		return "Proxy [prid=" + prid + ", prname=" + prname + ", prtime=" + prtime + ", prprice=" + prprice
+				+ ", prremark=" + prremark + ", spid=" + spid + ", res1=" + res1 + ", res2=" + res2 + ", res3=" + res3
+				+ ", spname=" + spname + ", stime=" + stime + ", etime=" + etime + "]";
+	}
+
+	public String getStime() {
+		return stime;
+	}
+
+	public void setStime(String stime) {
+		this.stime = stime;
+	}
+
+	public String getEtime() {
+		return etime;
+	}
+
+	public void setEtime(String etime) {
+		this.etime = etime;
+	}
+
+	public String getSpname() {
+		return spname;
+	}
+
+	public void setSpname(String spname) {
+		this.spname = spname;
+	}
+
+	public Integer getPrid() {
         return prid;
     }
 
@@ -38,13 +96,6 @@ public class Proxy {
     public String getPrtime() {
         return prtime;
     }
-
-    @Override
-	public String toString() {
-		return "Proxy [prid=" + prid + ", prname=" + prname + ", prtime=" + prtime + ", prprice=" + prprice
-				+ ", prremark=" + prremark + ", spid=" + spid + ", res1=" + res1 + ", res2=" + res2 + ", res3=" + res3
-				+ "]";
-	}
 
 	public void setPrtime(String prtime) {
         this.prtime = prtime == null ? null : prtime.trim();

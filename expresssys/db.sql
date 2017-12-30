@@ -49,7 +49,7 @@ add constraint FK_shipPoint_car
 foreign key(spid) references shipPoint(spid);
       
 
-
+select count(*) as res3 from proxy
 
 
 --配送单位
@@ -84,8 +84,8 @@ spid int ,--所属单位id                                         --
  res2  varchar(2000),    --备用字段
  res3  varchar(2000)    --备用字段
 )
-
-
+update proxy set res1=1
+select * from proxy
 alter table proxy
 add constraint FK_shipPoint_proxy  
 foreign key(spid) references shipPoint(spid);
@@ -109,7 +109,7 @@ create table route(
 
 --司机信息
 create table driver(
-    did   int primary key auto_increment, --id
+    did   int primary key auto_increment, 
     dname varchar(20)  ,--姓名
     dnumber varchar(20),     --驾驶证号
     dphone  varchar(20),     --联系电话
@@ -150,6 +150,8 @@ create table goods(
      res4  varchar(2000)    --备用字段
 )
 
+
+select * from goods;
 alter table goods
 add constraint FK_order_goods  
 foreign key(osid) references order(osid);

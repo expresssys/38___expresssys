@@ -14,43 +14,43 @@
 	<input type="text" name="spaddress" id="point_search_spaddress"/>
 	<a href="javascript:point_searchpoint()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
 </div>
-<div id="point_update" class="easyui-dialog" title="添加配送点信息" style="width:500px;height:300px;align:center"
+<div id="point_update" class="easyui-dialog" title="添加配送点信息" style="width:400px;height:500px;align:center"
 		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
 	<form id="point_update_point">
 		<ul>
 		
 			<li>
-				<label>配送点名称：</label>
+				<label>配送点名称<span></span></label>
 				<input type="text" name="spname" id="point_update_spname" class="point_input"/>
 			</li>
 			<li>
-				<label>联系人：</label>
+				<label>联系人<span></span></label>
 				<input type="text" name="spperson" id="point_update_spperson" class="point_input"/>
 			</li>
 			<li>
-				<label>配送点电话：</label>
+				<label>配送点电话<span></span></label>
 				<input type="text" name="sptel" id="point_update_sptel" class="point_input"/>
 			</li>
 			<li>
-				<label>联系邮件：</label>
+				<label>联系邮件<span></span></label>
 				<input type="text" name="spemail" id="point_update_spemail" class="point_input"/>
 			</li>
 			
 			<li>
-				<label>配送点地址：</label>
+				<label>配送点地址<span></span></label>
 				<input type="text" name="spaddress" id="point_update_spaddress" class="point_input"/>
 			</li>
 			<li>
-				<label>联系人电话：</label>
+				<label>联系人电话<span></span></label>
 				<input type="text" name="sppersontel" id="point_update_sppersontel" class="point_input"/>
 			</li>
 			<li>
-				<label>配送点传真：</label>
-				<input type="text" name="spfax" id="point_update_spfax" />
+				<label>配送点传真<span></span></label>
+				<input type="text" name="spfax" id="point_update_spfax" class="point_input"/>
 			</li>
 			<li>
-				<label>备注：</label>
-				<textarea  rows="5" cols="20"  id="point_update_spremark" >
+				<label>备注<span></span></label>
+				<textarea  rows="3" cols="25"  id="point_update_spremark" class="point_input">
 				</textarea>
 			</li>
 			
@@ -68,6 +68,18 @@
 	margin-top:20px;
 }
 
+#point_update label{
+	display:inline-block;
+	width:66px;	
+	text-align:justify;
+	margin-top: 15px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+#point_update label span{
+  display:inline-block;
+  width:100%;
+}
 #point_update .point_input{
 	width:160px;
 	border:1px solid #95B8E7;

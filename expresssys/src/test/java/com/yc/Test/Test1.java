@@ -29,29 +29,29 @@ public class Test1 {
 	private SqlSessionFactory sqlSessionFactory;
 	@Resource(name="sqlSession")
 	private SqlSessionTemplate sqlSession;
-	
+
 	@Resource(name="usersBizImpl")
 	private UsersBiz ub;
-	
+
 	@Resource(name="goodsBizImpl")
 	private GoodsBiz gb;
-	
+
 	//查询
 	@Test
 	public void test1(){
 		Map map = new HashMap();
-		
+
 		map.put("start", 0);
 		map.put("pagesize", 5);
-		
+
 		Users users = new Users();
 		users.setUname("1");
 		map.put("users", users);
-		
+
 		System.out.println(ub.findBy(map));
-		
+
 	}
-	
+
 	//add
 	@Test
 	public void test2(){
@@ -60,7 +60,7 @@ public class Test1 {
 		users.setUpwd(MD5Encryption.createPassword("1"));
 		System.out.println(ub.addUsers(users));
 	}
-	
+
 	//update
 	@Test
 	public void test3(){
@@ -70,13 +70,36 @@ public class Test1 {
 		users.setUsid(4);
 		System.out.println(ub.updateUsers(users));
 	}
-	
+
 	@Test
 	public void test4(){
 		Goods goods = new Goods();
 		goods.setGname("123");
 		goods.setGtype("日用品");
-		
+
 		System.out.println(gb.addGoods(goods));
+	}
+
+	@Test
+	public void test5(){
+		Goods goods = new Goods();
+		goods.setGid(1);
+		goods.setGname("1");
+		System.out.println(gb.updateGoods(goods));
+
+	}
+
+	@Test
+	public void test6(){
+		Goods goods = new Goods();
+		goods.setGid(2);
+		Map map = new HashMap();
+
+		map.put("start", 0);
+		map.put("pagesize", 5);
+		
+		map.put("goods", goods);
+		
+		System.out.println(gb.findBy(map));
 	}
 }
