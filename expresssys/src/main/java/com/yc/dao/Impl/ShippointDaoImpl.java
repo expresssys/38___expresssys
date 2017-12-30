@@ -29,14 +29,13 @@ public class ShippointDaoImpl implements ShipPointDao {
 		return this.sqlSession.selectList("com.yc.bean.Shippoint.findAll",m);
 	}
 
+	//条件查询
 	@Override
 	public List<Shippoint> findById(Shippoint s,Integer start, Integer pagesize) {
 		Map<String,Object> m=new HashMap<String,Object>();
 		m.put("start", start);
 		m.put("pagesize", pagesize);
-		s.setSpaddress("%"+s.getSpaddress()+"%");
 		m.put("shippoint", s);
-		
 		return this.sqlSession.selectList("com.yc.bean.Shippoint.selectById",m);
 	}
 
@@ -60,6 +59,7 @@ public class ShippointDaoImpl implements ShipPointDao {
 
 	@Override
 	public int total(Shippoint s) {
+		
 		 return this.sqlSession.selectOne("com.yc.bean.Shippoint.selectTotal",s);
 	}
 

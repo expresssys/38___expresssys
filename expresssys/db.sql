@@ -115,8 +115,8 @@ create table driver(
     dphone  varchar(20),     --联系电话
     didCard varchar(20), --身份证
     ddage   int ,--驾龄
-    dstatus   int ,   --司机状态(0空闲  ,1在忙)  默认0
- spid  int,    --所属单位                                                   --
+    dstatus   int ,   --司机状态(0空闲  ,1在忙,3离职)  默认0
+ 	spid  int,    --所属单位                                                   --
     res1  varchar(2000),    --备用字段
     res2  varchar(2000),    --备用字段
     res3  varchar(2000),    --备用字段

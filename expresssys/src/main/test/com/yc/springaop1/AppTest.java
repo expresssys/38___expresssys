@@ -10,7 +10,9 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.yc.bean.Driver;
 import com.yc.bean.Shippoint;
+import com.yc.biz.DriverBiz;
 import com.yc.biz.ShippointBiz;
 
 
@@ -33,14 +35,24 @@ public class AppTest {
 	@Resource(name="shippointBizImpl")
 	private ShippointBiz cb;
 	
+	@Resource(name="driverBizImpl")
+	private DriverBiz driverBiz;
 	@Test
-	public void test1() throws Exception {
+	public void testshippoint() throws Exception {
 		Shippoint s=new Shippoint();
-		s.setSpaddress("45");
+		s.setSpid(7);
 		
 		System.out.println(this.cb.findAll(0, 5));
-		System.out.println(this.cb.findById(s, 0, 5).get("rows"));
+		System.out.println(this.cb.findById(s, 0, 5));
 	}
 	
+	@Test
+	public void testdriver() throws Exception {
+		Driver s=new Driver();
+		s.setDid(1);
+		
+		System.out.println(this.driverBiz.findAll(0, 5));
+		System.out.println(this.driverBiz.findById(s, 0, 5));
+	}
 	
 }

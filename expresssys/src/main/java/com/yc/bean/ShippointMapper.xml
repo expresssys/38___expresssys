@@ -39,14 +39,14 @@
    
     <where>
     	res1=0
-     <if test="shippoint.spid != null and shippoint.spid!=''" >
-   		 and spid = ${shippoint.spid}
+     <if test="shippoint.spid != null" >
+   		 and spid = #{shippoint.spid,javaType=Integer}
     </if>
     <if test="shippoint.spname != null and shippoint.spname!=''" >
         and spname = #{shippoint.spname,javaType=String}
      
       </if>
-     <if test="shippoint.spaddress != null" >
+     <if test="shippoint.spaddress != null and shippoint.spaddress!=''" >
         and spaddress like  #{shippoint.spaddress,javaType=String}
       </if>
     </where>
@@ -54,13 +54,26 @@
   </select>
   
   <!-- 总条数 -->
-  <select id="selectTotal" resultType="java.lang.Integer">
+  <select id="selectTotal" resultType="java.lang.Integer"  parameterType="com.yc.bean.Shippoint">
 	select count(spid) from shippoint
+	 <where>
+    	res1=0
+     <if test="spid != null" >
+   		 and spid = #{spid}
+    </if>
+    <if test="spname != null and spname!=''" >
+        and spname = #{spname}
+     
+      </if>
+     <if test="spaddress != null and spaddress!=''" >
+        and spaddress like  #{spaddress}
+      </if>
+    </where>
   </select>
   
   
   <delete id="deleteByPrimaryKey"  >
-    update set res1=1 from shippoint
+    update shippoint set res1='1' 
     where spid = #{spid}
   </delete>
   
@@ -76,94 +89,8 @@
       #{spremark,jdbcType=VARCHAR}, 0, #{res2,jdbcType=VARCHAR}, 
       #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.yc.bean.Shippoint" useGeneratedKeys="true" keyColumn="spid" keyProperty="spid">
-    insert into shippoint
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      
-      <if test="spname != null" >
-        spname,
-      </if>
-      <if test="spperson != null" >
-        spperson,
-      </if>
-      <if test="sptel != null" >
-        sptel,
-      </if>
-      <if test="spemail != null" >
-        spemail,
-      </if>
-      <if test="spaddress != null" >
-        spaddress,
-      </if>
-      <if test="sppersontel != null" >
-        sppersonTel,
-      </if>
-      <if test="spfax != null" >
-        spfax,
-      </if>
-      <if test="sparea != null" >
-        sparea,
-      </if>
-      <if test="spremark != null" >
-        spremark,
-      </if>
-      <if test="res1 != null" >
-        res1,
-      </if>
-      <if test="res2 != null" >
-        res2,
-      </if>
-      <if test="res3 != null" >
-        res3,
-      </if>
-      <if test="res4 != null" >
-        res4,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      
-      <if test="spname != null" >
-        #{spname,jdbcType=VARCHAR},
-      </if>
-      <if test="spperson != null" >
-        #{spperson,jdbcType=VARCHAR},
-      </if>
-      <if test="sptel != null" >
-        #{sptel,jdbcType=VARCHAR},
-      </if>
-      <if test="spemail != null" >
-        #{spemail,jdbcType=VARCHAR},
-      </if>
-      <if test="spaddress != null" >
-        #{spaddress,jdbcType=VARCHAR},
-      </if>
-      <if test="sppersontel != null" >
-        #{sppersontel,jdbcType=VARCHAR},
-      </if>
-      <if test="spfax != null" >
-        #{spfax,jdbcType=VARCHAR},
-      </if>
-      <if test="sparea != null" >
-        #{sparea,jdbcType=VARCHAR},
-      </if>
-      <if test="spremark != null" >
-        #{spremark,jdbcType=VARCHAR},
-      </if>
-      <if test="res1 != null" >
-        #{res1,jdbcType=VARCHAR},
-      </if>
-      <if test="res2 != null" >
-        #{res2,jdbcType=VARCHAR},
-      </if>
-      <if test="res3 != null" >
-        #{res3,jdbcType=VARCHAR},
-      </if>
-      <if test="res4 != null" >
-        #{res4,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Shippoint" >
+
+  <update id="update" parameterType="com.yc.bean.Shippoint" >
     update shippoint
     <set >
       <if test="spname != null" >
@@ -193,9 +120,7 @@
       <if test="spremark != null" >
         spremark = #{spremark,jdbcType=VARCHAR},
       </if>
-      <if test="res1 != null" >
-        res1 = #{res1,jdbcType=VARCHAR},
-      </if>
+     
       <if test="res2 != null" >
         res2 = #{res2,jdbcType=VARCHAR},
       </if>
@@ -208,7 +133,7 @@
     </set>
     where spid = #{spid,jdbcType=INTEGER}
   </update>
-  <update id="update" parameterType="com.yc.bean.Shippoint" >
+  <update id="update2" parameterType="com.yc.bean.Shippoint" >
     update shippoint
     set spname = #{spname,jdbcType=VARCHAR},
       spperson = #{spperson,jdbcType=VARCHAR},
@@ -219,7 +144,7 @@
       spfax = #{spfax,jdbcType=VARCHAR},
       sparea = #{sparea,jdbcType=VARCHAR},
       spremark = #{spremark,jdbcType=VARCHAR},
-      res1 = #{res1,jdbcType=VARCHAR},
+      
       res2 = #{res2,jdbcType=VARCHAR},
       res3 = #{res3,jdbcType=VARCHAR},
       res4 = #{res4,jdbcType=VARCHAR}

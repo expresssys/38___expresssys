@@ -42,16 +42,29 @@ public class ShippointController {
 	//条件查询
 	@RequestMapping(value="findByCondition.action")
 	public @ResponseBody Map<String,Object> findByCondition(Shippoint s,int rows,int page,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
-		//查询所有配送点
 		JsonModel jm=new JsonModel();
-		
 		Map<String,Object> m=this.pointBiz.findById(s, page-1, rows);
 		System.out.println(s);
 		
 		session.setAttribute("AllshipPoint", s);
 		return m;
 	}
-	
+	//通过id查询
+	@RequestMapping(value="findByID.action")
+	public @ResponseBody Map<String,Object> findByID(Shippoint s,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+		//查询所有配送点
+		JsonModel jm=new JsonModel();
+		
+		Map<String,Object> m=this.pointBiz.findById(s, 0, 1);	
+		try{
+			jm.setCode(3);
+			jm.setObj(s);	
+		} catch (Exception e) {
+			jm.setCode(2);
+			jm.setMsg(e.getMessage());
+		}
+		return m;
+	}
 	//添加配送点
 	@RequestMapping(value="add.action")
 	public @ResponseBody int add(Shippoint s,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
