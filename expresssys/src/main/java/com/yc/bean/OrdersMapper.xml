@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orders" >
+  <resultMap id="BaseResultMap" type="com.yc.bean.Orders" >
+    <id column="osid" property="osid" jdbcType="INTEGER" />
+    <result column="osendName" property="osendname" jdbcType="VARCHAR" />
+    <result column="osendTel" property="osendtel" jdbcType="VARCHAR" />
+    <result column="osendAddress" property="osendaddress" jdbcType="VARCHAR" />
+    <result column="orecName" property="orecname" jdbcType="VARCHAR" />
+    <result column="orecTel" property="orectel" jdbcType="VARCHAR" />
+    <result column="orecAddress" property="orecaddress" jdbcType="VARCHAR" />
+    <result column="orecCode" property="oreccode" jdbcType="VARCHAR" />
+    <result column="orecPhone" property="orecphone" jdbcType="VARCHAR" />
+    <result column="otime" property="otime" jdbcType="DATE" />
+    <result column="oprice" property="oprice" jdbcType="DOUBLE" />
+    <result column="oinsurePrice" property="oinsureprice" jdbcType="DOUBLE" />
+    <result column="otype" property="otype" jdbcType="INTEGER" />
+    <result column="ostatus" property="ostatus" jdbcType="INTEGER" />
+    <result column="ostartTime" property="ostarttime" jdbcType="DATE" />
+    <result column="oendTime" property="oendtime" jdbcType="DATE" />
+    <result column="orecSpname" property="orecspname" jdbcType="VARCHAR" />
+    <result column="oremark" property="oremark" jdbcType="VARCHAR" />
+    <result column="usId" property="usid" jdbcType="INTEGER" />
+    <result column="spid" property="spid" jdbcType="INTEGER" />
+    <result column="res1" property="res1" jdbcType="VARCHAR" />
+    <result column="res2" property="res2" jdbcType="VARCHAR" />
+    <result column="res3" property="res3" jdbcType="VARCHAR" />
+    <result column="res4" property="res4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    osid, osendName, osendTel, osendAddress, orecName, orecTel, orecAddress, orecCode, 
+    orecPhone, otime, oprice, oinsurePrice, otype, ostatus, ostartTime, oendTime, orecSpname, 
+    oremark, usId, spid, res1, res2, res3, res4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where osid = #{osid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orders
+    where osid = #{osid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yc.bean.Orders" >
+    insert into orders (osid, osendName, osendTel, 
+      osendAddress, orecName, orecTel, 
+      orecAddress, orecCode, orecPhone, 
+      otime, oprice, oinsurePrice, 
+      otype, ostatus, ostartTime, 
+      oendTime, orecSpname, oremark, 
+      usId, spid, res1, res2, 
+      res3, res4)
+    values (#{osid,jdbcType=INTEGER}, #{osendname,jdbcType=VARCHAR}, #{osendtel,jdbcType=VARCHAR}, 
+      #{osendaddress,jdbcType=VARCHAR}, #{orecname,jdbcType=VARCHAR}, #{orectel,jdbcType=VARCHAR}, 
+      #{orecaddress,jdbcType=VARCHAR}, #{oreccode,jdbcType=VARCHAR}, #{orecphone,jdbcType=VARCHAR}, 
+      #{otime,jdbcType=DATE}, #{oprice,jdbcType=DOUBLE}, #{oinsureprice,jdbcType=DOUBLE}, 
+      #{otype,jdbcType=INTEGER}, #{ostatus,jdbcType=INTEGER}, #{ostarttime,jdbcType=DATE}, 
+      #{oendtime,jdbcType=DATE}, #{orecspname,jdbcType=VARCHAR}, #{oremark,jdbcType=VARCHAR}, 
+      #{usid,jdbcType=INTEGER}, #{spid,jdbcType=INTEGER}, #{res1,jdbcType=VARCHAR}, #{res2,jdbcType=VARCHAR}, 
+      #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yc.bean.Orders" >
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="osid != null" >
+        osid,
+      </if>
+      <if test="osendname != null" >
+        osendName,
+      </if>
+      <if test="osendtel != null" >
+        osendTel,
+      </if>
+      <if test="osendaddress != null" >
+        osendAddress,
+      </if>
+      <if test="orecname != null" >
+        orecName,
+      </if>
+      <if test="orectel != null" >
+        orecTel,
+      </if>
+      <if test="orecaddress != null" >
+        orecAddress,
+      </if>
+      <if test="oreccode != null" >
+        orecCode,
+      </if>
+      <if test="orecphone != null" >
+        orecPhone,
+      </if>
+      <if test="otime != null" >
+        otime,
+      </if>
+      <if test="oprice != null" >
+        oprice,
+      </if>
+      <if test="oinsureprice != null" >
+        oinsurePrice,
+      </if>
+      <if test="otype != null" >
+        otype,
+      </if>
+      <if test="ostatus != null" >
+        ostatus,
+      </if>
+      <if test="ostarttime != null" >
+        ostartTime,
+      </if>
+      <if test="oendtime != null" >
+        oendTime,
+      </if>
+      <if test="orecspname != null" >
+        orecSpname,
+      </if>
+      <if test="oremark != null" >
+        oremark,
+      </if>
+      <if test="usid != null" >
+        usId,
+      </if>
+      <if test="spid != null" >
+        spid,
+      </if>
+      <if test="res1 != null" >
+        res1,
+      </if>
+      <if test="res2 != null" >
+        res2,
+      </if>
+      <if test="res3 != null" >
+        res3,
+      </if>
+      <if test="res4 != null" >
+        res4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="osid != null" >
+        #{osid,jdbcType=INTEGER},
+      </if>
+      <if test="osendname != null" >
+        #{osendname,jdbcType=VARCHAR},
+      </if>
+      <if test="osendtel != null" >
+        #{osendtel,jdbcType=VARCHAR},
+      </if>
+      <if test="osendaddress != null" >
+        #{osendaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orecname != null" >
+        #{orecname,jdbcType=VARCHAR},
+      </if>
+      <if test="orectel != null" >
+        #{orectel,jdbcType=VARCHAR},
+      </if>
+      <if test="orecaddress != null" >
+        #{orecaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="oreccode != null" >
+        #{oreccode,jdbcType=VARCHAR},
+      </if>
+      <if test="orecphone != null" >
+        #{orecphone,jdbcType=VARCHAR},
+      </if>
+      <if test="otime != null" >
+        #{otime,jdbcType=DATE},
+      </if>
+      <if test="oprice != null" >
+        #{oprice,jdbcType=DOUBLE},
+      </if>
+      <if test="oinsureprice != null" >
+        #{oinsureprice,jdbcType=DOUBLE},
+      </if>
+      <if test="otype != null" >
+        #{otype,jdbcType=INTEGER},
+      </if>
+      <if test="ostatus != null" >
+        #{ostatus,jdbcType=INTEGER},
+      </if>
+      <if test="ostarttime != null" >
+        #{ostarttime,jdbcType=DATE},
+      </if>
+      <if test="oendtime != null" >
+        #{oendtime,jdbcType=DATE},
+      </if>
+      <if test="orecspname != null" >
+        #{orecspname,jdbcType=VARCHAR},
+      </if>
+      <if test="oremark != null" >
+        #{oremark,jdbcType=VARCHAR},
+      </if>
+      <if test="usid != null" >
+        #{usid,jdbcType=INTEGER},
+      </if>
+      <if test="spid != null" >
+        #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="res1 != null" >
+        #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="res4 != null" >
+        #{res4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Orders" >
+    update orders
+    <set >
+      <if test="osendname != null" >
+        osendName = #{osendname,jdbcType=VARCHAR},
+      </if>
+      <if test="osendtel != null" >
+        osendTel = #{osendtel,jdbcType=VARCHAR},
+      </if>
+      <if test="osendaddress != null" >
+        osendAddress = #{osendaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orecname != null" >
+        orecName = #{orecname,jdbcType=VARCHAR},
+      </if>
+      <if test="orectel != null" >
+        orecTel = #{orectel,jdbcType=VARCHAR},
+      </if>
+      <if test="orecaddress != null" >
+        orecAddress = #{orecaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="oreccode != null" >
+        orecCode = #{oreccode,jdbcType=VARCHAR},
+      </if>
+      <if test="orecphone != null" >
+        orecPhone = #{orecphone,jdbcType=VARCHAR},
+      </if>
+      <if test="otime != null" >
+        otime = #{otime,jdbcType=DATE},
+      </if>
+      <if test="oprice != null" >
+        oprice = #{oprice,jdbcType=DOUBLE},
+      </if>
+      <if test="oinsureprice != null" >
+        oinsurePrice = #{oinsureprice,jdbcType=DOUBLE},
+      </if>
+      <if test="otype != null" >
+        otype = #{otype,jdbcType=INTEGER},
+      </if>
+      <if test="ostatus != null" >
+        ostatus = #{ostatus,jdbcType=INTEGER},
+      </if>
+      <if test="ostarttime != null" >
+        ostartTime = #{ostarttime,jdbcType=DATE},
+      </if>
+      <if test="oendtime != null" >
+        oendTime = #{oendtime,jdbcType=DATE},
+      </if>
+      <if test="orecspname != null" >
+        orecSpname = #{orecspname,jdbcType=VARCHAR},
+      </if>
+      <if test="oremark != null" >
+        oremark = #{oremark,jdbcType=VARCHAR},
+      </if>
+      <if test="usid != null" >
+        usId = #{usid,jdbcType=INTEGER},
+      </if>
+      <if test="spid != null" >
+        spid = #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="res1 != null" >
+        res1 = #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        res2 = #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        res3 = #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="res4 != null" >
+        res4 = #{res4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where osid = #{osid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Orders" >
+    update orders
+    set osendName = #{osendname,jdbcType=VARCHAR},
+      osendTel = #{osendtel,jdbcType=VARCHAR},
+      osendAddress = #{osendaddress,jdbcType=VARCHAR},
+      orecName = #{orecname,jdbcType=VARCHAR},
+      orecTel = #{orectel,jdbcType=VARCHAR},
+      orecAddress = #{orecaddress,jdbcType=VARCHAR},
+      orecCode = #{oreccode,jdbcType=VARCHAR},
+      orecPhone = #{orecphone,jdbcType=VARCHAR},
+      otime = #{otime,jdbcType=DATE},
+      oprice = #{oprice,jdbcType=DOUBLE},
+      oinsurePrice = #{oinsureprice,jdbcType=DOUBLE},
+      otype = #{otype,jdbcType=INTEGER},
+      ostatus = #{ostatus,jdbcType=INTEGER},
+      ostartTime = #{ostarttime,jdbcType=DATE},
+      oendTime = #{oendtime,jdbcType=DATE},
+      orecSpname = #{orecspname,jdbcType=VARCHAR},
+      oremark = #{oremark,jdbcType=VARCHAR},
+      usId = #{usid,jdbcType=INTEGER},
+      spid = #{spid,jdbcType=INTEGER},
+      res1 = #{res1,jdbcType=VARCHAR},
+      res2 = #{res2,jdbcType=VARCHAR},
+      res3 = #{res3,jdbcType=VARCHAR},
+      res4 = #{res4,jdbcType=VARCHAR}
+    where osid = #{osid,jdbcType=INTEGER}
+  </update>
+</mapper>
