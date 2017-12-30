@@ -24,8 +24,47 @@ public class Price {
     private String res3;
 
     private String res4;
+    
+    private String spname;
+    
+    public Price() {
+		super();
+	}
 
-    public Integer getPid() {
+	public Price(Integer pid, String pfrom, String pto, Double pfirstwei, Double prestwei, Double pfirstvol,
+			Double prestvol, String pretime, String res1, String res2, String res3, String res4, String spname) {
+		super();
+		this.pid = pid;
+		this.pfrom = pfrom;
+		this.pto = pto;
+		this.pfirstwei = pfirstwei;
+		this.prestwei = prestwei;
+		this.pfirstvol = pfirstvol;
+		this.prestvol = prestvol;
+		this.pretime = pretime;
+		this.res1 = res1;
+		this.res2 = res2;
+		this.res3 = res3;
+		this.res4 = res4;
+		this.spname = spname;
+	}
+
+	@Override
+	public String toString() {
+		return "Price [pid=" + pid + ", pfrom=" + pfrom + ", pto=" + pto + ", pfirstwei=" + pfirstwei + ", prestwei="
+				+ prestwei + ", pfirstvol=" + pfirstvol + ", prestvol=" + prestvol + ", pretime=" + pretime + ", res1="
+				+ res1 + ", res2=" + res2 + ", res3=" + res3 + ", res4=" + res4 + ", spname=" + spname + "]";
+	}
+
+	public String getSpname() {
+		return spname;
+	}
+
+	public void setSpname(String spname) {
+		this.spname = spname;
+	}
+
+	public Integer getPid() {
         return pid;
     }
 
