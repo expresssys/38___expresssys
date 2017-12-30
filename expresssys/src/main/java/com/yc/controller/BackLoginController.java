@@ -57,8 +57,6 @@ public class BackLoginController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
 
 

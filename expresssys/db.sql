@@ -46,7 +46,7 @@ add constraint FK_shipPoint_car
 foreign key(spid) references shipPoint(spid);
       
 
-
+select count(*) as res3 from proxy
 
 
 --配送单位
@@ -68,6 +68,33 @@ res4  varchar(2000)    --备用字段
 
 )
 
+select spid,spname from shipPoint where res1=1
+insert into shipPoint(spname,res1) values('广州',1)
+
+update shipPoint set res1=1
+
+create table shipPoint(
+ spid  int primary key auto_increment,   
+ spname varchar(100),   
+ spperson varchar(20),   
+ sptel varchar(20),  
+  spemail  varchar(50),  
+  spaddress  varchar(50)  ,
+ sppersonTel varchar(20),   
+ spfax varchar(100),   
+sparea   varchar(100),   
+spremark   varchar(5000),  
+res1 varchar(5000),   
+res2 varchar(5000),
+res3  varchar(2000),   
+res4  varchar(2000)   
+)
+select * from shipPoint
+insert into shipPoint(spname) values('衡阳')
+
+select count(*) from proxy p join shipPoint s on p.spid=s.spid where 1=1 and prname like '%yc%'
+select prid, prname, prtime, prprice, prremark,spname from proxy p join shipPoint s on p.spid=s.spid
+		limit 0,2
 --代理
 create table proxy(
  prid int primary key auto_increment,   --id
@@ -80,8 +107,8 @@ create table proxy(
  res2  varchar(2000),    --备用字段
  res3  varchar(2000)    --备用字段
 )
-
-
+update proxy set res1=1
+select * from proxy
 alter table proxy
 add constraint FK_shipPoint_proxy  
 foreign key(spid) references shipPoint(spid);
