@@ -1,2 +1,250 @@
 <meta charset="UTF-8">
-代理点管理
+
+<table id="proxy_data" data-options="fit:true"></table>
+
+<div id="proxy_search" style="">
+	<a href="JavaScript:proxy_add()" class="easyui-linkbutton"
+		data-options="iconCls:'icon-add',plain:true" style="float:left">添加</a>
+	<div class="datagrid-btn-separator"></div>
+	<a href="JavaScript:proxyUpdate()"
+		class="easyui-linkbutton"
+		data-options="iconCls:'icon-anchor',plain:true" style="float: left">修改</a>
+	<div class="datagrid-btn-separator"></div>
+	<form id="selectBytj">
+		<label>代理点名称:</label><input type="text" name="selectprname" id="selectprname">
+		<label>所属单位:</label><input type="text" name="spname" id="spname">
+		<a href="JavaScript:proxyserch()" class="easyui-linkbutton"
+		data-options="iconCls:'icon-user-magnify'">查询</a>
+	</form>
+</div>
+
+<div id="singer_update" class="easyui-dialog" title="添加代理点信息"
+	style="width: 340px; height: 400px;"
+	data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+	<form id="proxyInfo">
+		<ul>
+			<li><input type="text" name="prid" id="prid" style="display:none"></li>
+			<li><label>代理名称：</label> <input type="text" name="prname"
+				id="prname" class="singer_input"></li>
+			<li><label>工作开始时间：</label> <input type="text" name="stime"
+				id="stime" class="easyui-timespinner" style="width:80px;"></li>
+			<li><label>工作结束时间：</label> <input type="text" name="etime"
+				id="etime" class="easyui-timespinner" style="width:80px;"></li>
+			<li><label>价&nbsp;&nbsp;格：</label> <input type="text" name="prprice"
+				id="prprice" class="singer_input"></li>
+			<li><label>备&nbsp;&nbsp;注：</label> 
+				<textarea rows="3" cols="20" name="prremark" id="prremark"> 
+				</textarea>
+			</li>
+			<li><label>所属单位：</label> 
+				<select name="spid" id="spid">
+					<option value="0">--请选择--</option>
+				</select>
+			</li>
+		</ul>
+	</form>
+</div>
+
+<style>
+#singer_update label {
+	margin-left: 20px;
+}
+
+#singer_update li {
+	list-style-type: none;
+	margin-top: 20px;
+}
+
+#singer_update .singer_input {
+	width: 160px;
+	border: 1px solid #95B8E7;
+	line-height: 20px;
+}
+
+.singer_delpic_show{
+	width:100px;
+	height:100px;
+	overflow:hidden;
+	position:relative;
+	float:left;
+	border:1px solid #fff;
+}
+
+.singer_delpic_show>span{
+	margin:0px;
+	padding:0px;
+	background:url("../../images/bullet_cross.png") no-repeat; center center;
+	width:16px;
+	height:16px;
+	display:none;
+	position:absolute;
+	top:2px;
+	right:2px;
+}
+
+.singer_delpic_show:hover{
+	border-color:#f63;
+}
+
+.singer_delpic_show:hover span{
+	display:block;
+	cursor:pointer;
+}
+</style>
+
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type: 'POST',
+		url: "selectpoint.action",
+		dataType: 'JSON',
+	 	success: function( data ){
+	 		var str="";
+			for(var i=0;i<data.length;i++){
+				str+="<option value="+data[i].spid+">"+data[i].spname+"</option>";
+			}
+			$("#spid").append(str);
+		}
+	});
+});
+
+var proxyObject=$('#proxy_data').datagrid({   
+    url:'findAllProxy.action',
+    queryParams:{prname:null,spname:null},
+    fitColumns:true,
+    pagination:true,	//设置true将在数据表格底部显示分页工具栏。
+    striped:true,	//交替显示行背景
+    loadMesg:'数据加载中',
+    rownumbers:true,
+    //singleSelect:true,
+    pageNumber:1,
+    pageSize:20,
+    pageList:[5,10,20,30,40,50],
+    sortName:'prid',
+    remoteSort:false,	//升序降序排列
+    columns:[[   
+        {checkbox:true},
+        {field:'prid',title:'代理点编号',width:100,align:'center',sortable:true},   
+        {field:'prname',title:'代理点名称',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'prtime',title:'代理点工作时间',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'prprice',title:'代理点价格',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'spid',title:'所属单位',width:100,align:'center',formatter:function(val,row,index){
+        	return row.spname;
+        }},
+        {field:'prremark',title:'备注',width:150,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'_operate',title:'操作',width:100,align:'center',formatter:function(val,row,index){
+        	return "<a href='JavaScript:proxydel("+row.prid+")'>删除</a>";
+        }},
+    ]],
+    toolbar:"#proxy_search",
+});  
+
+//代理点的添加
+function proxy_add(){
+	$("#proxyInfo")[0].reset();
+	$('#singer_update').dialog({
+		title:"添加代理信息",
+		iconCls:'icon-user-add',
+		buttons: [{
+			text:'确定',
+			iconCls:'icon-user-add',
+			handler:function(){
+				$.ajax({
+					type: 'POST',
+					url: "proxyadd.action",
+					data:$("#proxyInfo").serialize(),
+					dataType: 'JSON',
+				 	success: function( data ){
+						if(data.code==1){
+							proxyObject.datagrid("reload");
+							$("#proxyInfo")[0].reset();
+							$.messager.show({title:"成功提示",msg:"代理信息添加成功...",timeout:2000,showType:"slide"});
+							$('#singer_update').window('close');
+						}else{
+							$.messager.alert("失败提示","代理信息添加失败...","error");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#singer_update').dialog("open");
+}
+
+//代理点的修改
+function proxyUpdate(){
+	$("#proxyInfo")[0].reset();
+	var rows=$( '#proxy_data' ).datagrid("getChecked");
+	if(rows.length<=0){
+		$.messager.show({title:"温馨提示",msg:"请选择您要修改的歌手信息",timeout:2000,showType:"slide"});
+		return;
+	}else{
+		var row=rows[0];
+		$("#prname").val(row.prname);
+		$("#stime").val(row.prtime.substring(0,5));
+		$("#etime").val(row.prtime.substring(row.prtime.length-5));
+		$("#prprice").val(row.prprice);
+		$("#prremark").val(row.prremark);
+		$("#prid").val(row.prid);
+		document.getElementById("spid").value=row.spid;
+	}
+	$('#singer_update').dialog({
+		title:"修改代理信息",
+		iconCls:'icon-user-add',
+		buttons: [{
+			text:'修改',
+			iconCls:'icon-user-add',
+			handler:function(){
+				$.ajax({
+					type: 'POST',
+					url: "proxyupdate.action",
+					data:$("#proxyInfo").serialize(),
+					dataType: 'JSON',
+				 	success: function( data ){
+						if(data.code==1){
+							proxyObject.datagrid("reload");
+							$("#proxyInfo")[0].reset();
+							$.messager.show({title:"成功提示",msg:"代理信息修改成功...",timeout:2000,showType:"slide"});
+							$('#singer_update').window('close');
+						}else{
+							$.messager.alert("失败提示","代理信息修改失败...","error");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#singer_update').dialog("open");
+}
+
+//删除代理点
+function proxydel(prid){
+	prid=parseInt( $.trim(prid) );
+	$.ajax({
+		type: 'POST',
+		url: "proxydel.action",
+		data:{prid:prid},
+		dataType: 'JSON',
+	 	success: function( data ){
+			if(data.code==1){
+				$.messager.show({title:"成功提示",msg:"代理信息删除成功...",timeout:2000,showType:"slide"});
+				proxyObject.datagrid("reload");
+			}else{
+				$.messager.alert("失败提示","代理信息删除失败...","error");
+			}
+		}
+	});
+}
+
+//条件查询
+function proxyserch(){
+	var prname=$.trim( $("#selectprname").val() );
+	var spname=$.trim( $("#spname").val() );
+	$('#proxy_data').datagrid({
+		url:"findAllProxy.action",
+		queryParams:{prname:prname,spname:spname}
+	});
+}
+
+
+</script>

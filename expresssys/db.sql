@@ -46,7 +46,7 @@ add constraint FK_shipPoint_car
 foreign key(spid) references shipPoint(spid);
       
 
-
+select count(*) as res3 from proxy
 
 
 --配送单位
@@ -81,8 +81,8 @@ spid int ,--所属单位id                                         --
  res2  varchar(2000),    --备用字段
  res3  varchar(2000)    --备用字段
 )
-
-
+update proxy set res1=1
+select * from proxy
 alter table proxy
 add constraint FK_shipPoint_proxy  
 foreign key(spid) references shipPoint(spid);
