@@ -78,6 +78,15 @@
 						iframe="0">代理点管理</a></li>
 				</ul>
 			</div>
+			
+			<div title="价格管理" data-options="iconCls:'icon-note'"
+				style="padding: 5px;">
+				<ul class="easyui-tree wu-side-tree">
+					<li iconCls="icon-search"><a href="javascript:void(0)"
+						data-icon="icon-search" data-link="manage/price/price.html"
+						iframe="0">价格管理</a></li>
+				</ul>
+			</div>
 
 
 			<div title="司机管理" data-options="iconCls:'icon-contrast'"

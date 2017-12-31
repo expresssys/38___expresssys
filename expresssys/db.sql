@@ -18,8 +18,12 @@ res1  varchar(2000),  --用户身份
 )
 
 select * from users;
+<<<<<<< HEAD
 update users set ustatus=0 where usid=4
 delete from users where uname !="1";
+=======
+update users set ustatus=1 where usId=1
+>>>>>>> branch 'master' of git@github.com:expresssys/38___expresssys.git
 insert into users(uname,upwd) values('yc','123');
 insert into users(uname,upwd) values('y','123');
 
@@ -70,6 +74,11 @@ res3  varchar(2000),
 res4  varchar(2000)    
 
 )
+select spname from shipPoint where res1=0
+update shipPoint set res1=0 
+select * from shipPoint where res1=0
+update shipPoint set res1=1 where spid =4
+
 select count(spid) from shippoint
 select * from shipPoint
 --代理
@@ -84,7 +93,7 @@ spid int ,--所属单位id                                         --
  res2  varchar(2000),    --备用字段
  res3  varchar(2000)    --备用字段
 )
-update proxy set res1=1
+update proxy set res1=0
 select * from proxy
 alter table proxy
 add constraint FK_shipPoint_proxy  
@@ -263,9 +272,15 @@ create table price(
     res2  varchar(2000),
     res3 varchar(2000),
     res4  varchar(2000)
-
 )
 
+select * from price
+update price set res1=0
+insert into price(pfrom,pto,pfirstwei,prestwei,pfirstvol,prestvol,pretime,res1) values('衡阳','常德',20,21,18,19)
+
+select pid, pfrom, pto, pfirstwei, prestwei, pfirstvol, prestvol, pretime, res1 from price
+      where res1=0
+	  limit 0,20
 
 --订单详细
 create table orderInfo(
