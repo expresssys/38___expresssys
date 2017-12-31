@@ -20,6 +20,7 @@
 		<ul>
 		
 			<li>
+				<input type="hidden" name="did" id="driver_update_did">
 				<label>司机名称：</label>
 				<input type="text" name="dname" id="driver_update_dname" class="driver_input"/>
 			</li>
@@ -205,20 +206,11 @@ $(function(){
 				iconCls:'icon-user-add',
 				handler:function(){
 				
-					var dname=$.trim( $("#driver_update_dname").val() );
-					var dnumber=$.trim( $("#driver_update_dnumber").val() );
-					var dphone=$.trim( $("#driver_update_dphone").val() );
-					var didcard=$.trim( $("#driver_update_didcard").val() );
-					var ddage=$.trim( $("#driver_update_ddage").val() );
-					var spid=$.trim( $("#driver_update_spid").val() );
-					if(dname==""){
-						return;
-					}
 					$.ajax({
 						url:"driver/add.action",
 						secureuri:false,
 						dataType:"text",
-						data:{dname:dname,dnumber:dnumber,dphone:dphone,didcard:didcard,ddage:ddage,spid:spid},
+						data:$("#driver_update_driver").serialize(),
 						success:function(data,status){
 							console.info(data);
 							if(data>0){
@@ -251,6 +243,7 @@ $(function(){
 			$.post("driver/findByID.action",{did:did},function(data){
 				
 				drivermark=data.rows[0].spremark;
+				$("#driver_update_did").val(did);
 				$("#driver_update_dname").val(data.rows[0].dname);
 				$("#driver_update_dnumber").val(data.rows[0].dnumber);
 				$("#driver_update_dphone").val(data.rows[0].dphone);
@@ -267,20 +260,12 @@ $(function(){
 				text:'修改',
 				iconCls:'icon-user-edit',
 				handler:function(){
-					var dname=$.trim( $("#driver_update_dname").val() );
-					var dnumber=$.trim( $("#driver_update_dnumber").val() );
-					var dphone=$.trim( $("#driver_update_dphone").val() );
-					var didcard=$.trim( $("#driver_update_didcard").val() );
-					var ddage=$.trim( $("#driver_update_ddage").val() );
-					var spid=$.trim( $("#driver_update_spid").val() );
-					if(dname==""){
-						return;
-					}
+					
 					$.ajax({
 						url:"driver/update.action",
 						secureuri:false,
 						dataType:"text",
-						data:{did:did,dname:dname,dnumber:dnumber,dphone:dphone,didcard:didcard,ddage:ddage,spid:spid},
+						data:$("#driver_update_driver").serialize(),
 						success:function(data,status){
 							data=parseInt($.trim(data));
 							if(data>0){

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="orderinfo" >
+<mapper namespace="com.yc.bean.Orderinfo" >
   <resultMap id="BaseResultMap" type="com.yc.bean.Orderinfo" >
     <id column="orderId" property="orderid" jdbcType="INTEGER" />
     <result column="osid" property="osid" jdbcType="INTEGER" />
