@@ -1,0 +1,263 @@
+<meta charset="UTF-8">
+
+<table id="price_data" data-options="fit:true"></table>
+
+<div id="price_search" style="">
+	<a href="JavaScript:price_add()" class="easyui-linkbutton"
+		data-options="iconCls:'icon-add',plain:true" style="float:left">添加</a>
+	<div class="datagrid-btn-separator"></div>
+	<a href="JavaScript:proxyUpdate()"
+		class="easyui-linkbutton"
+		data-options="iconCls:'icon-anchor',plain:true" style="float: left">修改</a>
+	<div class="datagrid-btn-separator"></div>
+	<form id="selectBytj">
+		<label>起始地址:</label><input type="text" name="selectpfrom" id="selectpfrom">
+		<label>终点地址:</label><input type="text" name="selectpto" id="selectpto">
+		<a href="JavaScript:priceserch()" class="easyui-linkbutton"
+		data-options="iconCls:'icon-user-magnify'">查询</a>
+	</form>
+</div>
+
+<div id="singer_update" class="easyui-dialog" title="添加价格信息"
+	style="width: 340px; height: 400px;"
+	data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+	<form id="priceInfo">
+		<ul>
+			<li><input type="text" name="pid" id="pid" style="display:none"></li>
+			<li><label>起始地址：</label> 
+				<select name="pfrom" id="pfrom">
+					<option value="0">--请选择--</option>
+				</select>
+			</li>
+			<li><label>终点地址：</label> 
+				<select name="pto" id="pto">
+					<option value="0">--请选择--</option>
+				</select>
+			</li>
+			<li>
+				<label>首重价格：</label> 
+				<input type="text" name="pfirstwei" id="pfirstwei" class="singer_input">
+			</li>
+			<li>
+				<label>次重价格：</label> 
+				<input type="text" name="prestwei" id="prestwei" class="singer_input">
+			</li>
+			<li>
+				<label>首立方价格：</label> 
+				<input type="text" name="pfirstvol" id="pfirstvol" class="singer_input"></li>
+			<li>
+				<label>次立方价格：</label> 
+				<input type="text" name="prestvol" id="prestvol" class="singer_input"></li>
+			<li>
+				<label>预计时间：</label> 
+				<input type="text" name="pretime" id="pretime" class="easyui-numberspinner" data-options="increment:1" style="width:80px;">天
+			</li>
+		</ul>
+	</form>
+</div>
+
+<style>
+#singer_update label {
+	margin-left: 20px;
+}
+
+#singer_update li {
+	list-style-type: none;
+	margin-top: 20px;
+}
+
+#singer_update .singer_input {
+	width: 160px;
+	border: 1px solid #95B8E7;
+	line-height: 20px;
+}
+
+.singer_delpic_show{
+	width:100px;
+	height:100px;
+	overflow:hidden;
+	position:relative;
+	float:left;
+	border:1px solid #fff;
+}
+
+.singer_delpic_show>span{
+	margin:0px;
+	padding:0px;
+	background:url("../../images/bullet_cross.png") no-repeat; center center;
+	width:16px;
+	height:16px;
+	display:none;
+	position:absolute;
+	top:2px;
+	right:2px;
+}
+
+.singer_delpic_show:hover{
+	border-color:#f63;
+}
+
+.singer_delpic_show:hover span{
+	display:block;
+	cursor:pointer;
+}
+</style>
+
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type: 'POST',
+		url: "selectaddr.action",
+		dataType: 'JSON',
+	 	success: function( data ){
+	 		var str="";
+			for(var i=0;i<data.length;i++){
+				str+="<option value="+data[i].spname+">"+data[i].spname+"</option>";
+			}
+			$("#pfrom").append(str);
+			$("#pto").append(str);
+		}
+	});
+});
+
+var priceObject=$('#price_data').datagrid({   
+    url:'selectPrice.action',
+    queryParams:{pfrom:null,pto:null},
+    fitColumns:true,
+    pagination:true,	//设置true将在数据表格底部显示分页工具栏。
+    striped:true,	//交替显示行背景
+    loadMesg:'数据加载中',
+    rownumbers:true,
+    //singleSelect:true,
+    pageNumber:1,
+    pageSize:20,
+    pageList:[5,10,20,30,40,50],
+    sortName:'pid',
+    remoteSort:false,	//升序降序排列
+    columns:[[   
+        {checkbox:true},
+        {field:'pid',title:'价格编号',width:100,align:'center',sortable:true},   
+        {field:'pfrom',title:'起始地址',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'pto',title:'终点地址',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'pfirstwei',title:'首重价格',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'prestwei',title:'次重价格',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'pfirstvol',title:'首立方价格',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'prestvol',title:'次立方价格',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'pretime',title:'预计时间',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'_operate',title:'操作',width:100,align:'center',formatter:function(val,row,index){
+        	return "<a href='JavaScript:pricedel("+row.pid+")'>删除</a>";
+        }},
+    ]],
+    toolbar:"#price_search",
+});
+
+//价格的添加
+function price_add(){
+	$("#priceInfo")[0].reset();
+	$('#singer_update').dialog({
+		title:"添加代理信息",
+		iconCls:'icon-user-add',
+		buttons: [{
+			text:'确定',
+			iconCls:'icon-user-add',
+			handler:function(){
+				$.ajax({
+					type: 'POST',
+					url: "addprice.action",
+					data:$("#priceInfo").serialize(),
+					dataType: 'JSON',
+				 	success: function( data ){
+						if(data.code==1){
+							priceObject.datagrid("reload");
+							$("#priceInfo")[0].reset();
+							$.messager.show({title:"成功提示",msg:"价格信息添加成功...",timeout:2000,showType:"slide"});
+							$('#singer_update').window('close');
+						}else{
+							$.messager.alert("失败提示","价格信息添加失败...","error");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#singer_update').dialog("open");
+}
+
+//价格的修改
+function proxyUpdate(){
+	$("#priceInfo")[0].reset();
+	var rows=$( '#price_data' ).datagrid("getChecked");
+	if(rows.length<=0){
+		$.messager.show({title:"温馨提示",msg:"请选择您要修改的价格信息",timeout:2000,showType:"slide"});
+		return;
+	}else{
+		var row=rows[0];
+		document.getElementById("pfrom").value=row.pfrom;
+		document.getElementById("pto").value=row.pto;
+		$("#pfirstwei").val(row.pfirstwei);
+		$("#prestwei").val(row.prestwei);
+		$("#pfirstvol").val(row.pfirstvol);
+		$("#prestvol").val(row.prestvol);
+		$("#pretime").val(row.pretime);
+		$("#pid").val(row.pid);
+	}
+	$('#singer_update').dialog({
+		title:"修改代理信息",
+		iconCls:'icon-user-add',
+		buttons: [{
+			text:'修改',
+			iconCls:'icon-user-add',
+			handler:function(){
+				$.ajax({
+					type: 'POST',
+					url: "updateprice.action",
+					data:$("#priceInfo").serialize(),
+					dataType: 'JSON',
+				 	success: function( data ){
+						if(data.code==1){
+							priceObject.datagrid("reload");
+							$("#priceInfo")[0].reset();
+							$.messager.show({title:"成功提示",msg:"价格信息修改成功...",timeout:2000,showType:"slide"});
+							$('#singer_update').window('close');
+						}else{
+							$.messager.alert("失败提示","价格信息修改失败...","error");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#singer_update').dialog("open");
+}
+
+
+//删除价格
+function pricedel(pid){
+	pid=parseInt( $.trim(pid) );
+	$.ajax({
+		type: 'POST',
+		url: "deleteprice.action",
+		data:{pid:pid},
+		dataType: 'JSON',
+	 	success: function( data ){
+			if(data.code==1){
+				$.messager.show({title:"成功提示",msg:"价格信息删除成功...",timeout:2000,showType:"slide"});
+				priceObject.datagrid("reload");
+			}else{
+				$.messager.alert("失败提示","价格信息删除失败...","error");
+			}
+		}
+	});
+}
+
+
+//条件查询
+function priceserch(){
+	var pfrom=$.trim( $("#selectpfrom").val() );
+	var pto=$.trim( $("#selectpto").val() );
+	$('#price_data').datagrid({
+		url:"selectPrice.action",
+		queryParams:{pfrom:pfrom,pto:pto}
+	});
+}
+</script>
