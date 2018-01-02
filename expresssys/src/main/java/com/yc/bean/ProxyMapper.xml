@@ -20,7 +20,7 @@
 	<!-- 查询所有代理点 -->
 	<select id="findAllProxy" parameterType="java.util.Map" resultMap="BaseResultMap">
 		select prid, prname, prtime, prprice, prremark,p.spid as spid,spname from proxy p join shipPoint s on p.spid=s.spid where 1=1
-		and p.res1=1
+		and p.res1=0
 		<if test="prname!=null and prname!=''">
 			and prname like CONCAT('%', #{prname}, '%')
 		</if>
@@ -32,7 +32,7 @@
 
 	<!-- 删除代理点 -->
 	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		update proxy set res1=0
+		update proxy set res1=1
 		where prid = #{prid,jdbcType=INTEGER}
 	</update>
 
@@ -41,7 +41,7 @@
 		insert into proxy (prname, prtime,
 		prprice, prremark, spid,res1)
 		values (#{prname,jdbcType=VARCHAR}, #{prtime,jdbcType=VARCHAR},
-		#{prprice,jdbcType=DOUBLE}, #{prremark,jdbcType=VARCHAR},#{spid,jdbcType=INTEGER},1)
+		#{prprice,jdbcType=DOUBLE}, #{prremark,jdbcType=VARCHAR},#{spid,jdbcType=INTEGER},0)
 	</insert>
 
 	<!-- 修改代理点 -->
@@ -78,7 +78,7 @@
 
 	<!-- 查询总条数 -->
 	<select id="proxycount" parameterType="java.util.Map" resultMap="BaseResultMap">
-		select count(*) as res3 from proxy p join shipPoint s on p.spid=s.spid where 1=1 and p.res1=1
+		select count(*) as res3 from proxy p join shipPoint s on p.spid=s.spid where 1=1 and p.res1=0
 		<if test="prname!=null and prname!=''">
 			and prname like CONCAT('%', #{prname}, '%')
 		</if>
@@ -89,7 +89,7 @@
 
 	<!-- 查询所有配送点 -->
 	<select id="selectpoint" resultMap="BaseResultMap">
-	    select spid,spname from shipPoint where res1=1
+	    select spid,spname from shipPoint where res1=0
 	</select>
 
 </mapper>
