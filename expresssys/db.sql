@@ -96,7 +96,7 @@ create table route(
    rid int primary key auto_increment,  --线路id
    rname varchar(100),   --线路名称
    rvia  varchar(2000) ,   --配送线路顺序
-   res1  varchar(2000),    --备用字段
+   res1  varchar(2000),    --状态 0：不可用  1：可用 
    res2  varchar(2000),    --备用字段
    res3  varchar(2000),    --备用字段
    res4  varchar(2000)    --备用字段
