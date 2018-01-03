@@ -18,12 +18,9 @@ res1  varchar(2000),  --用户身份
 )
 
 select * from users;
-<<<<<<< HEAD
 update users set ustatus=0 where usid=4
 delete from users where uname !="1";
-=======
 update users set ustatus=1 where usId=1
->>>>>>> branch 'master' of git@github.com:expresssys/38___expresssys.git
 insert into users(uname,upwd) values('yc','123');
 insert into users(uname,upwd) values('y','123');
 
@@ -176,10 +173,10 @@ create  table handover(
    hstartTime Date,    --起始时间
    hendTime　Date ,  --到达时间
    hstatus  int ,   --交接单状态(0未发车，  1已发车，   2已完成)   默认0
-cid int ,   --运输车辆id                                                           --
-did  int ,-- 司机id                                                          --
-osid int ,-- 订单id                                                             --
-rid int ,--线路  id                                                        --
+	cid int ,   --运输车辆id                                                           --
+	did  int ,-- 司机id                                                          --
+	osid int ,-- 订单id                                                             --
+	rid int ,--线路  id                                                        --
 
    hremark   varchar(5000),  --备注
    res1  varchar(2000),    --备用字段
