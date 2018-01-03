@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="handover" >
+  <resultMap id="BaseResultMap" type="com.yc.bean.Handover" >
+    <id column="hid" property="hid" jdbcType="INTEGER" />
+    <result column="hfromSpname" property="hfromspname" jdbcType="VARCHAR" />
+    <result column="htoSpname" property="htospname" jdbcType="VARCHAR" />
+    <result column="hstartTime" property="hstarttime" jdbcType="DATE" />
+    <result column="hendTime" property="hendtime" jdbcType="DATE" />
+    <result column="hstatus" property="hstatus" jdbcType="INTEGER" />
+    <result column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="did" property="did" jdbcType="INTEGER" />
+    <result column="osid" property="osid" jdbcType="INTEGER" />
+    <result column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="hremark" property="hremark" jdbcType="VARCHAR" />
+    <result column="res1" property="res1" jdbcType="VARCHAR" />
+    <result column="res2" property="res2" jdbcType="VARCHAR" />
+    <result column="res3" property="res3" jdbcType="VARCHAR" />
+    <result column="res4" property="res4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    hid, hfromSpname, htoSpname, hstartTime, hendTime, hstatus, cid, did, osid, rid, 
+    hremark, res1, res2, res3, res4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from handover
+    where hid = #{hid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from handover
+    where hid = #{hid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yc.bean.Handover" >
+    insert into handover (hid, hfromSpname, htoSpname, 
+      hstartTime, hendTime, hstatus, 
+      cid, did, osid, rid, 
+      hremark, res1, res2, 
+      res3, res4)
+    values (#{hid,jdbcType=INTEGER}, #{hfromspname,jdbcType=VARCHAR}, #{htospname,jdbcType=VARCHAR}, 
+      #{hstarttime,jdbcType=DATE}, #{hendtime,jdbcType=DATE}, #{hstatus,jdbcType=INTEGER}, 
+      #{cid,jdbcType=INTEGER}, #{did,jdbcType=INTEGER}, #{osid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}, 
+      #{hremark,jdbcType=VARCHAR}, #{res1,jdbcType=VARCHAR}, #{res2,jdbcType=VARCHAR}, 
+      #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yc.bean.Handover" >
+    insert into handover
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hid != null" >
+        hid,
+      </if>
+      <if test="hfromspname != null" >
+        hfromSpname,
+      </if>
+      <if test="htospname != null" >
+        htoSpname,
+      </if>
+      <if test="hstarttime != null" >
+        hstartTime,
+      </if>
+      <if test="hendtime != null" >
+        hendTime,
+      </if>
+      <if test="hstatus != null" >
+        hstatus,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="did != null" >
+        did,
+      </if>
+      <if test="osid != null" >
+        osid,
+      </if>
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="hremark != null" >
+        hremark,
+      </if>
+      <if test="res1 != null" >
+        res1,
+      </if>
+      <if test="res2 != null" >
+        res2,
+      </if>
+      <if test="res3 != null" >
+        res3,
+      </if>
+      <if test="res4 != null" >
+        res4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hid != null" >
+        #{hid,jdbcType=INTEGER},
+      </if>
+      <if test="hfromspname != null" >
+        #{hfromspname,jdbcType=VARCHAR},
+      </if>
+      <if test="htospname != null" >
+        #{htospname,jdbcType=VARCHAR},
+      </if>
+      <if test="hstarttime != null" >
+        #{hstarttime,jdbcType=DATE},
+      </if>
+      <if test="hendtime != null" >
+        #{hendtime,jdbcType=DATE},
+      </if>
+      <if test="hstatus != null" >
+        #{hstatus,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="did != null" >
+        #{did,jdbcType=INTEGER},
+      </if>
+      <if test="osid != null" >
+        #{osid,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="hremark != null" >
+        #{hremark,jdbcType=VARCHAR},
+      </if>
+      <if test="res1 != null" >
+        #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="res4 != null" >
+        #{res4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Handover" >
+    update handover
+    <set >
+      <if test="hfromspname != null" >
+        hfromSpname = #{hfromspname,jdbcType=VARCHAR},
+      </if>
+      <if test="htospname != null" >
+        htoSpname = #{htospname,jdbcType=VARCHAR},
+      </if>
+      <if test="hstarttime != null" >
+        hstartTime = #{hstarttime,jdbcType=DATE},
+      </if>
+      <if test="hendtime != null" >
+        hendTime = #{hendtime,jdbcType=DATE},
+      </if>
+      <if test="hstatus != null" >
+        hstatus = #{hstatus,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="did != null" >
+        did = #{did,jdbcType=INTEGER},
+      </if>
+      <if test="osid != null" >
+        osid = #{osid,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null" >
+        rid = #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="hremark != null" >
+        hremark = #{hremark,jdbcType=VARCHAR},
+      </if>
+      <if test="res1 != null" >
+        res1 = #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        res2 = #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        res3 = #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="res4 != null" >
+        res4 = #{res4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where hid = #{hid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Handover" >
+    update handover
+    set hfromSpname = #{hfromspname,jdbcType=VARCHAR},
+      htoSpname = #{htospname,jdbcType=VARCHAR},
+      hstartTime = #{hstarttime,jdbcType=DATE},
+      hendTime = #{hendtime,jdbcType=DATE},
+      hstatus = #{hstatus,jdbcType=INTEGER},
+      cid = #{cid,jdbcType=INTEGER},
+      did = #{did,jdbcType=INTEGER},
+      osid = #{osid,jdbcType=INTEGER},
+      rid = #{rid,jdbcType=INTEGER},
+      hremark = #{hremark,jdbcType=VARCHAR},
+      res1 = #{res1,jdbcType=VARCHAR},
+      res2 = #{res2,jdbcType=VARCHAR},
+      res3 = #{res3,jdbcType=VARCHAR},
+      res4 = #{res4,jdbcType=VARCHAR}
+    where hid = #{hid,jdbcType=INTEGER}
+  </update>
+</mapper>
