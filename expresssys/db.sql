@@ -10,16 +10,17 @@ uaddress  varchar(50) ,
 uphone varchar(20),  
 utel  varchar(20),--   
 uemail   varchar(50),    
-ustatus int ,	  
-res1  varchar(2000),  
+ustatus int ,	  --用户状态  1-在职   0-离职
+res1  varchar(2000),  --用户身份  
  res2  varchar(2000),   
  res3  varchar(200),  
  res4  varchar(2000)  
 )
 
 select * from users;
-update users set ustatus=1 where usId=1
+
 insert into users(uname,upwd) values('yc','123');
+insert into users(uname,upwd) values('y','123');
 
 --运输车辆信息
 create table car(
@@ -70,20 +71,20 @@ select count(*) as res3 from proxy
 
 --配送单位
 create table shipPoint(
- spid  int primary key auto_increment,   --配送id
- spname varchar(100)   ,   --配送点名称
- spperson varchar(20),   --联系人
- sptel varchar(20),  --配送点电话
-  spemail  varchar(50),  --联系邮件
-  spaddress  varchar(50)  ,--配送点地址
- sppersonTel varchar(20),   --联系人电话
- spfax varchar(100),   --配送点传真
-sparea   varchar(100),   --配送点范围
-spremark   varchar(5000),   --备注
-res1 varchar(5000),   --状态   0-可用  1：已删除
+ spid  int primary key auto_increment,   
+ spname varchar(100)   ,   
+ spperson varchar(20),   
+ sptel varchar(20),  
+  spemail  varchar(50),  
+  spaddress  varchar(50)  ,
+ sppersonTel varchar(20),   
+ spfax varchar(100),   
+sparea   varchar(100),   
+spremark   varchar(5000),   
+res1 varchar(5000),   
 res2 varchar(5000),
-res3  varchar(2000),    --备用字段
-res4  varchar(2000)    --备用字段
+res3  varchar(2000),   
+res4  varchar(2000)    
 
 )
 select spname from shipPoint where res1=0
@@ -120,7 +121,7 @@ create table route(
    rid int primary key auto_increment,  --线路id
    rname varchar(100),   --线路名称
    rvia  varchar(2000) ,   --配送线路顺序
-   res1  varchar(2000),    --备用字段
+   res1  varchar(2000),    --状态 0：不可用  1：可用 
    res2  varchar(2000),    --备用字段
    res3  varchar(2000),    --备用字段
    res4  varchar(2000)    --备用字段
@@ -130,7 +131,7 @@ create table route(
 
 --司机信息
 create table driver(
-    did   int primary key auto_increment, --id
+    did   int primary key auto_increment, 
     dname varchar(20)  ,--姓名
     dnumber varchar(20),     --驾驶证号
     dphone  varchar(20),     --联系电话
@@ -154,7 +155,7 @@ foreign key(spid) references shipPoint(spid);
 --商品信息
 create table goods(
      gid int primary key auto_increment,    --货物编号
-     gname varchar(50),   --货物名称
+     gname varchar(50),   
      gcount int ,    --货物数量
      gunit  varchar(50),   --单位
      gprice  double(16,2) ,--货物价值
@@ -164,12 +165,14 @@ create table goods(
      gremark varchar(5000),   --备注
                                                      --
 
-     res1  varchar(5000),   --备用字段
+     res1  varchar(5000),   --备用字段   货物状态
      res2    varchar(5000), --备用字段
      res3  varchar(2000),    --备用字段
      res4  varchar(2000)    --备用字段
 )
 
+
+select * from goods;
 alter table goods
 add constraint FK_order_goods  
 foreign key(osid) references order(osid);
@@ -244,7 +247,7 @@ foreign key(rid) references route(rid);
 --订单表
 
 create table orders(
-     osid  int primary key auto_increment,   --订单编号
+     osid  int primary key auto_increment,   
      osendName varchar(20),   --寄件人姓名
      osendTel  varchar(20) , --寄件人电话
      osendAddress  varchar(50),  --寄件人地址
@@ -312,12 +315,19 @@ select pid, pfrom, pto, pfirstwei, prestwei, pfirstvol, prestvol, pretime, res1 
 	  limit 0,20
 
 --订单详细
+
+	  drop table orderInfo
 create table orderInfo(
   orderId int primary key auto_increment,
-  osid  int,           --
-  gid  int ,               --
-  res1 varchar(2000)
-
+  osid  int,           --订单
+  gid  int ,               --商品
+  rid  int,					--路线
+  ostatus int,				--状态 1：可用 2：删除
+  res1 varchar(2000),
+  res2 varchar(2000),
+  res3 varchar(2000),
+  res4 varchar(2000),
+  res5 varchar(2000)
 
 )
 alter table order

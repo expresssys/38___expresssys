@@ -5,10 +5,16 @@
     <id column="orderId" property="orderid" jdbcType="INTEGER" />
     <result column="osid" property="osid" jdbcType="INTEGER" />
     <result column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="ostatus" property="ostatus" jdbcType="INTEGER" />
     <result column="res1" property="res1" jdbcType="VARCHAR" />
+    <result column="res2" property="res2" jdbcType="VARCHAR" />
+    <result column="res3" property="res3" jdbcType="VARCHAR" />
+    <result column="res4" property="res4" jdbcType="VARCHAR" />
+    <result column="res5" property="res5" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    orderId, osid, gid, res1
+    orderId, osid, gid, rid, ostatus, res1, res2, res3, res4, res5
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,9 +28,13 @@
   </delete>
   <insert id="insert" parameterType="com.yc.bean.Orderinfo" >
     insert into orderinfo (orderId, osid, gid, 
-      res1)
+      rid, ostatus, res1, 
+      res2, res3, res4, res5
+      )
     values (#{orderid,jdbcType=INTEGER}, #{osid,jdbcType=INTEGER}, #{gid,jdbcType=INTEGER}, 
-      #{res1,jdbcType=VARCHAR})
+      #{rid,jdbcType=INTEGER}, #{ostatus,jdbcType=INTEGER}, #{res1,jdbcType=VARCHAR}, 
+      #{res2,jdbcType=VARCHAR}, #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR}, #{res5,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yc.bean.Orderinfo" >
     insert into orderinfo
@@ -38,8 +48,26 @@
       <if test="gid != null" >
         gid,
       </if>
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="ostatus != null" >
+        ostatus,
+      </if>
       <if test="res1 != null" >
         res1,
+      </if>
+      <if test="res2 != null" >
+        res2,
+      </if>
+      <if test="res3 != null" >
+        res3,
+      </if>
+      <if test="res4 != null" >
+        res4,
+      </if>
+      <if test="res5 != null" >
+        res5,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -52,8 +80,26 @@
       <if test="gid != null" >
         #{gid,jdbcType=INTEGER},
       </if>
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="ostatus != null" >
+        #{ostatus,jdbcType=INTEGER},
+      </if>
       <if test="res1 != null" >
         #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="res4 != null" >
+        #{res4,jdbcType=VARCHAR},
+      </if>
+      <if test="res5 != null" >
+        #{res5,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -66,8 +112,26 @@
       <if test="gid != null" >
         gid = #{gid,jdbcType=INTEGER},
       </if>
+      <if test="rid != null" >
+        rid = #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="ostatus != null" >
+        ostatus = #{ostatus,jdbcType=INTEGER},
+      </if>
       <if test="res1 != null" >
         res1 = #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        res2 = #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        res3 = #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="res4 != null" >
+        res4 = #{res4,jdbcType=VARCHAR},
+      </if>
+      <if test="res5 != null" >
+        res5 = #{res5,jdbcType=VARCHAR},
       </if>
     </set>
     where orderId = #{orderid,jdbcType=INTEGER}
@@ -76,7 +140,13 @@
     update orderinfo
     set osid = #{osid,jdbcType=INTEGER},
       gid = #{gid,jdbcType=INTEGER},
-      res1 = #{res1,jdbcType=VARCHAR}
+      rid = #{rid,jdbcType=INTEGER},
+      ostatus = #{ostatus,jdbcType=INTEGER},
+      res1 = #{res1,jdbcType=VARCHAR},
+      res2 = #{res2,jdbcType=VARCHAR},
+      res3 = #{res3,jdbcType=VARCHAR},
+      res4 = #{res4,jdbcType=VARCHAR},
+      res5 = #{res5,jdbcType=VARCHAR}
     where orderId = #{orderid,jdbcType=INTEGER}
   </update>
 </mapper>

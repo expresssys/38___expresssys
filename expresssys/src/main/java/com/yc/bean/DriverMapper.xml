@@ -37,11 +37,11 @@
     from driver
      <where>
      dstatus!=3
-     <if test="Driver.did!=null">
+     <if test="Driver.did!=null and Driver.did!='' ">
      	and   did = #{Driver.did,javaType=Integer}
      </if>
      
-      <if test="Driver.spid!=null">
+      <if test="Driver.spid!=null and Driver.spid!='' ">
      	and   spid = #{Driver.spid,javaType=Integer}
      </if>
       </where>
@@ -51,7 +51,17 @@
   <!-- 总条数 -->
   <select id="selectTotal" resultType="java.lang.Integer"  parameterType="com.yc.bean.Driver">
   
-  	select count(did) from driver where dstatus!=3
+  	select count(did) from driver
+  	<where>
+     dstatus!=3
+     <if test="did!=null and did!='' ">
+     	and   did = #{did,javaType=Integer}
+     </if>
+     
+      <if test="spid!=null and spid!='' ">
+     	and   spid = #{spid,javaType=Integer}
+     </if>
+      </where>
   </select>
   
   <!-- 删除 -->

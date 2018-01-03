@@ -5,13 +5,13 @@
 <head>
 <meta charset="utf-8" />
 <title>物流平台--后台管理</title>
-<link rel="stylesheet" type="text/css" href="../easyui/css/easyui.css" />
-<link rel="stylesheet" type="text/css" href="../easyui/css/wu.css" />
-<link rel="stylesheet" type="text/css" href="../easyui/css/icon.css" />
-<script type="text/javascript" src="../easyui/js/jquery-1.12.4.js"></script>
-<script type="text/javascript" src="../easyui/js/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="../easyui/js/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="../easyui/js/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="easyui/css/easyui.css" />
+<link rel="stylesheet" type="text/css" href="easyui/css/wu.css" />
+<link rel="stylesheet" type="text/css" href="easyui/css/icon.css" />
+<script type="text/javascript" src="easyui/js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="easyui/js/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="easyui/js/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
 </head>
@@ -42,10 +42,10 @@
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-user"><a href="javascript:void(0)"
-						data-icon="icon-user" data-link="manage/people/adminManage.html"
+						data-icon="icon-user" data-link="manage/users/adminManage.html"
 						iframe="0">管理员管理</a></li>
 					<li iconCls="icon-group"><a href="javascript:void(0)"
-						data-icon="icon-group" data-link="manage/people/userManage.html"
+						data-icon="icon-group" data-link="manage/users/userManage.html"
 						iframe="0">用户管理</a></li>
 				</ul>
 			</div>
@@ -134,7 +134,16 @@
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-car"><a href="javascript:void(0)"
 						data-icon="icon-car" data-link="manage/car/carmanage.html"
-						iframe="0">车辆查询</a></li>
+						iframe="0">车辆管理</a></li>
+				</ul>
+			</div>
+			
+			<div title="货物管理" data-options="iconCls:'icon-car'"
+				style="padding: 5px;">
+				<ul class="easyui-tree wu-side-tree">
+					<li iconCls="icon-car"><a href="javascript:void(0)"
+						data-icon="icon-car" data-link="manage/goods/goodsmanage.html"
+						iframe="0">货物管理</a></li>
 				</ul>
 			</div>
 

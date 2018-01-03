@@ -17,30 +17,36 @@ import com.yc.biz.UsersBiz;
 
 @Controller
 @Scope(value="prototype")
-public class BackLoginController {
+public class LoginController {
 	@Resource(name="usersBizImpl")
 	private UsersBiz ad;
 	
-	@RequestMapping(value="/login.action")
-	public @ResponseBody JsonModel Login(Users admin,String code,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+	@RequestMapping(value="back/login.action")
+	public @ResponseBody JsonModel Login(Users users,String code,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
 		//从application中取出所有tag 
 		JsonModel jm=new JsonModel();
-		Users c=this.ad.adminlogin(admin);
 		
 		String codes=String.valueOf(session.getAttribute("rand"));
 		if(!code.equals(codes)){
 			jm.setCode(1);//验证码错误
-		}
-		else{
-			try{
-				jm.setCode(3);
-				jm.setObj(c);	
-			} catch (Exception e) {
+			jm.setMsg("验证码错误");
+		}else{
+			Users c=this.ad.adminlogin(users);
+			
+			if(c!=null){
+				if(c.getUstatus()!=0){
+					jm.setCode(3);
+					jm.setObj(c);
+					session.setAttribute("user", c);
+				}else{
+					jm.setCode(0);
+					jm.setMsg("该用户权限不足");
+				}
+			} else{
 				jm.setCode(2);
-				jm.setMsg(e.getMessage());
+				jm.setMsg("用户名或密码错误");
 			}
 		}
-		session.setAttribute("user", c);
 		return jm;
 	}
 	
@@ -53,6 +59,7 @@ public class BackLoginController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 
