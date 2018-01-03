@@ -1,2 +1,380 @@
+<meta charset="UTF-8" >
+
+<table id="orders_manager" data-options="fit:true"></table>
+<div id="orders_search">
+	<a id="btn" href="javascript:jiaojie()" class="easyui-linkbutton" data-options="iconCls:'icon-script-add',plain:true" style="float:left">生成交接单</a>  
+	<div class="datagrid-btn-separator"></div>
+	<label>订单编号：</label>
+	<input type="text" name="osid" id="orders_search_osid"/>
+	<a href="javascript:orders_searchorders()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+</div>
+<div id="orders_update" class="easyui-dialog" title="添加配送点信息" style="width:600px;height:400px;align:center"
+		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
+	<form id="orders_update_orders">
+		<ul>
+			<li>
+				<input type="hidden" name="osid" id="orders_update_osid" value="">
+				<label>寄件人姓名：</label>
+				<input type="text" name="osendname" id="orders_update_osendname" class="orders_input"/>
+			
+				<label>寄件人电话：</label>
+				<input type="text" name="osendtel" id="orders_update_osendtel" class="orders_input"/>
+			</li>
+			<li>
+				<label>寄件人地址：</label>
+				<input type="text" name="osendaddress" id="orders_update_osendaddress" class="orders_input2"/>
+			</li>
+			<li>
+				<label>收件人姓名：</label>
+				<input type="text" name="orecname" id="orders_update_orecname" class="orders_input"/>
+			
+				<label>收件人电话：</label>
+				<input type="text" name="orectel" id="orders_update_orectel" class="orders_input"/>
+				
+			</li>
+			<li>
+			<label>收件人邮编：</label>
+				<input type="text" name="oreccode" id="orders_update_oreccode" class="orders_input"/>
+			
+				<label>收件人地址：</label>
+				<input type="text" name="orecaddress" id="orders_update_orecaddress" class="orders_input2"/>
+			</li>
+			
+			<li>
+				<label>订单日期：</label>
+				<input type="text" name="otime" id="orders_update_otime"  class="easyui-datebox" />
+			</li>
+			<li>
+				<label>配送费：</label>
+				<input type="text" name="oprice" id="orders_update_oprice" class="orders_input" />
+			
+				<label>保价金额：</label>
+				<input type="text" name="oinsureprice" id="orders_update_oinsureprice" class="orders_input"/>
+			</li>
+			<li>
+				<label>订单类型：</label>
+				<select  name="otype" id="orders_update_otype" >
+				<option value="0">快件</option>
+				<option value="1">慢件</option>
+				<option value="2">大件</option>
+				
+				</select>
+				<label>所属单位：</label>
+				<select name="spid" id="orders_update_spid" >
+				</select>
+			</li>
+			<li>
+				<label>要求启程时间：</label>
+				<input type="text" name="ostarttime" id="orders_update_ostarttime"  class="easyui-datebox" />
+			
+				<label>要求到达时间：</label>
+				<input type="text" name="oendtime" id="orders_update_oendtime"  class="easyui-datebox" />
+			</li>
+			
+			
+			<li>
+				<label>备注：</label>
+				<textarea  rows="5" cols="20"  id="orders_update_oremark" >
+				</textarea>
+			</li>
+			
+			
+		</ul>
+		
+	</form>
+</div>
+
+<!-- 交接单 -->
+<div id="jiaojie" style="padding: 10px">  
+    <form id="addForm" method="post">
+	    <table cellpadding="8" >
+	    	<tr>
+	    		<td>起始地址:</td>
+	    		<td>
+	    			<select name="hfromSpname" id="hfromSpname" style="width: 200px; height: 25px;">
+						<option value="0">--请选择--</option>
+					</select>
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<td>到达地址:</td>
+	    		<td>
+	    			<input id="htoSpname" name="htoSpname" style="width: 200px; height: 25px;" class="easyui-textbox" type="text" data-options="required:true, editable:false" disabled='disabled' />
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<td>起始时间:</td>
+	    		<td><input id="hstartTime" name="hstartTime" style="width: 200px; height: 25px;" class="easyui-datebox" type="text" data-options="required:true, missingMessage:'请选择日期', editable:false" /></td>
+	    	</tr>
+	    	<tr>
+	    		<td>到达时间:</td>
+	    		<td><input id="hendTime" name="hendTime" style="width: 200px; height: 25px;" class="easyui-datebox" type="text" data-options="required:true, missingMessage:'请选择日期', editable:false" /></td>
+	    	</tr>
+	    	<tr>
+	    		<td>交接单状态:</td>
+	    		<td>
+	    			<select name="hstatus" id="hstatus" style="width: 200px; height: 25px;">
+						<option value="0">--请选择--</option>
+					</select>
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<td>运输车辆:</td>
+	    		<td>
+	    			<select name="cid" id="cid" style="width: 200px; height: 25px;">
+						<option value="0">--请选择--</option>
+					</select>
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<td>司机:</td>
+	    		<td>
+	    			<select name="did" id="did" style="width: 200px; height: 25px;">
+						<option value="0">--请选择--</option>
+					</select>
+	    		</td>
+	    	</tr>
+	    </table>
+	</form>
+</div>
+
+
+<style>
+#orders_search label{
+	margin-left:20px;
+	width:30px;
+}
+
+#orders_update li{
+	list-style-type:none;
+	margin-top:20px;
+}
+
+#orders_update .orders_input{
+	width:100px;
+	border:1px solid #95B8E7;
+	line-height:20px;
+}
+#orders_update .orders_input2{
+	width:200px;
+	border:1px solid #95B8E7;
+	line-height:20px;
+}
+
+.orders_delpic_show{
+	width:100px;
+	height:100px;
+	overflow:hidden;
+	position:relative;
+	float:left;
+	border:1px solid #fff;
+}
+
+.orders_delpic_show>span{
+	margin:0px;
+	padding:0px;
+	background:url(../../images/cancel.png) no-repeat; center center;
+	width:16px;
+	height:16px;
+	display:none;
+	position:absolute;
+	top:2px;
+	right:2px;
+}
+
+.orders_delpic_show:hover{
+	border-color:#f63;
+}
+
+.orders_delpic_show:hover span{
+	display:block;
+	cursor:orderser;
+}
+
+.orders_delsaddr_show{
+	width:300px;
+	height:30px;
+	overflow:hidden;
+	position:relative;
+	float:left;
+	border:1px solid #fff;
+}
+.orders_delsaddr_show>span{
+	margin:0px;
+	padding:0px;
+	background:url(../../images/cancel.png) no-repeat; center center;
+	width:16px;
+	height:16px;
+	display:none;
+	position:absolute;
+	top:2px;
+	right:2px;
+}
+.orders_delsaddr_show:hover{
+	border-color:#f63;
+}
+
+.orders_delsaddr_show:hover span{
+	display:block;
+	cursor:orderser;
+}
+</style>
+<script type="text/javascript">
+var ordersEditRow=undefined;
+var ordersObject;
+var ordersFlag;
+var ordersmark="";
+var shippointList;
+$(function(){
+	var shippointStr="";
+	var shippointTypeStr="";
+	$.get("point/findAll.action",{rows:20,page:1},function(data){
+		var str="";
+		shippointList=data.rows;
+		$.each(shippointList,function(index,item){
+			shippointStr+="<option value='"+item.spid+"'>"+item.spname+"</option>";
+		});
+		$("#orders_search_spid").append($(shippointStr));
+		$("#orders_update_spid").append($(shippointStr));
+		
+		ordersObject = $('#orders_manager').datagrid({
+			url : "orders/findAll.action",
+			fitColumns : true,
+			striped : true,
+			loadMsg : '数据加载中...',
+			rownumbers : true,
+			pagination : true,
+			pageNumber : 1,
+			pageSize : 10,
+			pageList : [  10, 20, 30, 40, 50 ],
+			sortName:'osid',
+			remoteSort:false,
+			columns:[[   
+			        {checkbox:true},      
+			        {field:'osid',title:'配送id',width:100,align:'center',sortable:true},   
+			        {field:'osendname',title:'寄件人姓名',width:100,align:'center'},   
+			        {field:'osendtel',title:'联系人',width:100,align:'center'},
+			        {field:'osendaddress',title:'寄件人地址',width:100,align:'center',sortable:true},   
+			        {field:'orectel',title:'收件人电话ַ',width:100,align:'center'},
+			        {field:'orecaddress',title:'收件人地址',width:100,align:'center'}, 
+			        {field:'ostatus',title:'订单状态',width:100,align:'center',formatter:function(val,row,index){
+			        	if(val==0){
+			        		return '未发件';
+			        	} else if(val==1){
+			        		return '已发件';
+			        	}   else if(val==3){
+			        		return '已送达';
+			        	}
+			        }}, 
+			        
+			        {field:'_operate',title:'操作',width:100,align:'center',formatter:function(val,row,index){
+			        	return "<a href='javascript:orders_findorders("+row.osid+")'> 详情</a>"  //配送点详情查看
+			        }}
+			    ]],
+			    toolbar:"#orders_search"
+	
+	
+		});
+	},"json");
+	
+});	
+	
+
+	//详情查询
+	function orders_findorders(osid){
+		$("#orders_update_orders")[0].reset();
+		var rows=$('#orders_manager').datagrid("getChecked");
+		if(rows.length<=0){
+			$.messager.show({title:"温馨提示",msg:"请选择您要修改的配送点信息...",timeout:2000,showType:"slide"});
+		}else{
+			var row=rows[0];
+			var osid=row.osid;
+			$.post("orders/findByID.action",{osid:osid},function(data){
+				$("#orders_update_osid").val(osid);
+				ordersmark=data.rows[0].spremark;
+				$("#orders_update_osendname").val(data.rows[0].osendname);
+				$("#orders_update_osendtel").val(data.rows[0].osendtel);
+				$("#orders_update_osendaddress").val(data.rows[0].osendaddress);
+				$("#orders_update_orecname").val(data.rows[0].orecname);
+				$("#orders_update_orectel").val(data.rows[0].orectel);
+				$("#orders_update_orecaddress").val(data.rows[0].orecaddress);
+				$("#orders_update_oreccode").val(data.rows[0].oreccode);
+				$("#orders_update_otime").datebox('setValue',data.rows[0].otimeString);
+				
+				$("#orders_update_oprice").val(data.rows[0].oprice);
+				$("#orders_update_oinsureprice").val(data.rows[0].oinsureprice);
+				$("#orders_update_otype").val(data.rows[0].otype);
+				$("#orders_update_ostarttime").datebox('setValue',data.rows[0].ostarttimeString);
+				$("#orders_update_oendtime").datebox('setValue',data.rows[0].oendtimeString);
+				$("#orders_update_spid").val(data.rows[0].spid);
+				$("#orders_update_usid").val(data.rows[0].usid);
+				$("#orders_update_oremark").val(data.rows[0].oremark);
+				
+			})
+			
+		$('#orders_update').dialog({
+			title:"查看配送点信息",
+			iconCls:'icon-user-edit',
+			buttons:[{
+				text:'确定',
+				iconCls:'icon-user-edit',
+				handler:function(){
+					$('#orders_update').dialog("close");
+				}
+			}]
+		})
+		$('#orders_update').dialog("open");
+		}
+	}
+	
+	//条件查询
+	function orders_searchorders(){
+		var otype=$.trim( $("#orders_search_otype").val() );
+		var spid=$.trim( $("#orders_search_spid").val() );
+		var osid=$.trim( $("#orders_search_osid").val() );
+		$('#orders_manager').datagrid({
+			url:"orders/findByCondition.action",
+			queryParams:{otype:otype,spid:spid,osid:osid}
+		});
+		
+		$("#orders_search_otype").val("");
+		 $("#orders_search_spid").val("");
+	}
+	
+	//生成交接单
+	function jiaojie(){
+		$('#jiaojie').dialog({
+			title:"添加交接单",
+			iconCls:'icon-user-add',
+			buttons: [{
+				text:'确定',
+				iconCls:'icon-user-add',
+				handler:function(){
+					$.ajax({
+						type: 'POST',
+						url: "addprice.action",
+						data:$("#priceInfo").serialize(),
+						dataType: 'JSON',
+					 	success: function( data ){
+							if(data.code==1){
+								priceObject.datagrid("reload");
+								$("#priceInfo")[0].reset();
+								$.messager.show({title:"成功提示",msg:"价格信息添加成功...",timeout:2000,showType:"slide"});
+								$('#jiaojie').window('close');
+							}else{
+								$.messager.alert("失败提示","价格信息添加失败...","error");
+							}
+						}
+					});
+				}
+			}]
+		});
+		$('#jiaojie').dialog("open");
+	}
+
+
+</script>
+
+
+
 <meta charset="UTF-8">
-交接单管理

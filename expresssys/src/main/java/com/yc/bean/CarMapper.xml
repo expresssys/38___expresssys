@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="car" >
+<mapper namespace="com.yc.bean.Car" >
   <resultMap id="BaseResultMap" type="com.yc.bean.Car" >
     <id column="cid" property="cid" jdbcType="INTEGER" />
     <result column="cnumber" property="cnumber" jdbcType="VARCHAR" />
@@ -11,27 +11,168 @@
     <result column="cton" property="cton" jdbcType="DOUBLE" />
     <result column="cstatus" property="cstatus" jdbcType="INTEGER" />
     <result column="cisbox" property="cisbox" jdbcType="INTEGER" />
-    <result column="spid" property="spid" jdbcType="INTEGER" />
+    
+   
     <result column="cremark" property="cremark" jdbcType="VARCHAR" />
     <result column="res1" property="res1" jdbcType="VARCHAR" />
     <result column="res2" property="res2" jdbcType="VARCHAR" />
     <result column="res3" property="res3" jdbcType="VARCHAR" />
     <result column="res4" property="res4" jdbcType="VARCHAR" />
+    <result column="spid" property="spid"  jdbcType="INTEGER"/>
+    <association property="shippoint" javaType="com.yc.bean.Shippoint"> 
+    <id  column="spid" property="spid" jdbcType="INTEGER"/>
+    <result column="spname" property="spname" jdbcType="VARCHAR" />
+    <result column="spperson" property="spperson" jdbcType="VARCHAR" />
+    <result column="sptel" property="sptel" jdbcType="VARCHAR" />
+    <result column="spemail" property="spemail" jdbcType="VARCHAR" />
+    <result column="spaddress" property="spaddress" jdbcType="VARCHAR" />
+    <result column="sppersonTel" property="sppersontel" jdbcType="VARCHAR" />
+    <result column="spfax" property="spfax" jdbcType="VARCHAR" />
+    <result column="sparea" property="sparea" jdbcType="VARCHAR" />
+    <result column="spremark" property="spremark" jdbcType="VARCHAR" />
+    <result column="res1" property="res1" jdbcType="VARCHAR" />
+    <result column="res2" property="res2" jdbcType="VARCHAR" />
+    <result column="res3" property="res3" jdbcType="VARCHAR" />
+    <result column="res4" property="res4" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
+  
+  
+  
+  
+  
   <sql id="Base_Column_List" >
     cid, cnumber, ctype, cbuyDay, crunNum, cvolume, cton, cstatus, cisbox, spid, cremark, 
     res1, res2, res3, res4
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  
+  <!-- 分页条件的拼接  -->
+	<sql id="pageSql">
+		<if test="start!=null">
+			limit ${start},${pagesize}
+		</if>
+	</sql>
+  
+  
+  <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from car
     where cid = #{cid,jdbcType=INTEGER}
+  </select>-->
+  
+  
+  <!-- 通过car.spid查询shippoint -->
+  <select id="selectByspid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+     select
+     car.cid,cnumber, ctype, cbuyDay, crunNum, cvolume, cton, cstatus, cisbox, car.spid as spid, cremark, 
+    car.res1, car.res2, car.res3, car.res4,
+    shippoint.spid, spname, spperson, sptel, spemail, spaddress, sppersonTel, spfax, sparea, spremark, 
+    shippoint.res1, shippoint.res2, shippoint.res3, shippoint.res4
+    
+     from 
+    car  left join shippoint 
+    on car.spid=shippoint.spid
+    where car.spid=#{spid} and car.res1=0
+    	
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from car
-    where cid = #{cid,jdbcType=INTEGER}
+  
+  
+  
+  
+  
+  
+  <!-- 条件查询 -->
+  
+  <select  id="selectByParam" resultMap="BaseResultMap" parameterType="Car">
+      select
+     car.cid,cnumber, ctype,  cbuyDay, crunNum, cvolume, cton, cstatus, cisbox,car.spid as spid, cremark, 
+    car.res1, car.res2, car.res3, car.res4,
+    shippoint.spid, spname, spperson, sptel, spemail, spaddress, sppersonTel, spfax, sparea, spremark, 
+    shippoint.res1, shippoint.res2, shippoint.res3, shippoint.res4
+    
+     from 
+    car  left join shippoint 
+    on car.spid=shippoint.spid 
+    
+    <where>
+      <if test="cid!=null and cid!='' ">
+          cid=#{cid}
+      </if>
+      
+      <if test="cnumber!=null and cnumber!='' ">
+     and  cnumber=#{cnumber}
+      </if>
+      
+      
+      <if test="ctype!=null and ctype!='' ">
+    and  ctype=#{ctype}
+      </if>
+      
+      <if test="spid!=null and spid!='' ">
+    and   car.spid=#{spid}
+      </if>
+      
+      <if test="cstatus!=null  ">
+     and  cstatus=#{cstatus}
+      </if>
+      
+      <if test="res1==null ">
+       and car.res1=0
+      </if>
+     
+    </where>
+      <include refid="pageSql"/>
+  </select>
+  
+  
+  
+  
+  
+  <!-- 查询条数 -->
+  <select  id="selectTotal" resultType="java.lang.Integer" parameterType="Car">
+  select count(cid)  from car
+  <where>
+     <if test="cid!=null and cid!='' ">
+          cid=#{cid}
+      </if>
+      
+      <if test="cnumber!=null and cnumber!='' ">
+     and  cnumber=#{cnumber}
+      </if>
+      
+      
+      <if test="ctype!=null and ctype!='' ">
+    and  ctype=#{ctype}
+      </if>
+      
+      <if test="spid!=null and spid!='' ">
+    and   car.spid=#{spid}
+      </if>
+      
+      <if test="cstatus!=null and cstatus!='' ">
+     and  cstatus=#{cstatus}
+      </if>
+      
+       <if test="res1==null  ">
+       and car.res1=0
+      </if>
+    </where>
+  
+  
+  </select>
+  
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.yc.bean.Car" >
+   update car set
+   res1=1  where cid=#{cid}
   </delete>
+  
+  
+  
   <insert id="insert" parameterType="com.yc.bean.Car" >
     insert into car (cid, cnumber, ctype, 
       cbuyDay, crunNum, cvolume, 

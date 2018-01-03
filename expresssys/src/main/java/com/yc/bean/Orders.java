@@ -1,9 +1,19 @@
 package com.yc.bean;
 
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Orders {
-    private Integer osid;
+import org.springframework.format.annotation.DateTimeFormat;
+
+public class Orders implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer osid;
 
     private String osendname;
 
@@ -21,7 +31,8 @@ public class Orders {
 
     private String orecphone;
 
-    private Date otime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")  
+    private Date otime=new Date(new java.util.Date().getTime());
 
     private Double oprice;
 
@@ -31,9 +42,11 @@ public class Orders {
 
     private Integer ostatus;
 
-    private Date ostarttime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")  
+    private Date ostarttime=new Date(new java.util.Date().getTime());
 
-    private Date oendtime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd") 
+    private Date oendtime=new Date(new java.util.Date().getTime());
 
     private String orecspname;
 
@@ -50,8 +63,85 @@ public class Orders {
     private String res3;
 
     private String res4;
+    
+    private String otimeString;
+    private String ostarttimeString;
+    private String oendtimeString;
 
-    public Integer getOsid() {
+    public String getOtimeString() {
+    	DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		this.otimeString=df.format(new Date(this.otime.getTime()));
+		return otimeString;
+	}
+
+	public void setOtimeString(String otimeString) {
+		
+		this.otimeString=otimeString;
+	}
+
+	public String getOstarttimeString() {
+		DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		this.ostarttimeString=df.format(new Date(this.ostarttime.getTime()));
+		return ostarttimeString;
+	}
+
+	public Orders(Integer osid, String osendname, String osendtel, String osendaddress, String orecname, String orectel,
+			String orecaddress, String oreccode, String orecphone, Date otime, Double oprice, Double oinsureprice,
+			Integer otype, Integer ostatus, Date ostarttime, Date oendtime, String orecspname, String oremark,
+			Integer usid, Integer spid, String res1, String res2, String res3, String res4, String otimeString,
+			String ostarttimeString, String oendtimeString) {
+		super();
+		this.osid = osid;
+		this.osendname = osendname;
+		this.osendtel = osendtel;
+		this.osendaddress = osendaddress;
+		this.orecname = orecname;
+		this.orectel = orectel;
+		this.orecaddress = orecaddress;
+		this.oreccode = oreccode;
+		this.orecphone = orecphone;
+		this.otime = otime;
+		this.oprice = oprice;
+		this.oinsureprice = oinsureprice;
+		this.otype = otype;
+		this.ostatus = ostatus;
+		this.ostarttime = ostarttime;
+		this.oendtime = oendtime;
+		this.orecspname = orecspname;
+		this.oremark = oremark;
+		this.usid = usid;
+		this.spid = spid;
+		this.res1 = res1;
+		this.res2 = res2;
+		this.res3 = res3;
+		this.res4 = res4;
+		this.otimeString = otimeString;
+		this.ostarttimeString = ostarttimeString;
+		this.oendtimeString = oendtimeString;
+	}
+
+	public Orders() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	
+
+	public void setOstarttimeString(String ostarttimeString) {
+		this.ostarttimeString = ostarttimeString;
+	}
+
+	public String getOendtimeString() {
+		DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		this.oendtimeString=df.format(new Date(this.oendtime.getTime()));
+		return oendtimeString;
+	}
+
+	public void setOendtimeString(String oendtimeString) {
+		this.oendtimeString = oendtimeString;
+	}
+
+	public Integer getOsid() {
         return osid;
     }
 
@@ -71,7 +161,19 @@ public class Orders {
         return osendtel;
     }
 
-    public void setOsendtel(String osendtel) {
+    @Override
+	public String toString() {
+		return "Orders [osid=" + osid + ", osendname=" + osendname + ", osendtel=" + osendtel + ", osendaddress="
+				+ osendaddress + ", orecname=" + orecname + ", orectel=" + orectel + ", orecaddress=" + orecaddress
+				+ ", oreccode=" + oreccode + ", orecphone=" + orecphone + ", otime=" + otime + ", oprice=" + oprice
+				+ ", oinsureprice=" + oinsureprice + ", otype=" + otype + ", ostatus=" + ostatus + ", ostarttime="
+				+ ostarttime + ", oendtime=" + oendtime + ", orecspname=" + orecspname + ", oremark=" + oremark
+				+ ", usid=" + usid + ", spid=" + spid + ", res1=" + res1 + ", res2=" + res2 + ", res3=" + res3
+				+ ", res4=" + res4 + ", otimeString=" + otimeString + ", ostarttimeString=" + ostarttimeString
+				+ ", oendtimeString=" + oendtimeString + "]";
+	}
+
+	public void setOsendtel(String osendtel) {
         this.osendtel = osendtel == null ? null : osendtel.trim();
     }
 

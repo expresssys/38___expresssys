@@ -2,8 +2,11 @@ package com.yc.bean;
 
 import java.util.Date;
 
-public class Car {
-    private Integer cid;
+public class Car extends CommonBean{
+    
+	private static final long serialVersionUID = -2509115318296791463L;
+
+	private Integer cid;
 
     private String cnumber;
 
@@ -21,9 +24,19 @@ public class Car {
 
     private Integer cisbox;
 
+    private Shippoint shippoint;
+    
     private Integer spid;
 
-    private String cremark;
+    public Integer getSpid() {
+		return spid;
+	}
+
+	public void setSpid(Integer spid) {
+		this.spid = spid;
+	}
+
+	private String cremark;
 
     private String res1;
 
@@ -57,8 +70,8 @@ public class Car {
 	public String toString() {
 		return "Car [cid=" + cid + ", cnumber=" + cnumber + ", ctype=" + ctype + ", cbuyday=" + cbuyday + ", crunnum="
 				+ crunnum + ", cvolume=" + cvolume + ", cton=" + cton + ", cstatus=" + cstatus + ", cisbox=" + cisbox
-				+ ", spid=" + spid + ", cremark=" + cremark + ", res1=" + res1 + ", res2=" + res2 + ", res3=" + res3
-				+ ", res4=" + res4 + "]";
+				+ ", shippoint=" + shippoint + ", spid=" + spid + ", cremark=" + cremark + ", res1=" + res1 + ", res2="
+				+ res2 + ", res3=" + res3 + ", res4=" + res4 + "]";
 	}
 
 	public void setCtype(String ctype) {
@@ -113,15 +126,17 @@ public class Car {
         this.cisbox = cisbox;
     }
 
-    public Integer getSpid() {
-        return spid;
-    }
+  
 
-    public void setSpid(Integer spid) {
-        this.spid = spid;
-    }
+    public Shippoint getShippoint() {
+		return shippoint;
+	}
 
-    public String getCremark() {
+	public void setShippoint(Shippoint shippoint) {
+		this.shippoint = shippoint;
+	}
+
+	public String getCremark() {
         return cremark;
     }
 

@@ -11,8 +11,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.yc.bean.Driver;
+import com.yc.bean.Orders;
 import com.yc.bean.Shippoint;
 import com.yc.biz.DriverBiz;
+import com.yc.biz.OrdersBiz;
 import com.yc.biz.ShippointBiz;
 
 
@@ -37,6 +39,9 @@ public class AppTest {
 	
 	@Resource(name="driverBizImpl")
 	private DriverBiz driverBiz;
+	
+	@Resource(name="ordersBizImpl")
+	private OrdersBiz orderbiz;
 	@Test
 	public void testshippoint() throws Exception {
 		Shippoint s=new Shippoint();
@@ -54,5 +59,16 @@ public class AppTest {
 		System.out.println(this.driverBiz.findAll(0, 5));
 		System.out.println(this.driverBiz.findById(s, 0, 5));
 	}
+	
+	@Test
+	public void testorders() throws Exception {
+		Orders s=new Orders();
+		
+		s.setOsid(8);
+
+		
+		System.out.println(this.orderbiz.findById(s, 0, 5));
+	}
+	
 	
 }
