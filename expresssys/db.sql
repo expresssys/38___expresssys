@@ -282,6 +282,8 @@ select pid, pfrom, pto, pfirstwei, prestwei, pfirstvol, prestvol, pretime, res1 
 	  limit 0,20
 
 --订单详细
+
+	  drop table orderInfo
 create table orderInfo(
   orderId int primary key auto_increment,
   osid  int,           --订单
