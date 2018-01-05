@@ -1,5 +1,6 @@
 package com.yc.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -31,6 +32,13 @@ public class ShippointController {
 		//查询所有配送点
 		Map<String,Object> s=this.pointBiz.findAll(page-1,rows);
 		session.setAttribute("AllshipPoint", s);
+		return s;
+	}
+	
+	@RequestMapping(value="selectAll.action")
+	public @ResponseBody List<Shippoint> selectAll(HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+		//查询所有配送点
+		List<Shippoint> s=this.pointBiz.selectAll();
 		return s;
 	}
 	

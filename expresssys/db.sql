@@ -21,6 +21,7 @@ select * from users;
 update users set ustatus=0 where usid=4
 delete from users where uname !="1";
 update users set ustatus=1 where usId=1
+
 insert into users(uname,upwd) values('yc','123');
 insert into users(uname,upwd) values('y','123');
 
@@ -71,7 +72,7 @@ res3  varchar(2000),
 res4  varchar(2000)    
 
 )
-select spname from shipPoint where res1=0
+select * from shipPoint where res1=0
 update shipPoint set res1=0 
 select * from shipPoint where res1=0
 update shipPoint set res1=1 where spid =4
@@ -102,17 +103,18 @@ foreign key(spid) references shipPoint(spid);
 
 --配送路线
 create table route(
-   rid int primary key auto_increment,  --线路id
-   rname varchar(100),   --线路名称
-   rvia  varchar(2000) ,   --配送线路顺序
-   res1  varchar(2000),    --备用字段
-   res2  varchar(2000),    --备用字段
-   res3  varchar(2000),    --备用字段
-   res4  varchar(2000)    --备用字段
+   rid int primary key auto_increment,  
+   rname varchar(100),   
+   rvia  varchar(2000) ,  
+   res1  varchar(2000),    
+   res2  varchar(2000),   
+   res3  varchar(2000),   
+   res4  varchar(2000)    
 )
 
-
-
+select * from route
+delete from route
+insert into route(rname,rvia) values('测试','1-2-3-4')
 --司机信息
 create table driver(
     did   int primary key auto_increment, 
@@ -282,9 +284,15 @@ select pid, pfrom, pto, pfirstwei, prestwei, pfirstvol, prestvol, pretime, res1 
 --订单详细
 create table orderInfo(
   orderId int primary key auto_increment,
-  osid  int,           --
-  gid  int ,               --
-  res1 varchar(2000)
+  osid  int,           --订单
+  gid  int ,               --商品
+  rid  int,					--路线
+  ostatus int,				--状态 1：可用 2：删除
+  res1 varchar(2000),
+  res2 varchar(2000),
+  res3 varchar(2000),
+  res4 varchar(2000),
+  res5 varchar(2000)
 
 )
 alter table order

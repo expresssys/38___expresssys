@@ -33,7 +33,6 @@ public class GoodsController {
 	@RequestMapping("find.action")
 	public @ResponseBody Map<String,Object> find(Goods goods,int page,int rows,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
 		Map<String,Object> map = new HashMap<String,Object>();	
-		System.out.println("1" + goods);
 		map.put("goods", goods);
 		map.put("start", page-1);
 		map.put("pagesize", rows);

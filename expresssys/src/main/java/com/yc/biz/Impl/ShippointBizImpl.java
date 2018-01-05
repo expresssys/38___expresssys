@@ -65,4 +65,10 @@ public class ShippointBizImpl implements ShippointBiz {
 		return this.shipDao.delete(s);
 	}
 
+	@Override
+	public List<Shippoint> selectAll() {
+		
+		return this.shipDao.selectAll();
+	}
+
 }

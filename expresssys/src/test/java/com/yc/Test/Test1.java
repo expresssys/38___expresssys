@@ -56,18 +56,20 @@ public class Test1 {
 	@Test
 	public void test2(){
 		Users users = new Users();
-		users.setUname("1");
-		users.setUpwd(MD5Encryption.createPassword("1"));
-		System.out.println(ub.addUsers(users));
+		users.setUname("a");
+		users.setUpwd("a");
+//		System.out.println(ub.addUsers(users));
+		System.out.println(ub.adminlogin(users));;
 	}
 
 	//update
 	@Test
 	public void test3(){
 		Users users = new Users();
-		users.setUname("1");
-		users.setUpwd("1");
-		users.setUsid(4);
+//		users.setUname("1");
+//		users.setUpwd("1");
+		users.setUsid(3);
+		users.setUstatus(1);
 		System.out.println(ub.updateUsers(users));
 	}
 

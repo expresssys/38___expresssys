@@ -5,43 +5,35 @@
 	<div class="datagrid-btn-separator"></div>
 	<a id="btn" href="javascript:route_showUpdateroute()" class="easyui-linkbutton" data-options="iconCls:'icon-server-edit',plain:true" style="float:left">修改</a>  
 	<div class="datagrid-btn-separator"></div>
-	
 	<label>路线名称：</label>
 	<input type="text" name="rname" id="route_search_rname"/>
 	<a href="javascript:route_searchroute()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
 </div>
-<div id="route_update" class="easyui-dialog" title="添加路线信息" style="width:400px;height:500px;align:center"
+<div id="route_update" class="easyui-dialog" title="添加路线信息" style="width:500px;height:500px;align:center"
 		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
 	<form id="form_route_update">
 		<input type="hidden"  name="rid" id="route_update_rid"  />
+		<input type="hidden"  name="num" id="route_update_num"  />
 		<ul>
 			<li>
 				<label>路线名称<span></span></label>
 				<input type="text" name="rname" id="route_update_rname" class="route_input"/>
 			</li>
-			<li>
-				<label>路线数量<span></span></label>
-				<input type="text" name="gcount" id="route_update_gcount" class="route_input"/>
+			<li id="start">
+				<label>路线起点<span></span></label>
+				<select name="rviastart" id="route_update_rviastart" class="route_input"></select><input id="addStart" type="button" value="添加" onclick="javascript:addElement()" />
+			</li>
+			<li id="end">
+				<label>路线终点<span></span></label>
+				<select  name="rviaend" id="route_update_rviaend" class="route_input" ></select>
 			</li>
 		</ul>
 	</form>
 </div>
 
-<div id="route_show" class="easyui-dialog" title="查看路线信息" style="width:400px;height:500px;align:center"
+<div id="route_show" class="easyui-dialog" title="查看路线信息" style="width:1000px;height:650px;align:center"
 		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
-	<form id="form_route_show">
-		<ul>
-			<li>
-				<label>路线名称：<span></span></label>
-				<label id="route_show_rname" class="label" ></label>
-			</li>
-			<li>
-				<label>路线站点：<span></span></label>
-				<label  id="route_show_gcount" class="label"  ></label>
-			</li>
-			
-		</ul>
-	</form>
+	<div id="main" style="width: 900px;height:600px;"></div>
 </div>
 
 <style>
@@ -54,17 +46,26 @@
 	display:inroute-block;
 	width:66px;	
 	text-align:justify;
-	margin-top: 15px;
+	margin-top: 20px;
 	margin-right: 10px;
 	margin-left:10px;
 }
+
 #route_update label span{
   display:inroute-block;
   width:100%;
 }
 
+#route_update input[type=button]{
+  margin-left:15px;
+}
+
 #route_update li{
 	list-style-type:none;
+	margin-bottom: 20px;
+}
+#route_update .add_li{
+	margin-left: 53px;
 }
 
 #route_update .route_input{
@@ -93,12 +94,11 @@
 	list-style-type:none;
 }
 
+
 </style>
 
 <script type="text/javascript">
-var routeEditRow = undefined;
-var dataSelect =[{"status":"已签收"},{"status":"等待揽件"},{"status":"已发货"},{"status":"运输中"},{"status":"派送中"}];
-
+var elementNum = 0;
 var routeObject=$('#table_route_manager').datagrid({   
     url:'route/find.action',
     fitColumns:true,
@@ -115,13 +115,35 @@ var routeObject=$('#table_route_manager').datagrid({
 			{checkbox:true},  
 	        {field:'rid',title:'路线编号',width:100,align:'center',sortable:true},   
 	        {field:'rname',title:'路线名称',width:100,align:'center'},   
-	        
+	        {field:'rvia',title:'路线顺序',width:100,align:'center'},
+	        {field:'_operate',title:'操作',width:100,align:'center',formatter:function(val,row,index){
+	        	return "<a href='javascript:route_show("+row.rid+")'> 详情</a><a href='javascript:route_del("+row.rid+")'> 删除</a>" 
+	        }}
         ]],
         toolbar:"#route_search"
 }); 
 
-function route_showAddroute(){
+function route_showAddroute(start,end){
 	$("#form_route_update")[0].reset();
+	$("#route_update_rid").val("");
+	
+	if(elementNum > 0){
+		for(var i=1;i<=elementNum;i++){
+			$("#route"+i).remove();
+		}
+		var str="<input id='addStart' type='button' value='添加' onclick='javascript:addElement()' />"
+			$("#start").append(str);
+	}
+	elementNum=0;
+	
+	
+	if(start!=''){
+		$("#route_update_rviastart").val(start);
+	}
+	if(end!=''){
+		$("#route_update_rviaend").val(end);
+	}
+	
 	$('#route_update').dialog({
 		title:"添加路线信息",
 		iconCls:'icon-user-add',
@@ -129,11 +151,10 @@ function route_showAddroute(){
 			text:'确定',
 			iconCls:'icon-user-add',
 			handler:function(){
-				var gname=$.trim( $("#route_update_gname").val() );
-				var gtype=$.trim( $("#route_update_gtype").val() );
-				var res1=$.trim( $("#route_update_res1").val() );
+				var rname=$.trim( $("#route_update_rname").val() );
+				$("#route_update_num").val(elementNum);
 				
-				if(gname=="" || gtype=="" || res1==-1){
+				if(rname=="" ){
 					alert("请填入完整信息");
 					return ;
 				}
@@ -166,22 +187,36 @@ function route_showAddroute(){
 //修改
 function route_showUpdateroute(){
 	var rows=$('#table_route_manager').datagrid("getChecked");
+	if(elementNum > 0){
+		for(var i=1;i<=elementNum;i++){
+			$("#route"+i).remove();
+		}
+		var str="<input id='addStart' type='button' value='添加' onclick='javascript:addElement()' />"
+			$("#start").append(str);
+	}
+	elementNum =0;
 	
 	if(rows.length<=0){
 		$.messager.show({title:"温馨提示",msg:"请选择您要修改的路线信息...",timeout:2000,showType:"slide"});
 	}else{
 		var row = rows[0];
 		
-		$("#route_update_gname").val(row.gname);
-		$("#route_update_gcount").val(row.gcount);
-		$("#route_update_gunit").val(row.gunit);
-		$("#route_update_gprice").val(row.gprice);
-		$("#route_update_gweight").val(row.gweight);
-		$("#route_update_gvolume").val(row.gvolume);
-		$("#route_update_gtype").val(row.gtype);
-		$("#route_update_gremark").val(row.gremark);
+		var rvias = row.rvia.split("-");
+		$("#route_update_rviastart").val(rvias[0]);
+		if(rvias.length<=2){
+			$("#route_update_rviaend").val(rvias[1]);
+		}else{
+			$("#addStart").remove();
+			for(var i=1;i<rvias.length-1;i++){
+				addElement();
+				alert(rvias[i]);
+				$("#route_update_rvia"+i).val(rvias[i]);
+			}
+			$("#route_update_rviaend").val(rvias[rvias.length-1]);
+		}
+		
+		$("#route_update_rname").val(row.rname);
 		$("#route_update_rid").val(row.rid);
-		$("#route_update_res1").val(row.res1);
 		
 		
 		$('#route_update').dialog({
@@ -191,10 +226,10 @@ function route_showUpdateroute(){
 				text:'确定',
 				iconCls:'icon-user-add',
 				handler:function(){
-					var gname=$.trim( $("#route_update_gname").val() );
-					var gtype=$.trim( $("#route_update_gtype").val() );
+					var rid=$.trim( $("#route_update_rid").val() );
+					$("#route_update_num").val(elementNum);
 					
-					if(gname=="" || gtype==""){
+					if(rid=="" ){
 						alert("请填入完整的修改信息");
 						return ;
 					}
@@ -227,77 +262,281 @@ function route_showUpdateroute(){
 
 //条件查询
 function route_searchroute(){
-	var gname = $.trim( $("#route_search_gname").val() );
-	var gtype=$.trim( $("#route_search_gtype").val() );
-	var res1=$.trim( $("#route_search_res1").val() );
-	
-	if(res1==-1){
-		res1='';
-	}	
-	
+	var rname = $.trim( $("#route_search_rname").val() );
 	$('#table_route_manager').datagrid({
 		url:"route/find.action",
-		queryParams:{gname:gname,gtype:gtype,res1:res1}
+		queryParams:{rname:rname}
 	});
 }
 
 //路线状态修改
-function users_update_ustatus(rid){
+function route_update_ustatus(rid){
 	$.post("route/update.action",{rid:rid},function(data){
 		if(data.code>0){
 			$.messager.show({title:"成功提示",msg:"该路线状态已修改",timeout:2000,showType:"slide"});
-			usersObject.datagrid("reload");
+			routeObject.datagrid("reload");
 		}else{
 			$.messager.alert("失败提示","该路线状态修改失败...","error");
-			usersObject.datagrid("reload");
+			routeObject.datagrid("reload");
 		}
 	})
 }
 
-
-    /* $("#table_route_manager").datagrid({  
-        //双击事件  
-        onDblClickRow: function (index, row) {  
-                if(routeEditRow!=undefined){
-                	routeObject.datagrid('rejectChanges');//结束编辑
-                	routeEditRow=undefined;
-                }
-                if(row==undefined){
-					$.messager.show({title:'温馨提示',msg:'请选择或编辑您要修改的数据',timeout:2000,showType:'slide'});
-				}else{
-					routeEditRow = routeObject.datagrid('getRowIndex',row);
-					routeObject.datagrid("beginEdit",routeEditRow);
-					
-				}
-        }
-    });   */
-
     
-    function route_show(rid){
-    	
-    	$.post("route/find.action",{rid:rid,page:1,rows:1},function(data){
-    		if(data.total>0){
-    			$("#route_show_gname").html(data.rows[0].gname);
-    			$("#route_show_gcount").html(data.rows[0].gcount + " " + data.rows[0].gunit);
-    			$("#route_show_gprice").html(data.rows[0].gprice);
-    			$("#route_show_gweight").html(data.rows[0].gweight+" kg");
-    			$("#route_show_gvolume").html(data.rows[0].gvolume + " m³");
-    			$("#route_show_gtype").html(data.rows[0].gtype);
-    			$("#route_show_gremark").html(data.rows[0].gremark);
-    			$("#route_show_res1").html(dataSelect[data.rows[0].res1].status);
-    			
-    			
+    function route_del(rid){
+    	$.post("route/update.action",{rid:rid,res1:"0",num:0},function(data){
+    		if(data.code>0){
+    			$.messager.show({title:"成功提示",msg:"该路线状态已修改",timeout:2000,showType:"slide"});
+    			routeObject.datagrid("reload");
+    		}else{
+    			$.messager.alert("失败提示","该路线状态修改失败...","error");
+    			routeObject.datagrid("reload");
     		}
-    	})
-    	
-    	
-    	
-    	$('#route_show').dialog({
-    		title:"查看路线信息",
-    		iconCls:'icon-user-add',
-    		
     	});
-    	$('#route_show').dialog("open");
     }
+    
+    
+    
+    function freshData(id){
+    	$.post("point/selectAll.action",function(data){
+    		if(data!=null){
+    			var str ="";
+    			$.each(data,function(index,value){
+    				str += "<option value='"+value.spname+"'>"+value.spname+"</option>"
+    			});
+    			
+    			if(id==''){
+    				$("#route_update_rviastart").html($(str));
+    				$("#route_update_rviaend").html($(str));
+    			}else{
+    				$("#"+id).html($(str));
+    			}
+    		}
+    	});
+    }
+    
+    $(function(){
+    	freshData('');
+    });
+    
+    
+    function addElement(rvias){
+    	
+    	if(elementNum==0){
+    		$("#addStart").remove();
+    	}else{
+    		$("#add"+elementNum).remove();
+    		$("#del"+elementNum).remove();
+    	}
+    	elementNum++;
+    	var str="<li id='route"+elementNum+"' class='add_li'><label><span></span></label><select type='text' name='rvia"+elementNum+"' id='route_update_rvia"+elementNum+"' class='route_input'></select>"
+    			+"<input id='add"+elementNum+"' type='button' value='添加' onclick='javascript:addElement()' />"
+    		    +	"<input id='del"+elementNum+"' type='button' value='删除' onclick='javascript:delElement()' /></li>";
+    	 $("#end").before(str);  	 
+    	 freshData("route_update_rvia"+elementNum);
+    }
+    
+    
+    function delElement(){
+    		$("#route"+elementNum).remove();
+    		elementNum--;
+    		if(elementNum==0){
+    			var str="<input id='addStart' type='button' value='添加' onclick='javascript:addElement()' />"
+    			$("#start").append(str);
+    		}else{
+	    		var str="<input id='add"+elementNum+"' type='button' value='添加' onclick='javascript:addElement()' />"
+	    		    	+	"<input id='del"+elementNum+"' type='button' value='删除' onclick='javascript:delElement()' />";
+	    		$("#route"+elementNum).append(str);
+    		}
+    }
+    
+var myChart = echarts.init(document.getElementById('main'));
+var token = 'fHrNQj6DHTjZtfTvfqbsuvTzKc5V9SBl'
+var url = 'http://api.map.baidu.com/geocoder/v2/?output=json&ak=' + token + '&address='
+var ePlaceInput = $('#place-input');
+var eSearchBtn = $('#search-btn');
+var myChart = echarts.init(document.getElementById('main'));
+var geoCoordMap = [];
+var BJData = [];
+
+function route_show(rid){
+	var row;
+	alert(rid);
+	$.post("route/find.action",{rid:rid,page:1,rows:1},function(data){
+		if(data.total>0){
+			row = data.rows[0];
+		}
+	
+	var rvias = row.rvia.split("-");
+	console.info(row)
+	for(var i=0;i<rvias.length;i++){
+		if (rvias[i]) {
+			 $.getJSON(url + rvias[i] + '&callback=?', function(res) {
+			 var loc;
+			 if (res.status === 0) {
+			        loc = res.result.location;
+			        geoCoordMap.push({
+			          name: name,
+			          value: [loc.lng, loc.lat]
+			        });
+			      }else{
+			        alert('百度没有找到地址信息');
+			      }
+			    });
+		}
+		if(i<rvias.length-1){
+			BJData.push({name: rvias[i]},{name:rvias[i+1]});
+		}
+	}
+	
+var planePath = 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
+var convertData = function (data) {
+    var res = [];
+    for (var i = 0; i < data.length; i++) {
+        var dataItem = data[i];
+        var fromCoord = geoCoordMap[dataItem[0].name];
+        var toCoord = geoCoordMap[dataItem[1].name];
+        if (fromCoord && toCoord) {
+            res.push([{
+                name: dataItem[0].name,
+                coord: fromCoord
+            }, {
+                name: dataItem[1].name,
+                coord: toCoord
+            }]);
+        }
+    }
+    return res;
+};
+var color = ['#a6c84c', '#ffa022', '#46bee9'];
+var series = [];
+[['北京', BJData]].forEach(function (item, i) {
+    series.push({
+        name: '北京南宁线',
+        type: 'lines',
+        zlevel: 1,
+        effect: {
+            show: true,
+            period: 6,
+            trailLength: 0.7,
+            color: '#fff',
+            symbolSize: 3
+        },
+        lineStyle: {
+            normal: {
+                color: color[i],
+                width: 0,
+                curveness: 0.2
+            }
+        },
+        data: convertData(item[1])
+    },
+    {
+        name: '北京南宁线',
+        type: 'lines',
+        zlevel: 2,
+        effect: {
+            show: true,
+            period: 6,
+            trailLength: 0,
+            symbol: planePath,
+            symbolSize: 15
+        },
+        lineStyle: {
+            normal: {
+                color: color[i],
+                width: 1,
+                opacity: 0.4,
+                curveness: 0.2
+            }
+        },
+        data: convertData(item[1])
+    },
+    {
+        name: '北京南宁线',
+        type: 'effectScatter',
+        coordinateSystem: 'geo',
+        zlevel: 2,
+        rippleEffect: {
+            brushType: 'stroke'
+        },
+        label: {
+            normal: {
+                show: true,
+                position: 'right',
+                formatter: '{b}'
+            }
+        },
+        symbolSize: function (val) {
+            return val[2] / 8;
+        },
+        itemStyle: {
+            normal: {
+                color: color[i]
+            }
+        },
+        data: item[1].map(function (dataItem) {
+            return {
+                name: dataItem[1].name,
+                value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value])
+            };
+        })
+    });
+});
+option = {
+    backgroundColor: '#404a59',
+    title : {
+        text: '路线图',
+        //subtext: '数据纯属虚构',
+        left: 'center',
+        textStyle : {
+            color: '#fff'
+        }
+    },
+    tooltip : {
+        trigger: 'item'
+    },
+    legend: {
+        orient: 'vertical',
+        top: 'bottom',
+        left: 'right',
+        data:[row.rname],
+        textStyle: {
+            color: '#fff'
+        },
+        selectedMode: 'single'
+    },
+    geo: {
+        map: 'china',
+        label: {
+            emphasis: {
+                show: false
+            }
+        },
+        roam: true,
+        itemStyle: {
+            normal: {
+                areaColor: '#323c48',
+                borderColor: '#404a59'
+            },
+            emphasis: {
+                areaColor: '#2a333d'
+            }
+        }
+    },
+    series: series
+};
+// 使用刚指定的配置项和数据显示图表。
+myChart.setOption(option);
+
+
+$('#route_show').dialog({
+	title:"查看路线信息",
+	iconCls:'icon-user-add',
+});
+$('#route_show').dialog("open");
+	});
+}
+
 </script>
 

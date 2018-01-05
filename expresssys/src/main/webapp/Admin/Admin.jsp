@@ -11,7 +11,8 @@
 <script type="text/javascript" src="easyui/js/jquery-1.12.4.js"></script>
 <script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="easyui/js/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="easyui/js/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="easyui/js/echarts.js"></script>
+<script type="text/javascript" src="easyui/js/china.js"></script>
 <script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
 </head>
@@ -54,7 +55,7 @@
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-search"><a href="javascript:void(0)"
-						data-icon="icon-search" data-link="manage/line/linemanage.html"
+						data-icon="icon-search" data-link="manage/route/routemanage.html"
 						iframe="0">路线管理</a></li>
 
 				</ul>
