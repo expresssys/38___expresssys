@@ -58,8 +58,10 @@ public class Test1 {
 		Users users = new Users();
 		users.setUname("a");
 		users.setUpwd("a");
-//		System.out.println(ub.addUsers(users));
-		System.out.println(ub.adminlogin(users));;
+		users.setUstatus(1);
+		users.setRes1("1");
+		ub.addUsers(users);
+		System.out.println(ub.adminlogin(users));
 	}
 
 	//update

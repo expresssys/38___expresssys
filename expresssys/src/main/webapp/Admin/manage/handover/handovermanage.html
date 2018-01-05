@@ -1,8 +1,10 @@
 <meta charset="UTF-8" >
 
-<table id="orders_manager" data-options="fit:true"></table>
+<table id="handover_manager" data-options="fit:true"></table>
 <div id="orders_search">
-	<a id="btn" href="javascript:jiaojie()" class="easyui-linkbutton" data-options="iconCls:'icon-script-add',plain:true" style="float:left">生成交接单</a>  
+	<a id="btn" href="javascript:jiaojie()" class="easyui-linkbutton" data-options="iconCls:'icon-script-add',plain:true" style="float:left">添加交接单</a>  
+	<div class="datagrid-btn-separator"></div>
+	<a id="btn" href="javascript:ckjiaojie()" class="easyui-linkbutton" data-options="iconCls:'icon-script-add',plain:true" style="float:left">查看交接单</a>
 	<div class="datagrid-btn-separator"></div>
 	<label>订单编号：</label>
 	<input type="text" name="osid" id="orders_search_osid"/>
@@ -70,15 +72,11 @@
 				<label>要求到达时间：</label>
 				<input type="text" name="oendtime" id="orders_update_oendtime"  class="easyui-datebox" />
 			</li>
-			
-			
 			<li>
 				<label>备注：</label>
 				<textarea  rows="5" cols="20"  id="orders_update_oremark" >
 				</textarea>
 			</li>
-			
-			
 		</ul>
 		
 	</form>
@@ -86,8 +84,18 @@
 
 <!-- 交接单 -->
 <div id="jiaojie" style="padding: 10px">  
-    <form id="addForm" method="post">
+    <form id="addHandover" method="post">
 	    <table cellpadding="8" >
+	    	<tr>
+	    		<td>
+	    			<input type="text" name="osid" id="osid" style="display:none">
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<td>
+	    			<input type="text" name="htoSpname" id="htoSpname" style="display:none">
+	    		</td>
+	    	</tr>
 	    	<tr>
 	    		<td>起始地址:</td>
 	    		<td>
@@ -99,32 +107,39 @@
 	    	<tr>
 	    		<td>到达地址:</td>
 	    		<td>
-	    			<input id="htoSpname" name="htoSpname" style="width: 200px; height: 25px;" class="easyui-textbox" type="text" data-options="required:true, editable:false" disabled='disabled' />
+	    			<input id="htoSpnames" name="htoSpnames" style="width: 200px; height: 25px;" class="easyui-textbox" type="text" disabled="true"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<td>起始时间:</td>
-	    		<td><input id="hstartTime" name="hstartTime" style="width: 200px; height: 25px;" class="easyui-datebox" type="text" data-options="required:true, missingMessage:'请选择日期', editable:false" /></td>
+	    		<td><input id="hstartTime" name="hstartTime" style="width: 200px; height: 25px;" class="easyui-datebox" type="text" data-options="required:true, editable:false" /></td>
 	    	</tr>
 	    	<tr>
 	    		<td>到达时间:</td>
-	    		<td><input id="hendTime" name="hendTime" style="width: 200px; height: 25px;" class="easyui-datebox" type="text" data-options="required:true, missingMessage:'请选择日期', editable:false" /></td>
+	    		<td><input id="hendTime" name="hendTime" style="width: 200px; height: 25px;" class="easyui-datebox" type="text" data-options="required:true, editable:false" /></td>
 	    	</tr>
 	    	<tr>
 	    		<td>交接单状态:</td>
 	    		<td>
 	    			<select name="hstatus" id="hstatus" style="width: 200px; height: 25px;">
-						<option value="0">--请选择--</option>
+						<option>--请选择--</option>
+						<option value="0">--未发车--</option>
+						<option value="1">--已发车--</option>
+						<option value="2">--已完成--</option>
 					</select>
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<td>运输车辆:</td>
 	    		<td>
-	    			<select name="cid" id="cid" style="width: 200px; height: 25px;">
-						<option value="0">--请选择--</option>
+	    			<select name="cids" id="cids" style="width: 100px; height: 25px;">
+						<option value="0">--车辆类型--</option>
+					</select>
+					<select name="cid" id="cid" style="width: 100px; height: 25px;">
+						<option value="0">--车牌号--</option>
 					</select>
 	    		</td>
+	    			
 	    	</tr>
 	    	<tr>
 	    		<td>司机:</td>
@@ -134,8 +149,82 @@
 					</select>
 	    		</td>
 	    	</tr>
+	    	<tr>
+	    		<td>备注:</td>
+	    		<td>
+					<textarea rows="3" cols="20" name="hremark" id="hremark" style="width: 200px; "> 
+					</textarea>
+				</td>
+	    	</tr>
 	    </table>
 	</form>
+</div>
+
+<!-- 交接单查看 -->
+<div id="ckjiaojie" style="padding: 10px">  
+		<div style="padding: 10px">
+			<label>收发地：</label>
+			<select name="fromaddr" id="fromaddr" style="width: 190px; height: 30px;">
+				<option value="0">--请选择--</option>
+			</select>
+			<label>交接地：</label>
+			<select name="toaddr" id="toaddr" style="width: 190px; height: 30px;">
+				<option value="0">--请选择--</option>
+			</select>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-print" style="float:right">导出</a>
+		</div>
+		<div class="datagrid-toolbar"></div> 
+	<form id="chjj">
+	    <table cellpadding="8" >
+	   		 <tr>
+	    		<td>订单编号:</td>
+	    		<td>
+	    			<input id="bianhao" name="bianhao" style="width: 200px; height: 25px;" class="easyui-textbox" type="text" disabled="true"/>
+	    		</td>
+	    		<td>收件人:</td>
+	    		<td>
+	    			<input id="shoujianren" name="shoujianren" style="width: 200px; height: 25px;" class="easyui-textbox" type="text" disabled="true"/>
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<td>收寄地:</td>
+	    		<td>
+	    			<input id="jijianren" name="jijianren" style="width: 200px; height: 25px;" class="easyui-textbox" type="text" disabled="true"/>
+	    		</td>
+	    		<td>交接地:</td>
+	    		<td>
+	    			<input id="jiaojiedi" name="jiaojiedi" style="width: 200px; height: 25px;" class="easyui-textbox" type="text" disabled="true"/>
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<td>运输时间:</td>
+	    		<td>
+	    			<input id="yunshushijian" name="yunshushijian" style="width: 200px; height: 25px;" class="easyui-textbox" type="text" disabled="true"/>
+	    		</td>
+	    		<td>到达时间:</td>
+	    		<td>
+	    			<input id="daodashijian" name="daodashijian" style="width: 200px; height: 25px;" class="easyui-textbox" type="text" disabled="true"/>
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<td>车牌号:</td>
+	    		<td>
+	    			<input id="chepaihao" name="chepaihao" style="width: 200px; height: 25px;" class="easyui-textbox" type="text" disabled="true"/>
+	    		</td>
+	    		<td>司机:</td>
+	    		<td>
+	    			<input id="siji" name="siji" style="width: 200px; height: 25px;" class="easyui-textbox" type="text" disabled="true"/>
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<td>备注:</td>
+	    		<td>
+					<textarea rows="3" cols="20" name="beizhu" id="beizhu" style="width: 200px; " disabled="true"> 
+					</textarea>
+				</td>
+	    	</tr>
+	    </table>
+	 </form>
 </div>
 
 
@@ -220,6 +309,50 @@
 }
 </style>
 <script type="text/javascript">
+$(function(){
+	$.ajax({
+		type: 'POST',
+		url: "selectpoint.action",
+		dataType: 'JSON',
+	 	success: function( data ){
+	 		var str="";
+			for(var i=0;i<data.length;i++){
+				str+="<option value="+data[i].spname+">"+data[i].spname+"</option>";
+			}
+			$("#hfromSpname").append(str);
+			$("#fromaddr").append(str);
+			$("#toaddr").append(str);
+		}
+	});
+	
+	$.ajax({
+		type: 'POST',
+		url: "selectDriver.action",
+		dataType: 'JSON',
+	 	success: function( data ){
+	 		var str="";
+			for(var i=0;i<data.length;i++){
+				str+="<option value="+data[i].did+">"+data[i].dname+"</option>";
+			}
+			$("#did").append(str);
+		}
+	});
+	
+	$.ajax({
+		type: 'POST',
+		url: "selectcartype.action",
+		dataType: 'JSON',
+	 	success: function( data ){
+	 		var str="";
+			for(var i=0;i<data.length;i++){
+				str+="<option value="+data[i].ctype+">"+data[i].ctype+"</option>";
+			}
+			$("#cids").append(str);
+		}
+	});
+});
+
+
 var ordersEditRow=undefined;
 var ordersObject;
 var ordersFlag;
@@ -237,7 +370,7 @@ $(function(){
 		$("#orders_search_spid").append($(shippointStr));
 		$("#orders_update_spid").append($(shippointStr));
 		
-		ordersObject = $('#orders_manager').datagrid({
+		ordersObject = $('#handover_manager').datagrid({
 			url : "orders/findAll.action",
 			fitColumns : true,
 			striped : true,
@@ -283,7 +416,7 @@ $(function(){
 	//详情查询
 	function orders_findorders(osid){
 		$("#orders_update_orders")[0].reset();
-		var rows=$('#orders_manager').datagrid("getChecked");
+		var rows=$('#handover_manager').datagrid("getChecked");
 		if(rows.length<=0){
 			$.messager.show({title:"温馨提示",msg:"请选择您要修改的配送点信息...",timeout:2000,showType:"slide"});
 		}else{
@@ -332,7 +465,7 @@ $(function(){
 		var otype=$.trim( $("#orders_search_otype").val() );
 		var spid=$.trim( $("#orders_search_spid").val() );
 		var osid=$.trim( $("#orders_search_osid").val() );
-		$('#orders_manager').datagrid({
+		$('#handover_manager').datagrid({
 			url:"orders/findByCondition.action",
 			queryParams:{otype:otype,spid:spid,osid:osid}
 		});
@@ -341,8 +474,23 @@ $(function(){
 		 $("#orders_search_spid").val("");
 	}
 	
-	//生成交接单
+	
+	
+	//添加交接单
+	var osids;
 	function jiaojie(){
+		$("#addHandover")[0].reset();
+		var osid;
+		var rows=$( '#handover_manager' ).datagrid("getChecked");
+		if(rows.length<=0){
+			$.messager.show({title:"温馨提示",msg:"请选择您要生成交接单的订单",timeout:2000,showType:"slide"});
+			return;
+		}else{
+			var row=rows[0];
+			var osid=row.osid
+			osids=osid;
+			$('#osid').val(row.osid)
+		}
 		$('#jiaojie').dialog({
 			title:"添加交接单",
 			iconCls:'icon-user-add',
@@ -350,19 +498,30 @@ $(function(){
 				text:'确定',
 				iconCls:'icon-user-add',
 				handler:function(){
+					var osid=$('#osid').val();
+					var htoSpname=$('#htoSpname').val();
+					var hfromSpname=$('#hfromSpname').val();
+					var hstartTime=$("#hstartTime").datebox("getValue");
+					var hendTime=$("#hendTime").datebox("getValue");
+					var hstatus=$('#hstatus').val();
+					var cid=$('#cid').val();
+					var did=$('#did').val();
+					var hremark=$('#hremark').val();
 					$.ajax({
 						type: 'POST',
-						url: "addprice.action",
-						data:$("#priceInfo").serialize(),
+						url: "insertHandover.action",
+						data:{osid:osid,htoSpname:htoSpname,hfromSpname:hfromSpname,hstartTime:hstartTime,hendTime:hendTime,hstatus:hstatus,cid:cid,did:did,hremark:hremark},
 						dataType: 'JSON',
 					 	success: function( data ){
 							if(data.code==1){
-								priceObject.datagrid("reload");
-								$("#priceInfo")[0].reset();
-								$.messager.show({title:"成功提示",msg:"价格信息添加成功...",timeout:2000,showType:"slide"});
+								ordersObject.datagrid("reload");
+								$("#addHandover")[0].reset();
+								$.messager.show({title:"成功提示",msg:"交接单添加成功...",timeout:2000,showType:"slide"});
 								$('#jiaojie').window('close');
-							}else{
-								$.messager.alert("失败提示","价格信息添加失败...","error");
+							}else if(data.code==0){
+								$.messager.alert("失败提示","该订单已经有交接单，请勿重复添加...","error");
+							}else if(data.code==2){
+								$.messager.alert("失败提示","交接单添加失败...","error");
 							}
 						}
 					});
@@ -371,6 +530,137 @@ $(function(){
 		});
 		$('#jiaojie').dialog("open");
 	}
+	
+	//改变事件
+	$("select#hfromSpname").change(function(){
+		 var osid=osids;
+		 var nowd=$(this).val()
+	     $.ajax({
+				type: 'POST',
+				url: "selectddByid.action",
+				data:{osid:osids,nowd:nowd},
+				dataType: 'JSON',
+			 	success: function( data ){
+			 		if(data.code==1){
+			 			for(var i=0;i<data.obj.length;i++){
+							$("#htoSpnames").val(data.obj[i].nextd);
+							$("#htoSpname").val(data.obj[i].nextd);
+						}
+			 		}else if(data.code==0){
+			 			$.messager.alert('错误提示','当前已经是最后一个配送点，无须添加交接单');
+			 			$("#htoSpnames").val("");
+			 			$("#htoSpname").val("");
+			 		}else if(data.code==2){
+			 			$.messager.alert('错误提示','您当前选中的配送点不在此订单路线范围中内');
+			 			$("#htoSpnames").val("");
+			 			$("#htoSpname").val("");
+			 		}
+				}
+			});
+	 });
+	
+	$("select#cids").change(function(){
+		$("#cid").html('');
+		 var ctype=$(this).val()
+	     $.ajax({
+				type: 'POST',
+				url: "selectcar.action",
+				data:{ctype:ctype},
+				dataType: 'JSON',
+			 	success: function( data ){
+			 		var str="";
+					for(var i=0;i<data.length;i++){
+						str+="<option value="+data[i].cid+">"+data[i].cnumber+"</option>";
+					}
+					$("#cid").append(str);
+				}
+			});
+	 });
+	
+	//查看交接单
+	var ids;
+	function ckjiaojie(){
+		$("#chjj")[0].reset();
+		var rows=$( '#handover_manager' ).datagrid("getChecked");
+		if(rows.length<=0){
+			$.messager.show({title:"温馨提示",msg:"请选择您要查看交接单的订单",timeout:2000,showType:"slide"});
+			return;
+		}else{
+			var row=rows[0];
+			var id=row.osid;
+			ids=id;
+		}
+		$('#ckjiaojie').dialog({
+			title:"查看交接单信息",
+			iconCls:'icon-user-edit',
+			buttons:[{
+				text:'确定',
+				iconCls:'icon-user-edit',
+				handler:function(){
+					$('#ckjiaojie').dialog("close");
+				}
+			}]
+		})
+		$('#ckjiaojie').dialog("open");
+	}
+	
+	//收寄地的交接单
+	$("select#fromaddr").change(function(){
+		$("#chjj")[0].reset();
+		 var hfromSpname=$(this).val()
+	     $.ajax({
+				type: 'POST',
+				url: "selectfromaddr.action",
+				data:{hfromSpname:hfromSpname,osid:ids},
+				dataType: 'JSON',
+			 	success: function( data ){
+			 		if(data.code==1){
+			 			for(var i=0;i<data.obj.length;i++){
+			 				$("#bianhao").val(data.obj[i].osid);
+			 				$("#shoujianren").val(data.obj[i].orecName);
+			 				$("#jijianren").val(data.obj[i].hfromSpname);
+			 				$("#jiaojiedi").val(data.obj[i].htoSpname);
+			 				$("#yunshushijian").val(data.obj[i].hstartTime);
+			 				$("#daodashijian").val(data.obj[i].hendTime);
+			 				$("#chepaihao").val(data.obj[i].cnumber);
+			 				$("#siji").val(data.obj[i].dname);
+			 				$("#beizhu").val(data.obj[i].hremark);
+			 			}
+			 		}else{
+			 			$.messager.alert('温馨提示','当前地点无交接单');
+			 		}
+				}
+			});
+	 });
+	
+	//收寄地的交接单
+	$("select#toaddr").change(function(){
+		$("#chjj")[0].reset();
+		 var htoSpname=$(this).val()
+	     $.ajax({
+				type: 'POST',
+				url: "selecttoaddr.action",
+				data:{htoSpname:htoSpname,osid:ids},
+				dataType: 'JSON',
+			 	success: function( data ){
+					if(data.code==1){
+						for(var i=0;i<data.obj.length;i++){
+			 				$("#bianhao").val(data.obj[i].osid);
+			 				$("#shoujianren").val(data.obj[i].orecName);
+			 				$("#jijianren").val(data.obj[i].hfromSpname);
+			 				$("#jiaojiedi").val(data.obj[i].htoSpname);
+			 				$("#yunshushijian").val(data.obj[i].hstartTime);
+			 				$("#daodashijian").val(data.obj[i].hendTime);
+			 				$("#chepaihao").val(data.obj[i].cnumber);
+			 				$("#siji").val(data.obj[i].dname);
+			 				$("#beizhu").val(data.obj[i].hremark);
+			 			}
+			 		}else{
+			 			$.messager.alert('温馨提示','当前地点无交接单');
+			 		}
+				}
+			});
+	 });
 
 
 </script>

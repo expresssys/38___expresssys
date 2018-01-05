@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="handover" >
+<mapper namespace="com.yc.bean.Handover" >
   <resultMap id="BaseResultMap" type="com.yc.bean.Handover" >
     <id column="hid" property="hid" jdbcType="INTEGER" />
-    <result column="hfromSpname" property="hfromspname" jdbcType="VARCHAR" />
-    <result column="htoSpname" property="htospname" jdbcType="VARCHAR" />
-    <result column="hstartTime" property="hstarttime" jdbcType="DATE" />
-    <result column="hendTime" property="hendtime" jdbcType="DATE" />
+    <result column="hfromSpname" property="hfromSpname" jdbcType="VARCHAR" />
+    <result column="htoSpname" property="htoSpname" jdbcType="VARCHAR" />
+    <result column="hstartTime" property="hstartTime" jdbcType="DATE" />
+    <result column="hendTime" property="hendTime" jdbcType="DATE" />
     <result column="hstatus" property="hstatus" jdbcType="INTEGER" />
     <result column="cid" property="cid" jdbcType="INTEGER" />
     <result column="did" property="did" jdbcType="INTEGER" />
@@ -17,130 +17,72 @@
     <result column="res2" property="res2" jdbcType="VARCHAR" />
     <result column="res3" property="res3" jdbcType="VARCHAR" />
     <result column="res4" property="res4" jdbcType="VARCHAR" />
+    <result column="rname" property="rname" jdbcType="VARCHAR" />
+    <result column="dname" property="dname" jdbcType="VARCHAR" />
+    <result column="ctype" property="ctype" jdbcType="VARCHAR" />
+    <result column="cnumber" property="cnumber" jdbcType="VARCHAR" />
+    <result column="orecName" property="orecName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     hid, hfromSpname, htoSpname, hstartTime, hendTime, hstatus, cid, did, osid, rid, 
     hremark, res1, res2, res3, res4
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from handover
-    where hid = #{hid,jdbcType=INTEGER}
+  <!-- 根据订单详情id查询路线id -->
+  <select id="selectddByid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select rid from orderInfo where osid=#{osid}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from handover
-    where hid = #{hid,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.yc.bean.Handover" >
-    insert into handover (hid, hfromSpname, htoSpname, 
-      hstartTime, hendTime, hstatus, 
-      cid, did, osid, rid, 
-      hremark, res1, res2, 
-      res3, res4)
-    values (#{hid,jdbcType=INTEGER}, #{hfromspname,jdbcType=VARCHAR}, #{htospname,jdbcType=VARCHAR}, 
-      #{hstarttime,jdbcType=DATE}, #{hendtime,jdbcType=DATE}, #{hstatus,jdbcType=INTEGER}, 
-      #{cid,jdbcType=INTEGER}, #{did,jdbcType=INTEGER}, #{osid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}, 
-      #{hremark,jdbcType=VARCHAR}, #{res1,jdbcType=VARCHAR}, #{res2,jdbcType=VARCHAR}, 
-      #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR})
+  
+  <!-- 查询指定路线 -->
+  <select id="selectxianluByid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select rvia as res4 from route where rid=#{rid}
+  </select>
+  
+  <!-- 查询所有配送单位 -->
+  <select id="selectpoint" resultMap="BaseResultMap">
+    select spid,spname from shipPoint where res1=0
+  </select>
+  
+  <!-- 查询空闲的司机 -->
+  <select id="selectDriver" resultMap="BaseResultMap">
+      select did,dname from driver where dstatus=0
+  </select>
+  
+  <!-- 添加交接单 -->
+  <insert id="insertHandover" parameterType="com.yc.bean.Handover">
+      insert into handover(hfromSpname,htoSpname,hstartTime,hendTime,hstatus,cid,did,osid,rid,hremark) 
+      values(#{hfromSpname},#{htoSpname},#{hstartTime},#{hendTime},#{hstatus},1,#{did},#{osid},#{rid},#{hremark})
   </insert>
-  <insert id="insertSelective" parameterType="com.yc.bean.Handover" >
-    insert into handover
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="hid != null" >
-        hid,
-      </if>
-      <if test="hfromspname != null" >
-        hfromSpname,
-      </if>
-      <if test="htospname != null" >
-        htoSpname,
-      </if>
-      <if test="hstarttime != null" >
-        hstartTime,
-      </if>
-      <if test="hendtime != null" >
-        hendTime,
-      </if>
-      <if test="hstatus != null" >
-        hstatus,
-      </if>
-      <if test="cid != null" >
-        cid,
-      </if>
-      <if test="did != null" >
-        did,
-      </if>
-      <if test="osid != null" >
-        osid,
-      </if>
-      <if test="rid != null" >
-        rid,
-      </if>
-      <if test="hremark != null" >
-        hremark,
-      </if>
-      <if test="res1 != null" >
-        res1,
-      </if>
-      <if test="res2 != null" >
-        res2,
-      </if>
-      <if test="res3 != null" >
-        res3,
-      </if>
-      <if test="res4 != null" >
-        res4,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="hid != null" >
-        #{hid,jdbcType=INTEGER},
-      </if>
-      <if test="hfromspname != null" >
-        #{hfromspname,jdbcType=VARCHAR},
-      </if>
-      <if test="htospname != null" >
-        #{htospname,jdbcType=VARCHAR},
-      </if>
-      <if test="hstarttime != null" >
-        #{hstarttime,jdbcType=DATE},
-      </if>
-      <if test="hendtime != null" >
-        #{hendtime,jdbcType=DATE},
-      </if>
-      <if test="hstatus != null" >
-        #{hstatus,jdbcType=INTEGER},
-      </if>
-      <if test="cid != null" >
-        #{cid,jdbcType=INTEGER},
-      </if>
-      <if test="did != null" >
-        #{did,jdbcType=INTEGER},
-      </if>
-      <if test="osid != null" >
-        #{osid,jdbcType=INTEGER},
-      </if>
-      <if test="rid != null" >
-        #{rid,jdbcType=INTEGER},
-      </if>
-      <if test="hremark != null" >
-        #{hremark,jdbcType=VARCHAR},
-      </if>
-      <if test="res1 != null" >
-        #{res1,jdbcType=VARCHAR},
-      </if>
-      <if test="res2 != null" >
-        #{res2,jdbcType=VARCHAR},
-      </if>
-      <if test="res3 != null" >
-        #{res3,jdbcType=VARCHAR},
-      </if>
-      <if test="res4 != null" >
-        #{res4,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+  
+  <!-- 查询此订单编号中是否有出发地到交界地的交接单 -->
+  <select id="selectCopy" parameterType="com.yc.bean.Handover" resultMap="BaseResultMap">
+      select hid from handover where hfromSpname=#{hfromSpname} and osid=#{osid}
+  </select>
+  
+  <!-- 查询车辆类型 -->
+  <select id="selectcartype" resultMap="BaseResultMap">
+     	select ctype from car
+  </select>
+  
+  <!-- 查询车辆 -->
+   <select id="selectcar" parameterType="com.yc.bean.Handover" resultMap="BaseResultMap">
+     	select cid,cnumber from car where ctype=#{ctype} and cstatus=0
+  </select>
+  
+  <!-- 根据收寄地查询 -->
+  <select id="selectfromaddr" parameterType="java.util.Map" resultMap="BaseResultMap">
+     	select o.osid as osid,orecName,hfromSpname,htoSpname,hstartTime,hendTime,dname,hremark,cnumber 
+		from handover h join orders o on h.osid=o.osid join driver d on h.did=d.did join car c on h.cid=c.cid
+		where hfromSpname=#{hfromSpname} and h.osid=#{osid}
+  </select>
+  
+   <!-- 根据计件地地查询 -->
+  <select id="selecttoaddr" parameterType="java.util.Map" resultMap="BaseResultMap">
+     	select o.osid as osid,orecName,hfromSpname,htoSpname,hstartTime,hendTime,dname,hremark,cnumber 
+		from handover h join orders o on h.osid=o.osid join driver d on h.did=d.did join car c on h.cid=c.cid
+		where htoSpname=#{htoSpname} and h.osid=#{osid}
+  </select>
+   
+   
   <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Handover" >
     update handover
     <set >
