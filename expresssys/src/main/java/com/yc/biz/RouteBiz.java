@@ -6,10 +6,10 @@ import com.yc.bean.Route;
 
 public interface RouteBiz {
 	//查询所有路线
-			public Map<String, Object> findAll(Integer start, Integer pagesize);
+			public Map<String, Object> findAll();
 			
 			//根据id查询
-			public Map<String, Object> findById(Route s,Integer start, Integer pagesize);
+			public Map<String, Object> findBy(Map map);
 			
 			//添加路线
 			public int add(Route s);

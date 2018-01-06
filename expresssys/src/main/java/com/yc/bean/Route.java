@@ -50,12 +50,6 @@ public class Route implements Serializable{
         return res1;
     }
 
-    @Override
-	public String toString() {
-		return "Route [rid=" + rid + ", rname=" + rname + ", rvia=" + rvia + ", res1=" + res1 + ", res2=" + res2
-				+ ", res3=" + res3 + ", res4=" + res4 + "]";
-	}
-
 	public void setRes1(String res1) {
         this.res1 = res1 == null ? null : res1.trim();
     }
@@ -83,4 +77,12 @@ public class Route implements Serializable{
     public void setRes4(String res4) {
         this.res4 = res4 == null ? null : res4.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Route [rid=" + rid + ", rname=" + rname + ", rvia=" + rvia + ", res1=" + res1 + ", res2=" + res2
+				+ ", res3=" + res3 + ", res4=" + res4 + "]";
+	}
+
+    
 }

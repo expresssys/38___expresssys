@@ -30,6 +30,16 @@
     limit ${start},${pagesize} 
   </select>
   
+   <!-- 查询所有 -->
+   <select id="selectAll" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from shippoint 
+    where  res1=0
+  </select>
+  
+  
+  
   <!-- 通过id查询 -->
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.util.Map">
     select 

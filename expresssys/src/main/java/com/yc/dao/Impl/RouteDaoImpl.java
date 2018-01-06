@@ -23,21 +23,13 @@ public class RouteDaoImpl implements RouteDao {
 	
 
 	@Override
-	public List<Route> findAll(Integer start, Integer pagesize) {
-		Map<String,Object> m=new HashMap<String,Object>();
-		m.put("start", start);
-		m.put("pagesize", pagesize);
-	
-		return this.sqlSession.selectList("com.yc.bean.Route.findAll",m);
+	public List<Route> findAll() {
+		return this.sqlSession.selectList("com.yc.bean.Route.findAll");
 	}
 
 	@Override
-	public List<Route> findById(Route s, Integer start, Integer pagesize) {
-		Map<String,Object> m=new HashMap<String,Object>();
-		m.put("start", start);
-		m.put("pagesize", pagesize);
-		m.put("Route", s);
-		return this.sqlSession.selectList("com.yc.bean.Route.selectById",m);
+	public List<Route> findBy(Map map) {
+		return this.sqlSession.selectList("com.yc.bean.Route.findBy",map);
 	}
 
 	@Override

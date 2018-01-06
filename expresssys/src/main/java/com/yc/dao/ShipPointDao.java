@@ -1,6 +1,7 @@
 package com.yc.dao;
 
 import java.util.List;
+
 import com.yc.bean.Shippoint;
 
 public interface ShipPointDao {
@@ -21,5 +22,8 @@ public interface ShipPointDao {
 	
 	//总数
 	public int total(Shippoint s);
+	
+	
+	public List<Shippoint> selectAll();
 
 }

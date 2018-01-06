@@ -10,71 +10,71 @@
 	<input type="text" name="osid" id="orders_search_osid"/>
 	<a href="javascript:orders_searchorders()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
 </div>
-<div id="orders_update" class="easyui-dialog" title="添加配送点信息" style="width:600px;height:400px;align:center"
+<div id="handover_orders_update" class="easyui-dialog" title="添加配送点信息" style="width:600px;height:400px;align:center"
 		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
-	<form id="orders_update_orders">
+	<form id="handover_orders_update_orders">
 		<ul>
 			<li>
-				<input type="hidden" name="osid" id="orders_update_osid" value="">
+				<input type="hidden" name="osid" id="handover_orders_update_osid" value="">
 				<label>寄件人姓名：</label>
-				<input type="text" name="osendname" id="orders_update_osendname" class="orders_input"/>
+				<input type="text" name="osendname" id="handover_orders_update_osendname" class="orders_input"/>
 			
 				<label>寄件人电话：</label>
-				<input type="text" name="osendtel" id="orders_update_osendtel" class="orders_input"/>
+				<input type="text" name="osendtel" id="handover_orders_update_osendtel" class="orders_input"/>
 			</li>
 			<li>
 				<label>寄件人地址：</label>
-				<input type="text" name="osendaddress" id="orders_update_osendaddress" class="orders_input2"/>
+				<input type="text" name="osendaddress" id="handover_orders_update_osendaddress" class="orders_input2"/>
 			</li>
 			<li>
 				<label>收件人姓名：</label>
-				<input type="text" name="orecname" id="orders_update_orecname" class="orders_input"/>
+				<input type="text" name="orecname" id="handover_orders_update_orecname" class="orders_input"/>
 			
 				<label>收件人电话：</label>
-				<input type="text" name="orectel" id="orders_update_orectel" class="orders_input"/>
+				<input type="text" name="orectel" id="handover_orders_update_orectel" class="orders_input"/>
 				
 			</li>
 			<li>
 			<label>收件人邮编：</label>
-				<input type="text" name="oreccode" id="orders_update_oreccode" class="orders_input"/>
+				<input type="text" name="oreccode" id="handover_orders_update_oreccode" class="orders_input"/>
 			
 				<label>收件人地址：</label>
-				<input type="text" name="orecaddress" id="orders_update_orecaddress" class="orders_input2"/>
+				<input type="text" name="orecaddress" id="handover_orders_update_orecaddress" class="orders_input2"/>
 			</li>
 			
 			<li>
 				<label>订单日期：</label>
-				<input type="text" name="otime" id="orders_update_otime"  class="easyui-datebox" />
+				<input type="text" name="otime" id="handover_orders_update_otime"  class="easyui-datebox" />
 			</li>
 			<li>
 				<label>配送费：</label>
-				<input type="text" name="oprice" id="orders_update_oprice" class="orders_input" />
+				<input type="text" name="oprice" id="handover_orders_update_oprice" class="orders_input" />
 			
 				<label>保价金额：</label>
-				<input type="text" name="oinsureprice" id="orders_update_oinsureprice" class="orders_input"/>
+				<input type="text" name="oinsureprice" id="handover_orders_update_oinsureprice" class="orders_input"/>
 			</li>
 			<li>
 				<label>订单类型：</label>
-				<select  name="otype" id="orders_update_otype" >
+				<select  name="otype" id="handover_orders_update_otype" >
 				<option value="0">快件</option>
 				<option value="1">慢件</option>
 				<option value="2">大件</option>
 				
 				</select>
 				<label>所属单位：</label>
-				<select name="spid" id="orders_update_spid" >
+				<select name="spid" id="handover_orders_update_spid" >
 				</select>
 			</li>
 			<li>
 				<label>要求启程时间：</label>
-				<input type="text" name="ostarttime" id="orders_update_ostarttime"  class="easyui-datebox" />
+				<input type="text" name="ostarttime" id="handover_orders_update_ostarttime"  class="easyui-datebox" />
 			
 				<label>要求到达时间：</label>
-				<input type="text" name="oendtime" id="orders_update_oendtime"  class="easyui-datebox" />
+				<input type="text" name="oendtime" id="handover_orders_update_oendtime"  class="easyui-datebox" />
 			</li>
 			<li>
 				<label>备注：</label>
-				<textarea  rows="5" cols="20"  id="orders_update_oremark" >
+				<textarea  rows="5" cols="20"  id="handover_orders_update_oremark" >
 				</textarea>
 			</li>
 		</ul>
@@ -234,17 +234,17 @@
 	width:30px;
 }
 
-#orders_update li{
+#handover_orders_update li{
 	list-style-type:none;
 	margin-top:20px;
 }
 
-#orders_update .orders_input{
+#handover_orders_update .orders_input{
 	width:100px;
 	border:1px solid #95B8E7;
 	line-height:20px;
 }
-#orders_update .orders_input2{
+#handover_orders_update .orders_input2{
 	width:200px;
 	border:1px solid #95B8E7;
 	line-height:20px;
@@ -350,6 +350,19 @@ $(function(){
 			$("#cids").append(str);
 		}
 	});
+	
+	var shippointStr="";
+	var shippointTypeStr="";
+	$.get("point/findAll.action",{rows:100,page:1},function(data){
+		var str="";
+	
+		shippointList=data.rows;
+		
+		$.each(shippointList,function(index,item){
+			shippointStr+="<option value='"+item.spid+"'>"+item.spname+"</option>";
+		});
+		$("#handover_orders_update_spid").append($(shippointStr));
+	});
 });
 
 
@@ -415,7 +428,7 @@ $(function(){
 
 	//详情查询
 	function orders_findorders(osid){
-		$("#orders_update_orders")[0].reset();
+		$("#handover_orders_update_orders")[0].reset();
 		var rows=$('#handover_manager').datagrid("getChecked");
 		if(rows.length<=0){
 			$.messager.show({title:"温馨提示",msg:"请选择您要修改的配送点信息...",timeout:2000,showType:"slide"});
@@ -423,40 +436,40 @@ $(function(){
 			var row=rows[0];
 			var osid=row.osid;
 			$.post("orders/findByID.action",{osid:osid},function(data){
-				$("#orders_update_osid").val(osid);
+				$("#handover_orders_update_osid").val(osid);
 				ordersmark=data.rows[0].spremark;
-				$("#orders_update_osendname").val(data.rows[0].osendname);
-				$("#orders_update_osendtel").val(data.rows[0].osendtel);
-				$("#orders_update_osendaddress").val(data.rows[0].osendaddress);
-				$("#orders_update_orecname").val(data.rows[0].orecname);
-				$("#orders_update_orectel").val(data.rows[0].orectel);
-				$("#orders_update_orecaddress").val(data.rows[0].orecaddress);
-				$("#orders_update_oreccode").val(data.rows[0].oreccode);
-				$("#orders_update_otime").datebox('setValue',data.rows[0].otimeString);
+				$("#handover_orders_update_osendname").val(data.rows[0].osendname);
+				$("#handover_orders_update_osendtel").val(data.rows[0].osendtel);
+				$("#handover_orders_update_osendaddress").val(data.rows[0].osendaddress);
+				$("#handover_orders_update_orecname").val(data.rows[0].orecname);
+				$("#handover_orders_update_orectel").val(data.rows[0].orectel);
+				$("#handover_orders_update_orecaddress").val(data.rows[0].orecaddress);
+				$("#handover_orders_update_oreccode").val(data.rows[0].oreccode);
+				$("#handover_orders_update_otime").datebox('setValue',data.rows[0].otimeString);
 				
-				$("#orders_update_oprice").val(data.rows[0].oprice);
-				$("#orders_update_oinsureprice").val(data.rows[0].oinsureprice);
-				$("#orders_update_otype").val(data.rows[0].otype);
-				$("#orders_update_ostarttime").datebox('setValue',data.rows[0].ostarttimeString);
-				$("#orders_update_oendtime").datebox('setValue',data.rows[0].oendtimeString);
-				$("#orders_update_spid").val(data.rows[0].spid);
-				$("#orders_update_usid").val(data.rows[0].usid);
-				$("#orders_update_oremark").val(data.rows[0].oremark);
+				$("#handover_orders_update_oprice").val(data.rows[0].oprice);
+				$("#handover_orders_update_oinsureprice").val(data.rows[0].oinsureprice);
+				$("#handover_orders_update_otype").val(data.rows[0].otype);
+				$("#handover_orders_update_ostarttime").datebox('setValue',data.rows[0].ostarttimeString);
+				$("#handover_orders_update_oendtime").datebox('setValue',data.rows[0].oendtimeString);
+				$("#handover_orders_update_spid").val(data.rows[0].spid);
+				$("#handover_orders_update_usid").val(data.rows[0].usid);
+				$("#handover_orders_update_oremark").val(data.rows[0].oremark);
 				
 			})
 			
-		$('#orders_update').dialog({
+		$('#handover_orders_update').dialog({
 			title:"查看配送点信息",
 			iconCls:'icon-user-edit',
 			buttons:[{
 				text:'确定',
 				iconCls:'icon-user-edit',
 				handler:function(){
-					$('#orders_update').dialog("close");
+					$('#handover_orders_update').dialog("close");
 				}
 			}]
 		})
-		$('#orders_update').dialog("open");
+		$('#handover_orders_update').dialog("open");
 		}
 	}
 	

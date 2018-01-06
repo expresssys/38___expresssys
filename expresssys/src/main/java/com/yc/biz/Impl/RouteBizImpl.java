@@ -24,9 +24,9 @@ public class RouteBizImpl implements RouteBiz {
 	}
 
 	@Override
-	public Map<String, Object> findAll(Integer start, Integer pagesize) {
+	public Map<String, Object> findAll() {
 		Map<String, Object> result=new  HashMap<String, Object>();
-		List<Route> rows=this.RouteDao.findAll(start, pagesize);
+		List<Route> rows=this.RouteDao.findAll();
 		Route s=new Route();
 		int total=this.RouteDao.total(s);
 		result.put("rows", rows);
@@ -35,10 +35,10 @@ public class RouteBizImpl implements RouteBiz {
 	}
 
 	@Override
-	public Map<String, Object> findById(Route s, Integer start, Integer pagesize) {
+	public Map<String, Object> findBy(Map map) {
 		Map<String, Object> result=new  HashMap<String, Object>();
-		List<Route> rows=this.RouteDao.findById(s, start, pagesize);
-		int total=this.RouteDao.total(s);
+		List<Route> rows=this.RouteDao.findBy(map);
+		int total=this.RouteDao.total((Route)map.get("route"));
 		result.put("rows", rows);
 		result.put("total", total);
 		return result;

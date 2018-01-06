@@ -15,6 +15,4 @@ public interface GoodsDao {
 	
 	public int total(Goods goods);
 	
-	
-	
 }

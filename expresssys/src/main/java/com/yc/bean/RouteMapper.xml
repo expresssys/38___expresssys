@@ -1,111 +1,136 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yc.bean.Route" >
-  <resultMap id="BaseResultMap" type="com.yc.bean.Route" >
-    <id column="rid" property="rid" jdbcType="INTEGER" />
-    <result column="rname" property="rname" jdbcType="VARCHAR" />
-    <result column="rvia" property="rvia" jdbcType="VARCHAR" />
-    <result column="res1" property="res1" jdbcType="VARCHAR" />
-    <result column="res2" property="res2" jdbcType="VARCHAR" />
-    <result column="res3" property="res3" jdbcType="VARCHAR" />
-    <result column="res4" property="res4" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    rid, rname, rvia, res1, res2, res3, res4
-  </sql>
-  
-  <!-- 条件查询 -->
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.util.Map">
-    select 
-    <include refid="Base_Column_List" />
-    from route
-     <where>
-    	res1!='0'
-     <if test="Route.rid!=null and Route.rid!=''">
-     	and   rid = #{Route.rid,javaType=Integer}
-     </if>
-     
-      <if test="Route.rname!=null and Route.rname!=''">
-     	and   rname = #{Route.rname,javaType=String}
-     </if>
-      </where>
-      limit ${start},${pagesize} 
-  </select>
-  
-  
-   <!-- 查询所有 -->
-   <select id="findAll" resultMap="BaseResultMap" parameterType="java.util.Map" >
-   
-    select 
-    <include refid="Base_Column_List" />
-     from route
-     where res1!='0'
-    limit ${start},${pagesize} 
-   </select>
-  
-  <!-- 总条数 -->
-  <select id="selectTotal" resultType="java.lang.Integer"  parameterType="com.yc.bean.Route">
-  
-  	select count(rid) from route
-  	<where>
-     res1!='0'
-     <if test="rid!=null and rid!='' ">
-     	and   rid = #{rid,javaType=Integer}
-     </if>
-     
-      <if test="rname!=null and rname!='' ">
-     	and   rname = #{rname,javaType=String}
-     </if>
-      </where>
-  </select>
-  
-  <!-- 删除 -->
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    update route
-    set res1='0'
-    where rid=#{rid}
-  </delete>
-  
-  
-  <insert id="insert" parameterType="com.yc.bean.Route" useGeneratedKeys="true" keyColumn="rid" keyProperty="rid" >
-    insert into route ( rname, rvia, 
-      res1, res2, res3, res4
-      )
-    values ( #{rname,jdbcType=VARCHAR}, #{rvia,jdbcType=VARCHAR}, 
-     '1', #{res2,jdbcType=VARCHAR}, #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR}
-      )
-  </insert>
-  
-  <update id="update" parameterType="com.yc.bean.Route" >
-    update route
-    <set >
-      <if test="rname != null" >
-        rname = #{rname,jdbcType=VARCHAR},
-      </if>
-      <if test="rvia != null" >
-        rvia = #{rvia,jdbcType=VARCHAR},
-      </if>
-     
-      <if test="res2 != null" >
-        res2 = #{res2,jdbcType=VARCHAR},
-      </if>
-      <if test="res3 != null" >
-        res3 = #{res3,jdbcType=VARCHAR},
-      </if>
-      <if test="res4 != null" >
-        res4 = #{res4,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where rid = #{rid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Route" >
-    update route
-    set rname = #{rname,jdbcType=VARCHAR},
-      rvia = #{rvia,jdbcType=VARCHAR},
-     
-      res2 = #{res2,jdbcType=VARCHAR},
-      res3 = #{res3,jdbcType=VARCHAR},
-      res4 = #{res4,jdbcType=VARCHAR}
-    where rid = #{rid,jdbcType=INTEGER}
-  </update>
+<mapper namespace="com.yc.bean.Route">
+	<resultMap id="BaseResultMap" type="com.yc.bean.Route">
+		<id column="rid" property="rid" jdbcType="INTEGER" />
+		<result column="rname" property="rname" jdbcType="VARCHAR" />
+		<result column="rvia" property="rvia" jdbcType="VARCHAR" />
+		<result column="res1" property="res1" jdbcType="VARCHAR" />
+		<result column="res2" property="res2" jdbcType="VARCHAR" />
+		<result column="res3" property="res3" jdbcType="VARCHAR" />
+		<result column="res4" property="res4" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		rid, rname, rvia, res1, res2, res3, res4
+	</sql>
+
+	<!-- 条件查询 -->
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from route
+		<where>
+			res1 = 1
+			<if test="route.rid!=null and route.rid!=''">
+				and rid = #{route.rid,javaType=Integer}
+			</if>
+
+			<if test="route.rname!=null and route.rname!=''">
+				and rname = #{route.rname,javaType=String}
+			</if>
+		</where>
+		limit ${start},${pagesize}
+	</select>
+
+
+	<!-- 查询所有 -->
+	<select id="findAll" resultMap="BaseResultMap" parameterType="java.util.Map">
+
+		select
+		<include refid="Base_Column_List" />
+		from route
+		where res1=1
+		limit ${start},${pagesize}
+	</select>
+
+
+	<!-- 删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update route
+		set res1='0'
+		where rid=#{rid}
+	</delete>
+
+
+	<insert id="insert" parameterType="com.yc.bean.Route"
+		useGeneratedKeys="true" keyColumn="rid" keyProperty="rid">
+		insert into route ( rname, rvia,
+		res1, res2, res3, res4
+		)
+		values ( #{rname,jdbcType=VARCHAR}, #{rvia,jdbcType=VARCHAR},
+		'1', #{res2,jdbcType=VARCHAR}, #{res3,jdbcType=VARCHAR},
+		#{res4,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.yc.bean.Route">
+		update route
+		<set>
+			<if test="rname != null">
+				rname = #{rname,jdbcType=VARCHAR},
+			</if>
+			<if test="rvia != null">
+				rvia = #{rvia,jdbcType=VARCHAR},
+			</if>
+			<if test="res1 != null">
+				res1 = #{res1,jdbcType=VARCHAR},
+			</if>
+			<if test="res2 != null">
+				res2 = #{res2,jdbcType=VARCHAR},
+			</if>
+			<if test="res3 != null">
+				res3 = #{res3,jdbcType=VARCHAR},
+			</if>
+			<if test="res4 != null">
+				res4 = #{res4,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where rid = #{rid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yc.bean.Route">
+		update route
+		set rname = #{rname,jdbcType=VARCHAR},
+		rvia = #{rvia,jdbcType=VARCHAR},
+
+		res2 = #{res2,jdbcType=VARCHAR},
+		res3 = #{res3,jdbcType=VARCHAR},
+		res4 = #{res4,jdbcType=VARCHAR}
+		where rid = #{rid,jdbcType=INTEGER}
+	</update>
+
+	<select id="selectTotal" resultType="java.lang.Integer"
+		parameterType="com.yc.bean.Route">
+		select count(*) from route
+		<where>
+			1=1
+			<if test="rname!=null and rname != ''">
+				and rname like CONCAT('%',#{rname,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="res1!=null and res1 != ''">
+				and res1 = #{res1,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+
+	<select id="findBy" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select * from route
+		<where>
+			1=1
+			<if test=" route.rname != null and route.rname != '' ">
+				and rname like CONCAT('%',#{route.rname,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="route.res1!=null and route.res1 != ''">
+				and res1 = #{route.res1,jdbcType=VARCHAR}
+			</if>
+			<if test="route.rid!=null ">
+				and rid = #{route.rid,jdbcType=VARCHAR}
+			</if>
+		</where>
+		 limit ${start},${pagesize} 
+	</select>
+	
+	
+	
+
 </mapper>

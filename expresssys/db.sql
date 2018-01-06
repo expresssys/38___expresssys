@@ -18,6 +18,9 @@ res1  varchar(2000),  --用户身份
 )
 
 select * from users;
+update users set ustatus=0 where usid=4
+delete from users where uname !="1";
+update users set ustatus=1 where usId=1
 
 insert into users(uname,upwd) values('yc','123');
 insert into users(uname,upwd) values('y','123');
@@ -71,8 +74,6 @@ res3  varchar(2000),
 res4  varchar(2000)    
 
 )
-insert into shipPoint(spname,res1) values('海口',0)
-select spid,spname from shipPoint where res1=0
 update shipPoint set res1=0 
 select * from shipPoint where res1=0
 update shipPoint set res1=1 where spid =4
@@ -103,22 +104,17 @@ foreign key(spid) references shipPoint(spid);
 
 --配送路线
 create table route(
-   rid int primary key auto_increment,  --线路id
-   rname varchar(100),   --线路名称
-   rvia  varchar(2000) ,   --配送线路顺序
-   res1  varchar(2000),    --状态 0：不可用  1：可用 
-   res2  varchar(2000),    --备用字段
-   res3  varchar(2000),    --备用字段
-   res4  varchar(2000)    --备用字段
+   rid int primary key auto_increment,  
+   rname varchar(100),   
+   rvia  varchar(2000) ,  
+   res1  varchar(2000),    
+   res2  varchar(2000),   
+   res3  varchar(2000),   
+   res4  varchar(2000)    
 )
 select rvia as res4 from route where rid=1
 
 select * from route
-insert into route(rname,rvia,res1) values('广州常德线','常德-衡阳-广州',1)
-
-update shipPoint set res1=0 where spid=2
-
-select * from  shipPoint where res1=0;
 
 --司机信息
 create table driver(
@@ -181,10 +177,14 @@ create  table handover(
    hstartTime Date,    --起始时间
    hendTime　Date ,  --到达时间
    hstatus  int ,   --交接单状态(0未发车，  1已发车，   2已完成)   默认0
-cid int ,   --运输车辆id                                                           --
-did  int ,-- 司机id                                                          --
-osid int ,-- 订单id                                                             --
-rid int ,--线路  id                                                        --
+   cid int ,   --运输车辆id                                                           --
+   did  int ,-- 司机id                                                          --
+   osid int ,-- 订单id                                                             --
+   rid int ,--线路  id                                                        --
+	cid int ,   --运输车辆id                                                           --
+	did  int ,-- 司机id                                                          --
+	osid int ,-- 订单id                                                             --
+	rid int ,--线路  id                                                        --
    hremark   varchar(5000),  --备注
    res1  varchar(2000),    --备用字段
    res2  varchar(2000) ,
