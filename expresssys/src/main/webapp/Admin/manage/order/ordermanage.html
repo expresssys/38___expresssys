@@ -309,7 +309,7 @@ $(function(){
 			remoteSort:false,
 			columns:[[   
 			        {checkbox:true},      
-			        {field:'osid',title:'配送id',width:100,align:'center',sortable:true},   
+			        {field:'osid',title:'订单id',width:100,align:'center',sortable:true},   
 			        {field:'osendname',title:'寄件人姓名',width:100,align:'center'},   
 			        {field:'osendtel',title:'联系人',width:100,align:'center'},
 			        {field:'osendaddress',title:'寄件人地址',width:100,align:'center',sortable:true},   
@@ -479,10 +479,10 @@ $(function(){
 		$.post("orders/delete.action",{osid:osid},function(data){
 			data=parseInt($.trim(data));
 			if(data>0){
-				$.messager.show({title:"成功提示",msg:"配送点信息删除成功...",timeout:2000,showType:"slide"});
+				$.messager.show({title:"成功提示",msg:"订单信息删除成功...",timeout:2000,showType:"slide"});
 				ordersObject.datagrid("reload");
 			}else{
-				$.messager.alert("失败提示","配送点信息删除失败...","error");
+				$.messager.alert("失败提示","订单信息删除失败...","error");
 				ordersObject.datagrid("reload");
 			}
 		})
