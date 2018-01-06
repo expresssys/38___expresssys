@@ -74,9 +74,6 @@ res3  varchar(2000),
 res4  varchar(2000)    
 
 )
-select * from shipPoint where res1=0
-insert into shipPoint(spname,res1) values('海口',0)
-select spid,spname from shipPoint where res1=0
 update shipPoint set res1=0 
 select * from shipPoint where res1=0
 update shipPoint set res1=1 where spid =4
