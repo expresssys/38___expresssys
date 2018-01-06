@@ -20,8 +20,42 @@ public class Orderinfo {
     private String res4;
 
     private String res5;
+    private Goods goods;
+    @Override
+	public String toString() {
+		return "Orderinfo [orderid=" + orderid + ", osid=" + osid + ", gid=" + gid + ", rid=" + rid + ", ostatus="
+				+ ostatus + ", res1=" + res1 + ", res2=" + res2 + ", res3=" + res3 + ", res4=" + res4 + ", res5=" + res5
+				+ ", goods=" + goods + ", route=" + route + ", orders=" + orders + "]";
+	}
 
-    public Integer getOrderid() {
+	private Route route;
+	private Orders orders;
+
+    public Orders getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Orders orders) {
+		this.orders = orders;
+	}
+
+	public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
+	public Route getRoute() {
+		return route;
+	}
+
+	public void setRoute(Route route) {
+		this.route = route;
+	}
+
+	public Integer getOrderid() {
         return orderid;
     }
 

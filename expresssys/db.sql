@@ -169,22 +169,21 @@ foreign key(osid) references order(osid);
 
 --货物交接表
 create  table handover(
-   hid int primary key auto_increment,    --id
-   hfromSpname  varchar(50),  --初始配送点名称
-   htoSpname varchar(50),    --到达配送点名称
-   hstartTime Date,    --起始时间
-   hendTime　Date ,  --到达时间
-   hstatus  int ,   --交接单状态(0未发车，  1已发车，   2已完成)   默认0
-	cid int ,   --运输车辆id                                                           --
-	did  int ,-- 司机id                                                          --
-	osid int ,-- 订单id                                                             --
-	rid int ,--线路  id                                                        --
-
-   hremark   varchar(5000),  --备注
-   res1  varchar(2000),    --备用字段
+   hid int primary key auto_increment,    
+   hfromSpname  varchar(50),  
+   htoSpname varchar(50),    
+   hstartTime Date,   
+   hendTime　Date , 
+   hstatus  int ,   
+cid int ,  
+did  int ,
+osid int ,
+rid int ,
+   hremark varchar(5000), 
+   res1  varchar(2000),  
    res2  varchar(2000) ,
-   res3  varchar(2000),    --备用字段
-   res4  varchar(2000)    --备用字段
+   res3  varchar(2000),    
+   res4  varchar(2000)    
 
 )
 
@@ -216,13 +215,13 @@ foreign key(rid) references route(rid);
 
 create table orders(
      osid  int primary key auto_increment,   
-     osendName varchar(20),   --寄件人姓名
-     osendTel  varchar(20) , --寄件人电话
-     osendAddress  varchar(50),  --寄件人地址
-     orecName varchar(20),   --收件人姓名
-     orecTel  varchar(20),   --收件人电话
-      orecAddress varchar(50),   --收件人地址
-      orecCode varchar(20)  ,--收件人邮编
+     osendName varchar(20),   
+     osendTel  varchar(20) , 
+     osendAddress  varchar(50),  
+     orecName varchar(20),  
+     orecTel  varchar(20),   
+      orecAddress varchar(50),   
+      orecCode varchar(20)  ,
       orecPhone  varchar(20),   --备用字段
       otime Date ,   --订单日期
       oprice   double(10,2),   --配送费
@@ -297,6 +296,7 @@ create table orderInfo(
   res5 varchar(2000)
 
 )
+select * from orderinfo;
 alter table order
 add constraint FK_orderInfo_order  
 foreign key(osid) references order(osid);

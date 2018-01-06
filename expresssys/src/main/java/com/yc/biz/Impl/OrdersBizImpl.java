@@ -9,13 +9,18 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yc.bean.Orderinfo;
 import com.yc.bean.Orders;
+import com.yc.biz.OrderinfoBiz;
 import com.yc.biz.OrdersBiz;
 import com.yc.dao.OrdersDao;
 
 @Service
 @Transactional
 public class OrdersBizImpl implements OrdersBiz {
+	@Resource(name="orderinfoBizImpl")
+	private OrderinfoBiz  orderinfoBiz;
+	
 	
 	private OrdersDao ordersDao;
 	
@@ -54,7 +59,24 @@ public class OrdersBizImpl implements OrdersBiz {
 	@Override
 	public int add(Orders s) {
 		
-		return this.ordersDao.add(s);
+	
+	
+		int a= this.ordersDao.add(s);
+		
+		//添加订单详细表
+		
+	Orderinfo orderinfo=new Orderinfo();
+	orderinfo.setOsid(s.getOsid());
+	System.out.println(s.getOsid()+"这是订单编号");
+	orderinfo.setGid(Integer.valueOf(s.getRes1()));
+	orderinfo.setRid(Integer.valueOf(s.getRes2()));
+	orderinfo.setOstatus(1);
+	try {
+		orderinfoBiz.addOrderInfo(orderinfo);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return a;
 	}
 
 	@Override
@@ -65,7 +87,6 @@ public class OrdersBizImpl implements OrdersBiz {
 
 	@Override
 	public int delete(Orders s) {
-		// TODO Auto-generated method stub
 		return this.ordersDao.delete(s);
 	}
 	

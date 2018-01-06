@@ -1,2 +1,551 @@
-<meta charset="UTF-8">
-车辆管理
+<table id="carmanage_car_data"  data-options="fit:true"></table>
+<meta charset="utf-8">
+
+<div id="car_search" >
+
+
+<a href="javascript:car_showAddCar()" class="easyui-linkbutton" data-options="iconCls:'icon-user-add',plain:true" style="float:left">添加</a>
+<div class="datagrid-btn-separator"></div>
+<a href="javascript:car_showUpdateCar()" class="easyui-linkbutton" data-options="iconCls:'icon-user-edit',plain:true" style="float:left">修改</a>
+<div class="datagrid-btn-separator"></div>
+<label>车牌号:</label>
+<input type="text"   name="search_cnumber" id="car_search_cnumber">
+
+<label>车型:</label>
+<select name="search_ctype" id="car_search_ctype">
+   <option value="">--车型--</option>
+ <option value="挂车">挂车</option>
+ <option value="货车">货车</option>
+</select>
+
+<label>车辆状态:</label>
+<select name="search_cstatus" id="car_search_cstatus">
+  <option value="">--车辆状态--</option>
+ <option value="0">空闲</option>
+ <option value="1">在途中</option>
+</select>
+
+<label>所属单位:</label>
+<select name="search_spid" id="car_search_spid">
+
+</select>
+<a href="javascript:car_searchCar()" class="easyui-linkbutton" data-options="iconCls:'icon-user-magnify'">查询</a>
+</div>
+
+
+
+
+<div id="car_update" class="easyui-dialog" title="添加车辆信息" style="width:440px;height:550px;"data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+<form id="car_update_car">
+
+  <ul>
+  
+  <li>
+  <label>车牌号:<span></span></label>
+  <input type="text" name="cnumber" id="car_update_cnumber">
+
+ 
+  </li>
+ 
+ <li>
+  <label>车型:<span></span></label>
+  <select  name="ctype" id="car_update_ctype" >
+     <option value="">--车型--</option>
+     <option value="挂车">挂车</option>
+     <option value="货车">货车</option>
+  </select>
+  </li>
+  
+  <li>
+  <label>购买日期:<span></span></label>
+  <input type="text" name="cBuyDay" id="car_update_cBuyDay" class="easyui-datebox" >
+  </li>
+  
+  <li>
+ <label>运用编号:<span></span></label>
+ <input type="text"  name="crunNum" id="car_update_crunNum">
+ </li>
+ 
+ 
+ <li>
+ <label>容量:<span></span></label>
+ <input  type="number" name="cvolume" id="car_update_cvolume">
+ 
+ </li>
+ 
+ 
+ <li>
+  <label>吨位:<span></span></label>
+  <input type="number" name="cton" id="car_update_cton">
+ </li>
+  
+ <li>
+ <label>车辆状态:<span></span></label>
+ <input type="radio" value="0" name="cstatus" checked="true">空闲
+ <input type="radio" value="1" name="cstatus">在途中
+ </li>
+ 
+ <li>
+  <label>是否箱式:<span></span></label>
+  <input type="radio" value="0" name="cisbox">是
+ <input type="radio" value="1" name="cisbox">不是
+ </li>
+ 
+ <li>
+   <label>所属单位:<span></span></label>
+   <select  name="spid" id="car_update_spid">
+  
+   
+   
+   
+   </select>
+</li>
+
+<li>
+
+<label>备注:<span></span></label>
+   <textarea rows="5" cols="50" name="cremark" id="car_update_cremark">
+      
+   </textarea>
+</li>
+  
+  
+  </ul>
+</form>
+
+
+</div>
+
+<style>
+#car_search label{
+margin-left:20px;}
+
+#car_update .car_input{
+width:160px;
+border:1px solid #95B8E7;
+line-height:20px;}
+
+
+#car_update label{
+	display:inline-block;
+	width:75px;	
+	height:12px;
+	text-align:justify;
+	margin-top: 1px;
+	margin-right: 10px;
+	margin-left:10px;
+}
+
+#car_update label span{
+  display:inline-block;
+  width:100%;
+}
+#car_update li{
+list-style-type:none;
+margin-top:20px;}
+
+</style>
+
+
+
+<script  type="text/javascript">
+var carObject;
+
+$(function(){
+	var shippointStr=" <option value='0'>--所属单位--</option>";
+	
+	 $.get("point/findAll.action",{rows:20,page:1},function(data){
+		   var str="";
+		   shippointList=data.rows;
+			
+			$.each(shippointList,function(index,item){
+				shippointStr+="<option value='"+item.spid+"'>"+item.spname+"</option>";
+			});
+			
+			$("#car_update_spid").append($(shippointStr));
+			$("#car_search_spid").append($(shippointStr));
+			
+			   carObject=$('#carmanage_car_data').datagrid({
+					url:'car/findAllCar.action',                  //一个用于从远程站点请求数据的超链接地址
+					loadMsg:'数据加载中...',   
+					
+					fitColumns:true,   //使列自动适应表格宽度    fitColumns
+					striped:true,    //背景交替行出现
+					rownumbers:true,
+					//singleSelect:true,
+					
+					
+					pagination:true,
+					pageNumber:1,
+					pageSize:50,
+					pageList:[5,10,20,30,40,50],
+
+					sortName:'cid',
+					remoteSort:false,
+					columns:[[
+					          {checkbox:true},
+					          {field:'cid',title:'车辆编号' ,resizable:true, width:100,align:'center',sortable:true},
+					          {field:'cnumber',title:'车牌号' , width:100,align:'center'},
+					          {field:'ctype',title:'车辆类型' , width:100,align:'center'},
+					          {field:'crunnum',title:'运营证号' , width:100,align:'center'},
+					          {field:'shippoint',title:'所属单位' , width:100,align:'center',formatter:function(val,row,index){
+					        	
+					        	  return val.spname;
+					          }},
+					          {field:'cstatus',title:'车辆状态' , width:100,align:'center',formatter:function(val,row,index){
+					        	 if(val=="1"){
+					        		 return "在途中";
+					        	 }
+				                  if(val=="0") {
+					        		 return "空闲";
+					        	 }
+					          }},
+					          {field:'_operate',title:'操作' , width:100,align:'center',formatter:function(val,row,index){
+					        	  
+					        	  return "<a href='javascript:point_findpoint("+row.cid+")'> 详情</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:point_delpoint("+row.cid+")'> 删除</a>"  ;
+					          }}
+					          ]],
+					          
+					 toolbar:"#car_search"
+				});
+		  
+	 },"json");
+	
+	
+	
+ 
+	   
+
+
+
+});
+
+
+function car_showAddCar(){
+	$('#car_update').dialog({
+		title:"添加车辆信息",
+	iconCls:'icon-user-add',
+	buttons:[{
+		text:'确定',
+		iconCls:'icon-user-add',
+		handler:function(){
+			var cnumber=$.trim($("#car_update_cnumber").val());
+			var ctype=$.trim($("#car_update_ctype").val());
+			var cbuydays=$("#car_update_cBuyDay").datebox("getValue");
+			var crunnum=$.trim($("#car_update_crunNum").val());
+			var cvolume=$.trim($("#car_update_cvolume").val());
+			var cton=$.trim($("#car_update_cton").val());
+			//var cstatus=$.trim($("input[name='cstatus']").val());
+			var cstatus=null; 
+
+			var obj=document.getElementsByName("cstatus")
+			for (var i=0;i<obj.length;i++){ //遍历Radio 
+			if(obj[i].checked){ 
+			cstatus=obj[i].value; 
+			} 
+			} 
+			//var cisbox=$.trim($("input[name='cisbox']").val());
+			var cisbox=null; 
+
+			var objs=document.getElementsByName("cisbox")
+			for (var i=0;i<objs.length;i++){ //遍历Radio 
+			if(objs[i].checked){ 
+			cisbox=objs[i].value; 
+			} 
+			} 
+			var spid=$.trim($("#car_update_spid").val());
+			var cremark=$.trim($("#car_update_cremark").val());
+			
+			if(cnumber==""&&crunnum==""){
+				return;
+			}
+			
+			alert(cbuydays)
+			$.ajax({
+				url:"car/addcar.action",
+				secureuri:false,
+				dataType:"json",
+				method:"post",
+				data:{cnumber:cnumber,ctype:ctype,cbuydays:cbuydays,crunnum:crunnum,cvolume:cvolume,cton:cton,cstatus:cstatus,cisbox:cisbox,spid:spid,cremark:cremark},
+				success:function(data,status){
+					
+					if(data.code==1){
+						carObject.datagrid("reload");
+						$("#car_update_car")[0].reset();
+						$.messager.show({title:"成功提示",msg:"车辆信息添加成功...",timeout:2000,showType:"slide"});
+						$('#car_update').dialog("close");
+					}else{
+						$.messager.alert("失败提示","车辆信息添加失败...","error");
+					}
+					
+				
+					
+				},
+				error:function(data,status,e){
+					$.messager.alert("失败提示","车辆信息添加失败...\n"+e,"error");
+				}
+			});
+			
+			
+			
+		}
+	}]
+	});
+	$('#car_update').dialog("open");
+	
+	
+	
+	
+}
+
+
+
+function car_showUpdateCar(){
+	var rows=$('#carmanage_car_data').datagrid("getChecked");
+	
+	//js中date时间转换yyyy-mm-dd hh:MM:ss等格式字符串
+	Date.prototype.format = function (format) {
+	    var args = {
+	        "M+": this.getMonth() + 1,
+	        "d+": this.getDate(),
+	        "h+": this.getHours(),
+	        "m+": this.getMinutes(),
+	        "s+": this.getSeconds(),
+	        "q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
+	        "S": this.getMilliseconds()
+	    };
+	    if (/(y+)/.test(format))
+	        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+	    for (var i in args) {
+	        var n = args[i];
+	        if (new RegExp("(" + i + ")").test(format))
+	            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
+	    }
+	    return format;
+	};
+	
+	
+	if(rows.length<=0){
+		$.messager.show({title:"温馨提示",msg:"请选择你要修改的车辆信息....",timeout:2000,showType:"slide"});
+	}else{
+		var row=rows[0];
+	
+	     var cid=row.cid;
+	   
+		
+		$("#car_update_cnumber").val(row.cnumber); 
+		$("#car_update_ctype").val(row.ctype);
+		$("#car_update_cBuyDay").datebox("setValue",(new Date(row.cbuyday).format("yyyy-MM-dd")));
+		$("#car_update_crunNum").val(row.crunnum);
+		$("#car_update_cvolume").val(row.cvolume);
+		$("#car_update_cton").val(row.cton);
+		
+		if(row.cstatus==1){
+			
+			$(":radio[name='cstatus'][value='" + 1 + "']").prop("checked", "checked");
+		}
+		if(row.cstatus==0){
+			$(":radio[name='cstatus'][value='" + 0 + "']").prop("checked", "checked");
+
+		}
+	   if(row.cisbox==0){
+			
+			$(":radio[name='cisbox'][value='" + 0 + "']").prop("checked", "checked");
+		}
+	   if(row.cisbox==1){
+			
+			$(":radio[name='cisbox'][value='" + 1 + "']").prop("checked", "checked");
+		}
+		$("#car_update_spid").val(row.spid);
+		$("#car_update_cremark").val(row.cremark);
+		
+		
+		
+	$('#car_update').dialog({
+		title:"修改车辆信息",
+	   iconCls:'icon-user-edit',
+	   buttons:[{
+		   text:'保存修改',
+		   iconCls:'icon-user-edit',
+	       handler:function(){
+	    	   var cnumber=$.trim($("#car_update_cnumber").val());
+				var ctype=$.trim($("#car_update_ctype").val());
+				var cbuydays=$("#car_update_cBuyDay").datebox("getValue");
+				var crunnum=$.trim($("#car_update_crunNum").val());
+				var cvolume=$.trim($("#car_update_cvolume").val());
+				var cton=$.trim($("#car_update_cton").val());
+				//var cstatus=$.trim($("input[name='cstatus']").val());
+				var cstatus=null; 
+
+				var obj=document.getElementsByName("cstatus")
+				for (var i=0;i<obj.length;i++){ //遍历Radio 
+				if(obj[i].checked){ 
+				cstatus=obj[i].value; 
+				} 
+				} 
+				//var cisbox=$.trim($("input[name='cisbox']").val());
+				var cisbox=null; 
+
+				var objs=document.getElementsByName("cisbox")
+				for (var i=0;i<objs.length;i++){ //遍历Radio 
+				if(objs[i].checked){ 
+				cisbox=objs[i].value; 
+				} 
+				} 
+				var spid=$.trim($("#car_update_spid").val());
+				var cremark=$.trim($("#car_update_cremark").val());
+		     if(cnumber==""&&crunnum==""){
+		    	 return ;
+		    	 }
+		     
+		     
+		     $.ajax({
+		    	 url:"car/updateCar.action",
+		    			 secureuri:false,
+		    			
+		    			 dataType:"json",
+		    			 data:{cid:cid,cnumber:cnumber,ctype:ctype,cbuydays:cbuydays,crunnum:crunnum,cvolume:cvolume,cton:cton,cstatus:cstatus,cisbox:cisbox,spid:spid,cremark:cremark},
+		    			 success:function(data,status){
+		    				
+		    				
+		    				 if(data.code==1){
+		    					 carObject.datagrid("reload");
+		    					 $("#car_update_car")[0].reset();
+		    					
+									$.messager.show({title:"成功提示",msg:"车辆信息修改成功",timeout:2000,showType:"slide"});
+										$('#car_update').dialog("close");
+		    				 }else{
+		    					 $.messager.alert("失败提示","车辆信息修改失败","error");
+		    					 
+		    				 }
+		    				 
+		    			 },
+		    			 error:function(data,status,e){
+		    				 $.messager.alert("失败提示","车辆信息修改失败....","error");
+		    			 }
+		     });
+		     
+		     
+		     }
+	      
+	   }]
+	});
+	$('#car_update').dialog("open");
+	}
+}
+
+
+function car_searchCar(){
+	var cnumber=$.trim($("#car_search_cnumber").val());
+	var ctype=$.trim($("#car_search_ctype").val());
+	var cstatus=$.trim($("#car_search_cstatus").val());
+	var spid=$.trim($("#car_search_spid").val());
+	
+	$('#carmanage_car_data').datagrid({
+		url:"car/findByInfo.action",
+		queryParams:{cnumber:cnumber,ctype:ctype,cstatus:cstatus,spid:spid}
+	});
+}
+
+
+
+
+
+function point_delpoint(cid){
+	 var rows=carObject.datagrid("getChecked");
+	 if(rows.length<=0){
+		 $.messager.show({title:"温馨提示",msg:"请选择要删除的数据",timeout:2000,showType:"slide"});
+	 }else{
+
+	  $.messager.confirm('确认提示','数据一旦删除不能恢复,你确认删除吗?',function(r){
+		  if(r){
+			  $.post("car/delCar.action",{cid:cid},function(data){
+				  data=parseInt($.trim(data.code));		
+				  if(data==1){
+					  $.messager.show({title:'温馨提示',msg:'车辆删除成功...',timeout:2000,showType:'slide'});  
+					  $('#carmanage_car_data').datagrid("reload");
+				  }else{
+					 $.messager.alert("温馨提示","车辆删除失败...","error"); 
+				  }
+				  
+			  },"json");
+			  
+			  
+			 
+		  }else{
+			  return;
+		  }
+	  });
+	 }
+	
+}
+
+
+function point_findpoint(cid){
+	//js中date时间转换yyyy-mm-dd hh:MM:ss等格式字符串
+	Date.prototype.format = function (format) {
+	    var args = {
+	        "M+": this.getMonth() + 1,
+	        "d+": this.getDate(),
+	        "h+": this.getHours(),
+	        "m+": this.getMinutes(),
+	        "s+": this.getSeconds(),
+	        "q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
+	        "S": this.getMilliseconds()
+	    };
+	    if (/(y+)/.test(format))
+	        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+	    for (var i in args) {
+	        var n = args[i];
+	        if (new RegExp("(" + i + ")").test(format))
+	            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
+	    }
+	    return format;
+	};
+	
+	var rows=$('#carmanage_car_data').datagrid("getChecked");
+	var row=rows[0];
+	
+	$("#car_update_cnumber").val(row.cnumber); 
+	$("#car_update_ctype").val(row.ctype);
+	$("#car_update_cBuyDay").datebox("setValue",(new Date(row.cbuyday).format("yyyy-MM-dd")));
+	$("#car_update_crunNum").val(row.crunnum);
+	$("#car_update_cvolume").val(row.cvolume);
+	$("#car_update_cton").val(row.cton);
+	
+	
+	if(row.cstatus==1){
+		
+		$(":radio[name='cstatus'][value='" + 1 + "']").prop("checked", "checked");
+	}
+	if(row.cstatus==0){
+		$(":radio[name='cstatus'][value='" + 0 + "']").prop("checked", "checked");
+
+	}
+   if(row.cisbox==0){
+		
+		$(":radio[name='cisbox'][value='" + 0 + "']").prop("checked", "checked");
+	}
+   if(row.cisbox==1){
+		
+		$(":radio[name='cisbox'][value='" + 1 + "']").prop("checked", "checked");
+	}
+	
+	$("#car_update_spid").val(row.spid);
+	$("#car_update_cremark").val(row.cremark);
+	
+	
+	
+$('#car_update').dialog({
+	title:"查看车辆信息",
+   iconCls:'icon-user-edit',
+   
+});
+$('#car_update').dialog("open");
+
+}
+
+
+</script>
+
+

@@ -55,7 +55,6 @@ public class OrdersController {
 	//添加配送点
 	@RequestMapping(value="add.action")
 	public @ResponseBody int add(Orders s,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
-		System.out.println(s);
 		int result=0;
 		this.ordersBiz.add(s);
 		result=1;
