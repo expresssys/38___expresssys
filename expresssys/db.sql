@@ -72,7 +72,6 @@ res1 varchar(5000),
 res2 varchar(5000),
 res3  varchar(2000),   
 res4  varchar(2000)    
-
 )
 update shipPoint set res1=0 
 select * from shipPoint where res1=0
