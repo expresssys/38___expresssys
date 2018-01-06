@@ -84,7 +84,7 @@
   
   <!-- 条件查询 -->
   
-  <select  id="selectByParam" resultMap="BaseResultMap" parameterType="Car">
+  <select  id="selectByParam" resultMap="BaseResultMap" parameterType="com.yc.bean.Car">
       select
      car.cid,cnumber, ctype,  cbuyDay, crunNum, cvolume, cton, cstatus, cisbox,car.spid as spid, cremark, 
     car.res1, car.res2, car.res3, car.res4,
@@ -101,7 +101,7 @@
       </if>
       
       <if test="cnumber!=null and cnumber!='' ">
-     and  cnumber=#{cnumber}
+     and  cnumber like CONCAT('%',#{cnumber,jdbcType=VARCHAR},'%')
       </if>
       
       
@@ -130,7 +130,7 @@
   
   
   <!-- 查询条数 -->
-  <select  id="selectTotal" resultType="java.lang.Integer" parameterType="Car">
+  <select  id="selectTotal" resultType="java.lang.Integer" parameterType="com.yc.bean.Car">
   select count(cid)  from car
   <where>
      <if test="cid!=null and cid!='' ">
@@ -138,7 +138,7 @@
       </if>
       
       <if test="cnumber!=null and cnumber!='' ">
-     and  cnumber=#{cnumber}
+     	and cnumber like CONCAT('%',#{cnumber,jdbcType=VARCHAR},'%')
       </if>
       
       

@@ -4,9 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <title>你好</title>
-
+<script src="js/echarts.js"></script>
 </head>
 <body>
 
@@ -28,4 +27,5 @@ console.info(geoCoordMap[str]);
 </script>
 
 </body>
+
 </html>

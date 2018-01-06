@@ -14,9 +14,10 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.yc.Util.MD5Encryption;
+import com.yc.bean.Car;
 import com.yc.bean.Goods;
 import com.yc.bean.Users;
+import com.yc.biz.CarBiz;
 import com.yc.biz.GoodsBiz;
 import com.yc.biz.UsersBiz;
 
@@ -35,6 +36,9 @@ public class Test1 {
 
 	@Resource(name="goodsBizImpl")
 	private GoodsBiz gb;
+	
+	@Resource(name="carBizImpl")
+	private CarBiz cb;
 
 	//查询
 	@Test
@@ -58,8 +62,10 @@ public class Test1 {
 		Users users = new Users();
 		users.setUname("a");
 		users.setUpwd("a");
-//		System.out.println(ub.addUsers(users));
-		System.out.println(ub.adminlogin(users));;
+		users.setUstatus(1);
+		users.setRes1("1");
+		ub.addUsers(users);
+		System.out.println(ub.adminlogin(users));
 	}
 
 	//update
@@ -103,5 +109,17 @@ public class Test1 {
 		map.put("goods", goods);
 		
 		System.out.println(gb.findBy(map));
+	}
+	
+	@Test
+	public void test7(){
+		Car car = new Car();
+		car.setCnumber("55");
+		
+		try {
+			System.out.println(cb.findCarByInfo(car));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

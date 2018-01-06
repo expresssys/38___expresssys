@@ -130,6 +130,7 @@ public class CarController implements Serializable {
 			int start=(pages-1)*pagesize;
 			car.setStart(start);
 			car.setRes1(null);
+			System.out.println(car);
 			List<Car> list=carBiz.findCarByInfo(car);
 			jm.setRows(list);
 			int total=carDao.total(car);

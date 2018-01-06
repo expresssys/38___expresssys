@@ -298,14 +298,14 @@ $(function(){
 		ordersObject = $('#orders_manager').datagrid({
 			url : "orders/findAll.action",
 			fitColumns : true,
-			striped : true,//������ʾ�б���
+			striped : true,
 			loadMsg : '数据加载中...',
 			rownumbers : true,
 			pagination : true,
 			pageNumber : 1,
 			pageSize : 10,
 			pageList : [  10, 20, 30, 40, 50 ],
-			sortName:'osid',//������һ��������
+			sortName:'osid',
 			remoteSort:false,
 			columns:[[   
 			        {checkbox:true},      

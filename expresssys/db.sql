@@ -36,15 +36,17 @@ create table car(
   cton   double(16,2),  --吨位
   cstatus int ,     --车辆状态  (0空闲 ，1在途中)
   cisbox  int ,   --是否箱式  (0是，1不是)
-
 spid int ,    --所属单位                                          --
   cremark  varchar(5000),   --备注
   res1 varchar(5000),   --备用字段
   res2 varchar(5000),
   res3  varchar(2000),    --备用字段   
   res4  varchar(2000)    --备用字段
-
 )
+insert into car(cnumber,ctype,cstatus) values(458,'货车',0)
+select ctype from car
+
+select cid,cnumber from car where ctype='货车' and cstatus=0
 
 alter table car
 add constraint FK_shipPoint_car  
@@ -73,6 +75,8 @@ res4  varchar(2000)
 
 )
 select * from shipPoint where res1=0
+insert into shipPoint(spname,res1) values('海口',0)
+select spid,spname from shipPoint where res1=0
 update shipPoint set res1=0 
 select * from shipPoint where res1=0
 update shipPoint set res1=1 where spid =4
@@ -111,10 +115,17 @@ create table route(
    res3  varchar(2000),   
    res4  varchar(2000)    
 )
+select rvia as res4 from route where rid=1
 
 select * from route
 delete from route
 insert into route(rname,rvia) values('测试','1-2-3-4')
+insert into route(rname,rvia,res1) values('广州常德线','常德-衡阳-广州',1)
+
+update shipPoint set res1=0 where spid=2
+
+select * from  shipPoint where res1=0;
+
 --司机信息
 create table driver(
     did   int primary key auto_increment, 
@@ -129,8 +140,9 @@ create table driver(
     res2  varchar(2000),    --备用字段
     res3  varchar(2000),    --备用字段
     res4  varchar(2000)    --备用字段
-
 )
+insert into driver(dname,dstatus) values('张三',0)
+select did,dname from driver where dstatus=0
 
 
 
@@ -169,24 +181,31 @@ foreign key(osid) references order(osid);
 
 --货物交接表
 create  table handover(
-   hid int primary key auto_increment,    
-   hfromSpname  varchar(50),  
-   htoSpname varchar(50),    
-   hstartTime Date,   
-   hendTime　Date , 
-   hstatus  int ,   
-cid int ,  
-did  int ,
-osid int ,
-rid int ,
-   hremark varchar(5000), 
-   res1  varchar(2000),  
+   hid int primary key auto_increment,    --id
+   hfromSpname  varchar(50),  --初始配送点名称
+   htoSpname varchar(50),    --到达配送点名称
+   hstartTime Date,    --起始时间
+   hendTime　Date ,  --到达时间
+   hstatus  int ,   --交接单状态(0未发车，  1已发车，   2已完成)   默认0
+cid int ,   --运输车辆id                                                           --
+did  int ,-- 司机id                                                          --
+osid int ,-- 订单id                                                             --
+rid int ,--线路  id                                                        --
+   hremark   varchar(5000),  --备注
+   res1  varchar(2000),    --备用字段
    res2  varchar(2000) ,
-   res3  varchar(2000),    
-   res4  varchar(2000)    
-
+   res3  varchar(2000),    --备用字段
+   res4  varchar(2000)    --备用字段
 )
 
+select o.osid as osid,orecName,hfromSpname,htoSpname,hstartTime,hendTime,dname,hremark,cnumber 
+from handover h join orders o on h.osid=o.osid join driver d on h.did=d.did join car c on h.cid=c.cid
+where hfromSpname=#{hfromSpname} and osid=#{osid}
+
+insert into handover(hstartTime) values('2012-10-15')
+delete from handover
+
+select * from handover where hfromSpname='广州' and htoSpname='' and osid=
 
 alter table handover
 add constraint FK_car_handover  
@@ -239,10 +258,11 @@ create table orders(
       res2 varchar(2000),    --备用字段
       res3 varchar(2000),     --备用字段
       res4  varchar(2000)   --备用字段
-
-
 )
-select * from orders;
+
+
+
+select osid,orecName from orders;
 
 
 alter table order
@@ -297,6 +317,7 @@ create table orderInfo(
 
 )
 select * from orderinfo;
+select rid from orderInfo where osid=1
 alter table order
 add constraint FK_orderInfo_order  
 foreign key(osid) references order(osid);

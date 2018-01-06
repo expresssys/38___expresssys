@@ -205,7 +205,6 @@ $(function(){
 					        	  return "<a href='javascript:point_findpoint("+row.cid+")'> 详情</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:point_delpoint("+row.cid+")'> 删除</a>"  ;
 					          }}
 					          ]],
-					          
 					 toolbar:"#car_search"
 				});
 		  
@@ -222,6 +221,7 @@ $(function(){
 
 
 function car_showAddCar(){
+	$("#car_update_car")[0].reset();
 	$('#car_update').dialog({
 		title:"添加车辆信息",
 	iconCls:'icon-user-add',
@@ -260,7 +260,6 @@ function car_showAddCar(){
 				return;
 			}
 			
-			alert(cbuydays)
 			$.ajax({
 				url:"car/addcar.action",
 				secureuri:false,
