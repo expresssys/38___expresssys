@@ -1,5 +1,10 @@
 package com.yc.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,12 +12,16 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yc.Util.ExportExcel;
+import com.yc.bean.Excel;
 import com.yc.bean.Handover;
 import com.yc.biz.HandoverBiz;
 
@@ -157,4 +166,34 @@ public class HandoverController {
 		}
 		return map;
 	}
+	
+	//导出excel表格
+	@RequestMapping(value = "/exportHandover.action", method = RequestMethod.GET, produces = { "application/json;charset=UTF-8" })
+	@ResponseBody
+	public void selectAllstudent(Integer osid,String hfromSpname,String htoSpname,
+			String orecName,String hstartTime,String hendTime,String cnumber,String dname,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		List<Excel> list=new ArrayList<>();
+		String filename= new String(("订单号:"+osid+",收寄地:"+hfromSpname+",交接地:"+htoSpname+".xls").getBytes(),"iso-8859-1");	//中文文件名必须使用此句话
+		response.setContentType("application/octet-stream");
+        response.setContentType("application/OCTET-STREAM;charset=UTF-8");
+        response.setHeader("Content-Disposition", "attachment;filename="+filename );
+        String[] headers = { "订单编号","收件人", "收寄地", "交接地", "运输时间","到达时间", "车牌号","司机" };  //表格的标题栏
+        Excel excel=new Excel(osid,hfromSpname,htoSpname,orecName,hstartTime,hendTime,cnumber,dname);
+        list.add(excel);
+        try {
+        	ExportExcel<Excel> ex=new ExportExcel<Excel>();
+        	System.out.println("1111");
+			OutputStream  out = new BufferedOutputStream(response.getOutputStream());
+			ex.exportExcel("交接单",headers, list, out);
+			System.out.println("2222");
+			out.flush();
+			out.close();
+		} catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
 }

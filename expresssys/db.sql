@@ -72,11 +72,7 @@ res1 varchar(5000),
 res2 varchar(5000),
 res3  varchar(2000),   
 res4  varchar(2000)    
-
 )
-select * from shipPoint where res1=0
-insert into shipPoint(spname,res1) values('海口',0)
-select spid,spname from shipPoint where res1=0
 update shipPoint set res1=0 
 select * from shipPoint where res1=0
 update shipPoint set res1=1 where spid =4
@@ -118,6 +114,7 @@ create table route(
 select rvia as res4 from route where rid=1
 
 select * from route
+<<<<<<< HEAD
 delete from route
 insert into route(rname,rvia) values('测试','1-2-3-4')
 insert into route(rname,rvia,res1) values('广州常德线','常德-衡阳-广州',1)
@@ -126,6 +123,9 @@ update shipPoint set res1=0 where spid=2
 
 select * from  shipPoint where res1=0;
 
+=======
+
+>>>>>>> branch 'master' of git@github.com:expresssys/38___expresssys.git
 --司机信息
 create table driver(
     did   int primary key auto_increment, 
@@ -186,11 +186,23 @@ create  table handover(
    htoSpname varchar(50),    --到达配送点名称
    hstartTime Date,    --起始时间
    hendTime　Date ,  --到达时间
+<<<<<<< HEAD
    hstatus  int ,   --交接单状态(0未发车，  1已发车，   2已完成)   默认0
 cid int ,   --运输车辆id                                                           --
 did  int ,-- 司机id                                                          --
 osid int ,-- 订单id                                                             --
 rid int ,--线路  id                                                        --
+=======
+   hstatus  int ,   --交接单状态(0未发车，  1已发车，   2已完成)   默认0
+   cid int ,   --运输车辆id                                                           --
+   did  int ,-- 司机id                                                          --
+   osid int ,-- 订单id                                                             --
+   rid int ,--线路  id                                                        --
+	cid int ,   --运输车辆id                                                           --
+	did  int ,-- 司机id                                                          --
+	osid int ,-- 订单id                                                             --
+	rid int ,--线路  id                                                        --
+>>>>>>> branch 'master' of git@github.com:expresssys/38___expresssys.git
    hremark   varchar(5000),  --备注
    res1  varchar(2000),    --备用字段
    res2  varchar(2000) ,

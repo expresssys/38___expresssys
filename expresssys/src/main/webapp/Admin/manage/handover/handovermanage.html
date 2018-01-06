@@ -171,7 +171,7 @@
 			<select name="toaddr" id="toaddr" style="width: 190px; height: 30px;">
 				<option value="0">--请选择--</option>
 			</select>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-print" style="float:right">导出</a>
+			<a href="javascript:ckjj()" class="easyui-linkbutton" iconCls="icon-print" style="float:right">导出</a>
 		</div>
 		<div class="datagrid-toolbar"></div> 
 	<form id="chjj">
@@ -179,7 +179,7 @@
 	   		 <tr>
 	    		<td>订单编号:</td>
 	    		<td>
-	    			<input id="bianhao" name="bianhao" style="width: 200px; height: 25px;" class="easyui-textbox" type="text" disabled="true"/>
+	    			<input value="" id="bianhao" name="bianhao" style="width: 200px; height: 25px;" class="easyui-textbox" type="text" disabled="true"/>
 	    		</td>
 	    		<td>收件人:</td>
 	    		<td>
@@ -674,6 +674,21 @@ $(function(){
 				}
 			});
 	 });
+	
+	function ckjj(){
+		var osid=$("#bianhao").val();
+		var orecName=$("#shoujianren").val();
+		var hfromSpname=$("#jijianren").val();
+		var htoSpname=$("#jiaojiedi").val();
+		var hstartTime=$("#yunshushijian").val();
+		var hendTime=$("#daodashijian").val();
+		var cnumber=$("#chepaihao").val();
+		var dname=$("#siji").val();
+		if(osid==""){
+			$.messager.alert('温馨提示','请查看您要导出的交接单在导出');
+		}
+		window.location.href="http://localhost:8080/expresssys/Admin/exportHandover.action?"+"osid="+osid+"&hfromSpname="+hfromSpname+"&htoSpname="+htoSpname+"&orecName="+orecName+"&hstartTime="+hstartTime+"&hendTime="+hendTime+"&cnumber="+cnumber+"&dname="+dname; 
+	}
 
 
 </script>
