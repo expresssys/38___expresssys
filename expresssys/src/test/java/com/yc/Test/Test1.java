@@ -16,9 +16,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.yc.bean.Car;
 import com.yc.bean.Goods;
+import com.yc.bean.Logininfo;
 import com.yc.bean.Users;
 import com.yc.biz.CarBiz;
 import com.yc.biz.GoodsBiz;
+import com.yc.biz.LoginInfoBiz;
 import com.yc.biz.UsersBiz;
 
 @RunWith(SpringJUnit4ClassRunner.class) 
@@ -40,6 +42,9 @@ public class Test1 {
 	@Resource(name="carBizImpl")
 	private CarBiz cb;
 
+	@Resource(name="logininfoBizImpl")
+	private LoginInfoBiz lb;
+	
 	//查询
 	@Test
 	public void test1(){
@@ -121,5 +126,16 @@ public class Test1 {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void testlogininfo(){
+		Logininfo l = new Logininfo();
+		l.setLname("yc");
+		
+		
+		
+		
+		System.out.println(lb.findLoginInfo(l, 0, 5));
 	}
 }
