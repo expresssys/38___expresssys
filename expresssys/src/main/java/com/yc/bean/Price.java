@@ -159,4 +159,5 @@ public class Price {
     public void setRes4(String res4) {
         this.res4 = res4 == null ? null : res4.trim();
     }
+    
 }

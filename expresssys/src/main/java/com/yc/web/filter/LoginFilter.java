@@ -26,9 +26,8 @@ public class LoginFilter implements Filter{
 		HttpServletResponse servletResponse = (HttpServletResponse) arg1;
 		HttpSession session = servletRequest.getSession();
 		
-		System.out.println(session.getAttribute("user"));
 		if(session.getAttribute("user")==null){
-			servletResponse.sendRedirect("../back/login.html");
+			servletResponse.sendRedirect("../login.html");
 		}else{
 			arg2.doFilter(arg0, arg1);
 		}

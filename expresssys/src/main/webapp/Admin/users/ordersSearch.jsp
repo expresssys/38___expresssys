@@ -194,7 +194,7 @@
 		
 		
 		$.ajax({
-			url:"Admin/orders/findByID.action",
+			url:"orders/findByID.action",
 			secureuri:false,
 			type:"POST",
 			data: {"osid":searchVal},
@@ -203,7 +203,7 @@
 					$("#show-orderid").html(data.rows[0].osid);
 					
 					$.ajax({
-						url:"Admin/handover/findBy.action",
+						url:"handover/findBy.action",
 						secureuri:false,
 						type:"POST",
 						data: {"osid":searchVal},

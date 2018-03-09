@@ -147,18 +147,18 @@ $(function(){
 		driverObject = $('#driver_manager').datagrid({
 			url : "driver/findAll.action",
 			fitColumns : true,
-			striped : true,//������ʾ�б���
+			striped : true,//
 			loadMsg : '数据加载中...',
 			rownumbers : true,
 			pagination : true,
 			pageNumber : 1,
 			pageSize : 10,
 			pageList : [  10, 20, 30, 40, 50 ],
-			sortName:'did',//������һ��������
+			sortName:'did',//
 			remoteSort:false,
 			columns:[[   
 			        {checkbox:true},      
-			        {field:'did',title:'配送id',width:100,align:'center',sortable:true},   
+			        {field:'did',title:'司机id',width:100,align:'center',sortable:true},   
 			        {field:'dname',title:'司机名称',width:100,align:'center'},   
 			        {field:'dnumber',title:'驾驶证号',width:100,align:'center'},
 			        {field:'dphone',title:'联系电话',width:100,align:'center',sortable:true},   
@@ -184,7 +184,7 @@ $(function(){
 			        	}
 			        }},
 			        {field:'_operate',title:'操作',width:100,align:'center',formatter:function(val,row,index){
-			        	return "<a href='javascript:driver_finddriver("+row.did+")'> 详情</a><a href='javascript:driver_deldriver("+row.did+")'> 删除</a>"  //司机详情查看
+			        	return "<a href='javascript:driver_deldriver("+row.did+")'> 删除</a>"  //司机详情查看
 			        }}
 			    ]],
 			    toolbar:"#driver_search"

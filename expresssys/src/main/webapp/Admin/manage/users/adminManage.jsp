@@ -131,6 +131,7 @@ var usersObject=$('#table_users_manager').datagrid({
         {field:'res1',title:'身份',width:100,align:'center',formatter:function(val,row,index){
         	if(val==1) return "物流公司管理员";
         	else if(val==2) return "配送点管理员";
+        	else if(val==3) return "普通用户";
         }},
         {field:'_operate',title:'操作',width:100,align:'center',formatter:function(val,row,index){
         	if(row.ustatus==0){

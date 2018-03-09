@@ -1,26 +1,19 @@
 package com.yc.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yc.bean.JsonModel;
 import com.yc.bean.Price;
-import com.yc.bean.Proxy;
-import com.yc.bean.Users;
 import com.yc.biz.PriceBiz;
-import com.yc.biz.ProxyBiz;
 
 @Controller
 @Scope(value="prototype")
@@ -96,6 +89,35 @@ public class PriceController {
 		int result=priceBiz.deleteprice(pid);
 		if(result>0){
 			map.put("code", 1);
+		}else{
+			map.put("code", 0);
+		}
+		return map;
+	}
+	
+	
+	@RequestMapping(value="calPrice.action")
+	@ResponseBody
+	public Map<String,Object> calculate(String pfrom,String pto,double weight){
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("pfrom", pfrom);
+		map.put("pto", pto);
+		map.put("start", 0);
+		map.put("pagesize", 1);
+		List<Price> list=priceBiz.selectPrice(map);
+		map.clear();
+		
+		double price = 0.0;
+		if(list != null && list.size()>0){
+			if(weight>1){
+				price += list.get(0).getPrestwei() * (weight-1);
+				map.put("weight",weight );
+			}else{
+				map.put("weight",1 );
+			}
+			price += list.get(0).getPfirstwei();
+			map.put("code", 1);
+			map.put("price", price);
 		}else{
 			map.put("code", 0);
 		}

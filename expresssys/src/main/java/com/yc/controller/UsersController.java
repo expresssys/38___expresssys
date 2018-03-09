@@ -49,7 +49,7 @@ public class UsersController {
 	public @ResponseBody JsonModel updateUsers(Users users,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
 		JsonModel jm = new JsonModel();
 		Users u = (Users) session.getAttribute("user");
-		if(users.getUsid()==u.getUsid() && users.getUstatus()==0){
+		if(users.getUsid()==u.getUsid() || u.getUstatus()==0){
 			jm.setCode(0);
 			jm.setMsg("更新失败");
 			return jm;
@@ -72,7 +72,6 @@ public class UsersController {
 		JsonModel jm = new JsonModel();
 		users.setUstatus(1);
 		int status = this.ad.addUsers(users);
-		
 		if(status==1){
 			jm.setCode(1);
 		}else{

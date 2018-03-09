@@ -221,7 +221,7 @@ button, input, select, textarea {
 
 <script type="text/javascript">
 	$("#place-input").click(function(e) {
-		SelCity(this, e);
+		SelCity(this, e,"place-input");
 	});
 
 	var token = 'fHrNQj6DHTjZtfTvfqbsuvTzKc5V9SBl';
@@ -249,7 +249,7 @@ button, input, select, textarea {
 			return ;
 		}		
 		$.ajax({
-			url:"Admin/point/findByAddr.action",
+			url:"point/findByAddr.action",
 			secureuri:false,
 			type:"POST",
 			data: {"address":place,"searchType":searchType},

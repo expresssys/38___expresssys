@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>YC物流</title>
-<link rel="stylesheet" type="text/css" href="css/index.css">
+<link rel="stylesheet" type="text/css" href="easyui/css/index.css">
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 <script src="js/common.js"></script>
 <script src="js/Popt.js"></script>

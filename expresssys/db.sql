@@ -25,6 +25,22 @@ update users set ustatus=1 where usId=1
 insert into users(uname,upwd) values('yc','123');
 insert into users(uname,upwd) values('y','123');
 
+
+--登录日志信息
+
+create table logininfo(
+	lid int primary key auto_increment,
+	ltime datetime,			--登录时间
+	lname varchar(255),		--登录名
+	lip varchar(200),		--登录ip
+	lstatus varchar(200),	--状态 1登录成功  0失败
+	res1 varchar(2000),
+	res2 varchar(2000),
+	res3 varchar(2000),
+	res4 varchar(2000)
+)
+
+select * from logininfo;
 --运输车辆信息
 create table car(
   cid int primary key auto_increment,    --车辆编号
@@ -199,7 +215,6 @@ select o.osid as osid,orecName,hfromSpname,htoSpname,hstartTime,hendTime,dname,h
 from handover h join orders o on h.osid=o.osid join driver d on h.did=d.did join car c on h.cid=c.cid
 where hfromSpname=#{hfromSpname} and osid=#{osid}
 
-insert into handover(hstartTime) values('2012-10-15')
 delete from handover
 
 select * from handover where hfromSpname='广州' and htoSpname='' and osid=

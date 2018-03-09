@@ -28,6 +28,7 @@
 		from users
 		where uname=#{uname}
 		and upwd=#{upwd}
+		and ustatus > 0
 	</select>
 
 	

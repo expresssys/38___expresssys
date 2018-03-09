@@ -2,10 +2,10 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="../css/login.css">
-<script type="text/javascript" src="../js/jquery.min.js"></script>
+<link rel="stylesheet" href="css/login.css">
+<script type="text/javascript" src="js/jquery.min.js"></script>
 <title>后台登陆</title>
-<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 <script type="text/javascript">
 function adminLogin(){
 	var aname=$.trim($("#aname").val());
@@ -28,10 +28,12 @@ function adminLogin(){
 		dataType: 'JSON',
 	 	success: function( data ){
 			
-			if(data.code!=3){
+			if(data.code<=0){
 				alert(data.msg);
+			}else if(data.code==3){
+				location.href="Admin/index.jsp";
 			}else{
-				location.href="../Admin/Admin.jsp";
+				location.href="Admin/Admin.jsp";
 			}
 			
 		}
