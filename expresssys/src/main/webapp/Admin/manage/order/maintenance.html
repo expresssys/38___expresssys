@@ -1,0 +1,49 @@
+<meta charset="UTF-8">
+<table id="orders_addMaint" data-options="fit:true"></table>
+
+
+
+<script type="text/javascript">
+
+var ordersObject;
+
+$(function(){
+		ordersObject = $('#orders_addMaint').datagrid({
+			url : "orders/findAll.action",
+			fitColumns : true,
+			striped : true,
+			loadMsg : '数据加载中...',
+			rownumbers : true,
+			pagination : true,
+			pageNumber : 1,
+			pageSize : 10,
+			pageList : [  10, 20, 30, 40, 50 ],
+			sortName:'osid',
+			remoteSort:false,
+			columns:[[   
+			        {checkbox:true},      
+			        {field:'osid',title:'订单id',width:100,align:'center',sortable:true},   
+			        {field:'osendname',title:'寄件人姓名',width:100,align:'center'},   
+			        {field:'osendtel',title:'联系人',width:100,align:'center'},
+			        {field:'osendaddress',title:'寄件人地址',width:100,align:'center',sortable:true},   
+			        {field:'orectel',title:'收件人电话ַ',width:100,align:'center'},
+			        {field:'orecaddress',title:'收件人地址',width:100,align:'center'}, 
+			        {field:'ostatus',title:'订单状态',width:100,align:'center',formatter:function(val,row,index){
+			        	if(val==0){
+			        		return '未发件';
+			        	} else if(val==1){
+			        		return '已发件';
+			        	}   else if(val==3){
+			        		return '已送达';
+			        	}
+			        }}, 
+			        
+			        {field:'_operate',title:'操作',width:100,align:'center',formatter:function(val,row,index){
+			        	return "<a href='javascript:orders_findorders("+row.osid+")'> 详情</a><a href='javascript:orders_delorders("+row.osid+")'> 删除</a>"  //配送点详情查看
+			        }}
+			    ]],
+			    toolbar:"#orders_search"
+	
+		});
+	},"json");
+</script>
