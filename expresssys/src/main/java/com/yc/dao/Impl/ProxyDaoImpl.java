@@ -56,6 +56,11 @@ public class ProxyDaoImpl implements ProxyDao {
 	public List<Proxy> selectpoint() {
 		return this.sqlSession.selectList("com.yc.bean.Proxy.selectpoint");
 	}
+
+	@Override
+	public List<Proxy> findByAddr(Proxy proxy) {
+		return this.sqlSession.selectList("com.yc.bean.Proxy.findByAddr",proxy);
+	}
 	
 
 }

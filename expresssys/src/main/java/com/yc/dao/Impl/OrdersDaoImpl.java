@@ -47,7 +47,6 @@ public class OrdersDaoImpl implements OrdersDao {
 
 	@Override
 	public int update(Orders s) {
-		
 		return this.sqlSession.insert("com.yc.bean.Orders.update",s);
 	}
 

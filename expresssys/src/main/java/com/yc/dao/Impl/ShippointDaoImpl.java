@@ -68,4 +68,9 @@ public class ShippointDaoImpl implements ShipPointDao {
 		return this.sqlSession.selectList("com.yc.bean.Shippoint.selectAll");
 	}
 
+	@Override
+	public List<Shippoint> findByAddr(Shippoint s) {
+		return this.sqlSession.selectList("com.yc.bean.Shippoint.selectByAddr",s);
+	}
+
 }

@@ -36,4 +36,12 @@ public interface HandoverDao {
 	//根据收寄地查询
 	public List<Handover> selecttoaddr(Map<String,Object> map);
 	
+	//条件查询
+	public List<Handover> findBy(Handover handover);
+	
+	//更改交接单信息
+	public int update(Handover handover);
+	
+	
+	
 }

@@ -11,13 +11,13 @@
     <result column="orecAddress" property="orecaddress" jdbcType="VARCHAR" />
     <result column="orecCode" property="oreccode" jdbcType="VARCHAR" />
     <result column="orecPhone" property="orecphone" jdbcType="VARCHAR" />
-    <result column="otime" property="otime" jdbcType="DATE" />
+    <result column="otime" property="otime" jdbcType="TIMESTAMP" />
     <result column="oprice" property="oprice" jdbcType="DOUBLE" />
     <result column="oinsurePrice" property="oinsureprice" jdbcType="DOUBLE" />
     <result column="otype" property="otype" jdbcType="INTEGER" />
     <result column="ostatus" property="ostatus" jdbcType="INTEGER" />
-    <result column="ostartTime" property="ostarttime" jdbcType="DATE" />
-    <result column="oendTime" property="oendtime" jdbcType="DATE" />
+    <result column="ostartTime" property="ostarttime" jdbcType="TIMESTAMP" />
+    <result column="oendTime" property="oendtime"  jdbcType="TIMESTAMP"/>
     <result column="orecSpname" property="orecspname" jdbcType="VARCHAR" />
     <result column="oremark" property="oremark" jdbcType="VARCHAR" />
     <result column="usId" property="usid" jdbcType="INTEGER" />
@@ -40,7 +40,7 @@
     <include refid="Base_Column_List" />
     from orders 
     
-    where  ostatus!=3
+    where  ostatus > 0
     limit ${start},${pagesize} 
   </select>
   
@@ -50,7 +50,7 @@
     <include refid="Base_Column_List" />
     from orders
     <where>
-    	ostatus!=3
+    	ostatus >0
      <if test="orders.osid != null and orders.osid!=''" >
    		 and osid = #{orders.osid,javaType=Integer}
     </if>
@@ -76,7 +76,7 @@
   <select id="selectTotal" resultType="java.lang.Integer"  parameterType="com.yc.bean.Orders">
 	select count(osid) from orders
 	 <where>
-    	ostatus!=3
+    	ostatus >0
       <if test="osid != null and osid!=''" >
    		 and osid = #{osid,javaType=Integer}
     </if>
@@ -99,7 +99,7 @@
   <!-- 删除 -->
   <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     update orders
-    set ostatus=3
+    set ostatus = -1
     where osid = #{osid,jdbcType=INTEGER}
   </update>
   
@@ -111,7 +111,7 @@
   </update>
   -->
   
-  <!-- 确认收货 -->
+  <!-- 修改订单状态 -->
    <update id="updateStatus" parameterType="java.lang.Integer" >
     update orders
     set ostatus=#{ostatus,jdbcType=INTEGER}
@@ -130,9 +130,9 @@
     values ( #{osendname,jdbcType=VARCHAR}, #{osendtel,jdbcType=VARCHAR}, 
       #{osendaddress,jdbcType=VARCHAR}, #{orecname,jdbcType=VARCHAR}, #{orectel,jdbcType=VARCHAR}, 
       #{orecaddress,jdbcType=VARCHAR}, #{oreccode,jdbcType=VARCHAR}, #{orecphone,jdbcType=VARCHAR}, 
-      #{otime,jdbcType=DATE}, #{oprice,jdbcType=DOUBLE}, #{oinsureprice,jdbcType=DOUBLE}, 
-      #{otype,jdbcType=INTEGER}, 0, #{ostarttime,jdbcType=DATE}, 
-      #{oendtime,jdbcType=DATE}, #{orecspname,jdbcType=VARCHAR}, #{oremark,jdbcType=VARCHAR}, 
+      #{otime}, #{oprice,jdbcType=DOUBLE}, #{oinsureprice,jdbcType=DOUBLE}, 
+      #{otype,jdbcType=INTEGER}, 0, #{ostarttime}, 
+      #{oendtime}, #{orecspname,jdbcType=VARCHAR}, #{oremark,jdbcType=VARCHAR}, 
       #{usid,jdbcType=INTEGER}, #{spid,jdbcType=INTEGER}, #{res1,jdbcType=VARCHAR}, #{res2,jdbcType=VARCHAR}, 
       #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR})
   </insert>
@@ -148,13 +148,13 @@
       orecAddress = #{orecaddress,jdbcType=VARCHAR},
       orecCode = #{oreccode,jdbcType=VARCHAR},
       orecPhone = #{orecphone,jdbcType=VARCHAR},
-      otime = #{otime,jdbcType=DATE},
+      otime = #{otime},
       oprice = #{oprice,jdbcType=DOUBLE},
       oinsurePrice = #{oinsureprice,jdbcType=DOUBLE},
       otype = #{otype,jdbcType=INTEGER},
      
-      ostartTime = #{ostarttime,jdbcType=DATE},
-      oendTime = #{oendtime,jdbcType=DATE},
+      ostartTime = #{ostarttime},
+      oendTime = #{oendtime},
       orecSpname = #{orecspname,jdbcType=VARCHAR},
       oremark = #{oremark,jdbcType=VARCHAR},
      

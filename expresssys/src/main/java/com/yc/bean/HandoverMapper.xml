@@ -5,8 +5,8 @@
     <id column="hid" property="hid" jdbcType="INTEGER" />
     <result column="hfromSpname" property="hfromSpname" jdbcType="VARCHAR" />
     <result column="htoSpname" property="htoSpname" jdbcType="VARCHAR" />
-    <result column="hstartTime" property="hstartTime" jdbcType="DATE" />
-    <result column="hendTime" property="hendTime" jdbcType="DATE" />
+    <result column="hstartTime" property="hstartTime" jdbcType="TIMESTAMP" />
+    <result column="hendTime" property="hendTime" jdbcType="TIMESTAMP" />
     <result column="hstatus" property="hstatus" jdbcType="INTEGER" />
     <result column="cid" property="cid" jdbcType="INTEGER" />
     <result column="did" property="did" jdbcType="INTEGER" />
@@ -70,14 +70,14 @@
   
   <!-- 根据收寄地查询 -->
   <select id="selectfromaddr" parameterType="java.util.Map" resultMap="BaseResultMap">
-     	select o.osid as osid,orecName,hfromSpname,htoSpname,hstartTime,hendTime,dname,hremark,cnumber 
+     	select o.osid as osid,orecName,hfromSpname,htoSpname,hstartTime,hendTime,dname,hremark,cnumber,hstatus,hid 
 		from handover h join orders o on h.osid=o.osid join driver d on h.did=d.did join car c on h.cid=c.cid
 		where hfromSpname=#{hfromSpname} and h.osid=#{osid}
   </select>
   
    <!-- 根据计件地地查询 -->
   <select id="selecttoaddr" parameterType="java.util.Map" resultMap="BaseResultMap">
-     	select o.osid as osid,orecName,hfromSpname,htoSpname,hstartTime,hendTime,dname,hremark,cnumber 
+     	select o.osid as osid,orecName,hfromSpname,htoSpname,hstartTime,hendTime,dname,hremark,cnumber ,hstatus,hid
 		from handover h join orders o on h.osid=o.osid join driver d on h.did=d.did join car c on h.cid=c.cid
 		where htoSpname=#{htoSpname} and h.osid=#{osid}
   </select>
@@ -86,17 +86,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Handover" >
     update handover
     <set >
-      <if test="hfromspname != null" >
-        hfromSpname = #{hfromspname,jdbcType=VARCHAR},
+      <if test="hfromSpname != null" >
+        hfromSpname = #{hfromSpname,jdbcType=VARCHAR},
       </if>
-      <if test="htospname != null" >
-        htoSpname = #{htospname,jdbcType=VARCHAR},
+      <if test="htoSpname != null" >
+        htoSpname = #{htoSpname,jdbcType=VARCHAR},
       </if>
-      <if test="hstarttime != null" >
-        hstartTime = #{hstarttime,jdbcType=DATE},
+      <if test="hstartTime != null" >
+        hstartTime = #{hstartTime,jdbcType=DATE},
       </if>
-      <if test="hendtime != null" >
-        hendTime = #{hendtime,jdbcType=DATE},
+      <if test="hendTime != null" >
+        hendTime = #{hendTime,jdbcType=DATE},
       </if>
       <if test="hstatus != null" >
         hstatus = #{hstatus,jdbcType=INTEGER},
@@ -133,10 +133,10 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yc.bean.Handover" >
     update handover
-    set hfromSpname = #{hfromspname,jdbcType=VARCHAR},
-      htoSpname = #{htospname,jdbcType=VARCHAR},
-      hstartTime = #{hstarttime,jdbcType=DATE},
-      hendTime = #{hendtime,jdbcType=DATE},
+    set hfromSpname = #{hfromSpname,jdbcType=VARCHAR},
+      htoSpname = #{htoSpname,jdbcType=VARCHAR},
+      hstartTime = #{hstarTtime,jdbcType=DATE},
+      hendTime = #{hendTime,jdbcType=DATE},
       hstatus = #{hstatus,jdbcType=INTEGER},
       cid = #{cid,jdbcType=INTEGER},
       did = #{did,jdbcType=INTEGER},
@@ -149,4 +149,28 @@
       res4 = #{res4,jdbcType=VARCHAR}
     where hid = #{hid,jdbcType=INTEGER}
   </update>
+  
+  <select id="findBy" resultMap="BaseResultMap" parameterType="com.yc.bean.Handover" >
+  	select * from handover
+  	<where>
+  		1=1
+  		<if test="osid != null and osid != '' ">
+  			and osid = #{osid,jdbcType=INTEGER}
+  		</if>
+  		<if test="hstatus != null and hstatus != '' ">
+  			and hstatus = #{hstatus,jdbcType=INTEGER}
+  		</if>
+		<if test="cid != null and cid != '' ">
+  			and cid = #{cid,jdbcType=INTEGER}
+  		</if>
+  		<if test="cid != null and cid != '' ">
+  			and cid = #{cid,jdbcType=INTEGER}
+  		</if>
+		<if test="did != null and did != '' ">
+  			and did = #{did,jdbcType=INTEGER}
+  		</if>
+  	</where>	
+  </select>
+  
+  
 </mapper>

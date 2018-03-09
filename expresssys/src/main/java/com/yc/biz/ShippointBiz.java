@@ -22,5 +22,8 @@ public interface ShippointBiz {
 		public int delete(Shippoint s);
 		
 		public List<Shippoint> selectAll();
+		
+		//根据地址查询
+		public List<Shippoint> findByAddr(Shippoint s);
 
 }

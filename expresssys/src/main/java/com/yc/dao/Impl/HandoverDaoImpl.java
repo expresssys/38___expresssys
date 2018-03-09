@@ -72,6 +72,16 @@ public class HandoverDaoImpl implements HandoverDao {
 		return this.sqlSession.selectList("com.yc.bean.Handover.selecttoaddr",map);
 	}
 
+	@Override
+	public List<Handover> findBy(Handover handover) {
+		return this.sqlSession.selectList("com.yc.bean.Handover.findBy",handover);
+	}
+
+	@Override
+	public int update(Handover handover) {
+		return this.sqlSession.update("com.yc.bean.Handover.updateByPrimaryKeySelective",handover);
+	}
+
 	
 
 }

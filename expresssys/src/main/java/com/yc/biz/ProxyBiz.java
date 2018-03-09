@@ -23,4 +23,7 @@ public interface ProxyBiz {
 	
 	//查询所有配送点
 	public List<Proxy> selectpoint();
+	
+	//根据addr查询代理点
+	public List<Proxy> findByAddr(Proxy proxy);
 }

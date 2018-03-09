@@ -40,16 +40,13 @@ public class OrdersController {
 	public @ResponseBody Map<String,Object> findByCondition(Orders s,int rows,int page,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
 
 		Map<String,Object> m=this.ordersBiz.findById(s, page-1, rows);
-		System.out.println(s);
 		session.setAttribute("AllOrders", s);
 		return m;
 	}
 	//通过id查询
 	@RequestMapping(value="findByID.action")
 	public @ResponseBody Map<String,Object> findByID(Orders s,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
-		//查询所有配送点	
 		Map<String,Object> m=this.ordersBiz.findById(s, 0, 1);	
-	
 		return m;
 	}
 	//添加配送点
@@ -64,11 +61,10 @@ public class OrdersController {
 	//修改配送点
 	@RequestMapping(value="update.action")
 	public @ResponseBody int update(Orders s,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
-	
+		System.out.println(s);
 		Users us=(Users) session.getAttribute("user");
 		int usid=us.getUsid();
 		s.setUsid(usid);
-		System.out.println(usid);
 		int result=0;
 		this.ordersBiz.update(s);
 		result=1;

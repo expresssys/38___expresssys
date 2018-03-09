@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
+
 <table id="carmanage_car_data"  data-options="fit:true"></table>
 <meta charset="utf-8">
 
@@ -14,15 +18,17 @@
 <label>车型:</label>
 <select name="search_ctype" id="car_search_ctype">
    <option value="">--车型--</option>
- <option value="挂车">挂车</option>
- <option value="货车">货车</option>
+	<c:forEach items="${ALLCONST.carType}" varStatus="i" var="item" >  
+		<option value="${item.cname}">${item.cname}</option>
+	</c:forEach>
 </select>
 
 <label>车辆状态:</label>
 <select name="search_cstatus" id="car_search_cstatus">
   <option value="">--车辆状态--</option>
- <option value="0">空闲</option>
- <option value="1">在途中</option>
+ <c:forEach items="${ALLCONST.carStatus}" varStatus="i" var="item" > 
+ 		<option value="${item.cstatus}">${item.cname}</option>
+	</c:forEach>
 </select>
 
 <label>所属单位:</label>
@@ -51,8 +57,9 @@
   <label>车型:<span></span></label>
   <select  name="ctype" id="car_update_ctype" >
      <option value="">--车型--</option>
-     <option value="挂车">挂车</option>
-     <option value="货车">货车</option>
+     <c:forEach items="${ALLCONST.carType}" varStatus="i" var="item" >  
+		<option value="${item.cname}">${item.cname}</option>
+	</c:forEach>
   </select>
   </li>
   
@@ -69,20 +76,21 @@
  
  <li>
  <label>容量:<span></span></label>
- <input  type="number" name="cvolume" id="car_update_cvolume">
+ <input  type="number" name="cvolume" id="car_update_cvolume" ><label id="carVUnit">${ALLCONST.carVUnit[0].cname}</label>
  
  </li>
  
  
  <li>
   <label>吨位:<span></span></label>
-  <input type="number" name="cton" id="car_update_cton">
+  <input type="number" name="cton" id="car_update_cton"><label id="carWUnit">${ALLCONST.carWUnit[0].cname}</label>
  </li>
   
  <li>
  <label>车辆状态:<span></span></label>
- <input type="radio" value="0" name="cstatus" checked="true">空闲
- <input type="radio" value="1" name="cstatus">在途中
+ 	<c:forEach items="${ALLCONST.carStatus}" varStatus="i" var="item" >  
+		<input type="radio" value="${item.cstatus}" name="cstatus" checked="true">${item.cname}
+	</c:forEach>
  </li>
  
  <li>
@@ -150,6 +158,8 @@ margin-top:20px;}
 
 <script  type="text/javascript">
 var carObject;
+var carWUnit = "${ALLCONST.carWUnit[0].cname}"; 
+var carVUnit = "${ALLCONST.carVUnit[0].cname}";
 
 $(function(){
 	var shippointStr=" <option value='0'>--所属单位--</option>";
@@ -511,6 +521,10 @@ function point_findpoint(cid){
 	$("#car_update_crunNum").val(row.crunnum);
 	$("#car_update_cvolume").val(row.cvolume);
 	$("#car_update_cton").val(row.cton);
+	
+	$("#carVUnit").html(carVUnit);
+	$("#carWUnit").html(carWUnit);
+	
 	
 	
 	if(row.cstatus==1){

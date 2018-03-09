@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <meta charset="UTF-8" >
 
 <table id="orders_manager" data-options="fit:true"></table>
@@ -17,13 +20,69 @@
 	
 	<label>快递类型：</label>
 	<select  name="otype" id="orders_search_otype" >
-				<option value="">--全部--</option>
-				<option value="0">快件</option>
-				<option value="1">慢件</option>
-				<option value="2">大件</option>
+		<option value="">--全部--</option>
+		<c:forEach items="${ALLCONST.orderType}" varStatus="i" var="item" >  
+			<option value="${item.cstatus}">${item.cname}</option>
+		</c:forEach>
 	</select>
 	<a href="javascript:orders_searchorders()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
 </div>
+
+<div id="orders_goods_update" class="easyui-dialog" title="添加货物信息" style="width:400px;height:500px;align:center"
+		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
+	<form id="form_orders_goods_update">
+		<input type="hidden"  name="gid" id="orders_goods_update_gid"  />
+		<ul>
+			<li>
+				<label>货物名称<span></span></label>
+				<input type="text" name="gname" id="orders_goods_update_gname" class="goods_input"/>
+			</li>
+			<li>
+				<label>货物数量<span></span></label>
+				<input type="text" name="gcount" id="orders_goods_update_gcount" class="goods_input"/>
+			</li>
+			<li>
+				<label>单位<span></span></label>
+				<select id="orders_goods_update_gunit" name="gunit" class="goods_input">
+					<option value="-1">--请选择--</optionv>
+					<c:forEach items="${ALLCONST.comUnit}" varStatus="i" var="item" > 
+ 						<option value="${item.cname}">${item.cname}</option>
+					</c:forEach>
+				</select>
+			</li>
+			<li>
+				<label>货物价值<span></span></label>
+				<input type="text" name="gprice" id="orders_goods_update_gprice" class="goods_input"/>
+			</li>
+			<li>
+				<label>货物重量<span></span></label>
+				<input type="text" name="gweight" id="orders_goods_update_gweight" class="goods_input" placeholder="单位：${ALLCONST.goodsWUnit[0].cname}" />
+			</li>
+			<li>
+				<label>货物体积<span></span></label>
+				<input type="text" name="gvolume" id="orders_goods_update_gvolume" class="goods_input" placeholder="单位： ${ALLCONST.goodsVUnit[0].cname}" />
+			</li>
+			<li>
+				<label>货物类别<span></span></label>
+				<input type="text" name="gtype" id="orders_goods_update_gtype" class="goods_input"/>
+			</li>
+			<li>
+				<label>货物状态：</label>
+				<select id="orders_goods_update_res1" name="res1" class="goods_input">
+					<option value="-1">--请选择--</optionv>
+					<c:forEach items="${ALLCONST.goodsStatus}" varStatus="i" var="item" > 
+ 						<option value="${item.cstatus}">${item.cname}</option>
+					</c:forEach>
+				</select>
+			</li>
+			<li>
+				<label>备注<span></span></label>
+				<textarea rows="5" cols="23" name="gremark" id="orders_goods_update_gremark" class="goods_input"></textarea>
+			</li>
+		</ul>
+	</form>
+</div>
+
 <div id="order_route_update" class="easyui-dialog" title="添加路线信息" style="width:500px;height:500px;align:center"
 		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
 	<form id="form_order_route_update">
@@ -45,21 +104,23 @@
 		</ul>
 	</form>
 </div>
-<div id="orders_update" class="easyui-dialog" title="添加配送点信息" style="width:600px;height:650px;align:center"
+<div id="orders_update" class="easyui-dialog" title="添加订单信息" style="width:600px;height:650px;align:center"
 		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
 	<form id="orders_update_orders">
+		<input type="hidden" name="osid" id="orders_update_osid" value="">
 		<ul>
 		    <li>
 		        <label>商品编号名称：</label>
 				<select name="res1" id="orders_update_gid" >
 				</select>
+				<input id="addGoods" type="button" value="添加" onclick="javascript:order_goods_showAddgoods()" />
+				
 				<label>所属路线：</label>
 				<select name="res2"  id="orders_update_rid">
 				</select>
-				<input id="add" type="button" value="添加" onclick="javascript:orser_route_showAddroute()" />
+				<input id="addRoute" type="button" value="添加" onclick="javascript:order_route_showAddroute()" />
 			</li>
 			<li>
-				<input type="hidden" name="osid" id="orders_update_osid" value="">
 				<label>寄件人姓名：</label>
 				<input type="text" name="osendname" id="orders_update_osendname" class="orders_input"/>
 			
@@ -88,7 +149,7 @@
 			
 			<li>
 				<label>订单日期：</label>
-				<input type="text" name="otime" id="orders_update_otime"  class="easyui-datebox" />
+				<input type="text" name="otime" id="orders_update_otime"  class="easyui-datetimebox" />
 			</li>
 			<li>
 				<label>配送费：</label>
@@ -100,10 +161,9 @@
 			<li>
 				<label>订单类型：</label>
 				<select  name="otype" id="orders_update_otype" >
-				<option value="0">快件</option>
-				<option value="1">慢件</option>
-				<option value="2">大件</option>
-				
+					<c:forEach items="${ALLCONST.orderType}" varStatus="i" var="item" >  
+						<option value="${item.cstatus}">${item.cname}</option>
+					</c:forEach>
 				</select>
 				<label>所属单位：</label>
 				<select name="spid" id="orders_update_spid" >
@@ -111,17 +171,15 @@
 			</li>
 			<li>
 				<label>要求启程时间：</label>
-				<input type="text" name="ostarttime" id="orders_update_ostarttime"  class="easyui-datebox" />
+				<input type="text" name="ostarttime" id="orders_update_ostarttime"  class="easyui-datetimebox" />
 			
 				<label>要求到达时间：</label>
-				<input type="text" name="oendtime" id="orders_update_oendtime"  class="easyui-datebox" />
+				<input type="text" name="oendtime" id="orders_update_oendtime"  class="easyui-datetimebox" />
 			</li>
-			
-			
 			
 			<li>
 				<label>备注：</label>
-				<textarea  rows="5" cols="20"  id="orders_update_oremark" >
+				<textarea  rows="5" cols="20"  id="orders_update_oremark" name="oremark">
 				</textarea>
 			</li>
 			
@@ -246,12 +304,26 @@
 }
 </style>
 <script type="text/javascript">
+function changstr(str){
+	var s = str.split(" ");
+	var ss = s[3];
+	var sss = ss.split(":");
+	
+	if(s[4]== 'PM'){
+		sss[0] = parseInt(sss[0])+12 + "";
+	}
+	return sss;
+}
+
+
 var ordersEditRow=undefined;
 var ordersObject;
 var ordersFlag;
 var ordersmark="";
 var shippointList;
 var elementNum = 0;
+
+
 
 function freshData(){
 	$("#orders_update_gid").html("");
@@ -265,7 +337,6 @@ function freshData(){
 		})
 		$("#orders_update_gid").append($(gidandname));
 
-		
 	},"json");
 	
 	var rname="<option value='0'>--路线名称--</option>";
@@ -331,12 +402,11 @@ $(function(){
 			    ]],
 			    toolbar:"#orders_search"
 	
-	
 		});
 	},"json");
 	
 
-	
+	//添加订单信息
 	function orders_showAddorders(){
 		$("#orders_update_orders")[0].reset();
 		$("#orders_orderinfo").html("")
@@ -382,6 +452,7 @@ $(function(){
 		$('#orders_update').dialog("open");
 	}
 	
+	//修改订单
 	function orders_showUpdateorders(){
 		$("#orders_update_orders")[0].reset();
 		$("#orders_orderinfo").html("")
@@ -391,26 +462,31 @@ $(function(){
 		}else{
 			var row=rows[0];
 			var osid=row.osid;
-			Date.prototype.format = function (format) {
-			    var args = {
-			        "M+": this.getMonth() + 1,
-			        "d+": this.getDate(),
-			        "h+": this.getHours(),
-			        "m+": this.getMinutes(),
-			        "s+": this.getSeconds(),
-			        "q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
-			        "S": this.getMilliseconds()
-			    };
-			    if (/(y+)/.test(format))
-			        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-			    for (var i in args) {
-			        var n = args[i];
-			        if (new RegExp("(" + i + ")").test(format))
-			            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
-			    }
-			    return format;
-			};
-			
+			Date.prototype.format = function (format,str) {
+					var strsss = changstr(str);
+					console.info(str);
+					console.info(strsss);
+				    var args = {
+				        "M+": this.getMonth() + 1,
+				        "d+": this.getDate(),
+				        "h+": strsss[0],
+				        "m+": strsss[1],
+				        "s+": strsss[2],
+				        "q+": Math.floor((this.getMonth() + 3) / 3), 
+				        "S": this.getMilliseconds()
+				    };
+				    
+				    if (/(y+)/.test(format))
+				        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+				    for (var i in args) {
+				        var n = args[i];
+				        if (new RegExp("(" + i + ")").test(format)){
+				            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
+				        }
+				        
+				    }
+				    return format;
+				};
 			
 			$.post("orders/find.action",{osid:osid},function(date){
 				var data=date.rows;
@@ -424,16 +500,21 @@ $(function(){
 				$("#orders_update_orectel").val(item.orders.orectel);
 				$("#orders_update_orecaddress").val(item.orders.orecaddress);
 				$("#orders_update_oreccode").val(item.orders.oreccode);
-				$("#orders_update_otime").datebox('setValue',(new Date(item.orders.otime).format("yyyy-MM-dd")));
+				$("#orders_update_otime").datebox('setValue',(new Date(item.orders.otime).format("yyyy-MM-dd hh:mm:ss",item.orders.otime)));
 				
 				$("#orders_update_oprice").val(item.orders.oprice);
 				$("#orders_update_oinsureprice").val(item.orders.oinsureprice);
 				$("#orders_update_otype").val(item.orders.otype);
-				$("#orders_update_ostarttime").datebox('setValue',(new Date(item.orders.ostarttime).format("yyyy-MM-dd")));
-				$("#orders_update_oendtime").datebox('setValue',(new Date(item.orders.oendtime).format("yyyy-MM-dd")));
+				
+				
+				$("#orders_update_ostarttime").datebox('setValue',(new Date(item.orders.ostarttime).format("yyyy-MM-dd hh:mm:ss",item.orders.ostarttime)));
+				$("#orders_update_oendtime").datebox('setValue',(new Date(item.orders.oendtime).format("yyyy-MM-dd hh:mm:ss",item.orders.oendtime)));
 				$("#orders_update_spid").val(item.orders.spid);
 				$("#orders_update_usid").val(item.orders.usid);
 				$("#orders_update_oremark").val(item.orders.oremark);
+				
+				$("#orders_update_osid").val(osid);
+				
 			});
 			});	
 			
@@ -474,7 +555,7 @@ $(function(){
 	}
 
 
-	//删除配送点
+	//删除订单
 	function orders_delorders(osid){
 		$.post("orders/delete.action",{osid:osid},function(data){
 			data=parseInt($.trim(data));
@@ -487,79 +568,36 @@ $(function(){
 			}
 		})
 	}
-
-	//详情查询
-	/*function orders_findorders(osid){
-
-		$("#orders_update_orders")[0].reset();
-		var rows=$('#orders_manager').datagrid("getChecked");
-		if(rows.length<=0){
-			$.messager.show({title:"温馨提示",msg:"请选择您要修改的配送点信息...",timeout:2000,showType:"slide"});
-		}else{
-			var row=rows[0];
-			var osid=row.osid;
-			$.post("orders/findByID.action",{osid:osid},function(data){
-				$("#orders_update_osid").val(osid);
-				ordersmark=data.rows[0].spremark;
-				$("#orders_update_osendname").val(data.rows[0].osendname);
-				$("#orders_update_osendtel").val(data.rows[0].osendtel);
-				$("#orders_update_osendaddress").val(data.rows[0].osendaddress);
-				$("#orders_update_orecname").val(data.rows[0].orecname);
-				$("#orders_update_orectel").val(data.rows[0].orectel);
-				$("#orders_update_orecaddress").val(data.rows[0].orecaddress);
-				$("#orders_update_oreccode").val(data.rows[0].oreccode);
-				$("#orders_update_otime").datebox('setValue',data.rows[0].otimeString);
-				
-				$("#orders_update_oprice").val(data.rows[0].oprice);
-				$("#orders_update_oinsureprice").val(data.rows[0].oinsureprice);
-				$("#orders_update_otype").val(data.rows[0].otype);
-				$("#orders_update_ostarttime").datebox('setValue',data.rows[0].ostarttimeString);
-				$("#orders_update_oendtime").datebox('setValue',data.rows[0].oendtimeString);
-				$("#orders_update_spid").val(data.rows[0].spid);
-				$("#orders_update_usid").val(data.rows[0].usid);
-				$("#orders_update_oremark").val(data.rows[0].oremark);
-				
-			})
-			
-		$('#orders_update').dialog({
-			title:"查看配送点信息",
-			iconCls:'icon-user-edit',
-			buttons:[{
-				text:'确定',
-				iconCls:'icon-user-edit',
-				handler:function(){
-					$('#orders_update').dialog("close");
-				}
-			}]
-		})
-		$('#orders_update').dialog("open");
-		}
-	}*/
 	
 	
 	function orders_findorders(osid){
 		
 		//js中date时间转换yyyy-mm-dd hh:MM:ss等格式字符串
-		Date.prototype.format = function (format) {
-		    var args = {
-		        "M+": this.getMonth() + 1,
-		        "d+": this.getDate(),
-		        "h+": this.getHours(),
-		        "m+": this.getMinutes(),
-		        "s+": this.getSeconds(),
-		        "q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
-		        "S": this.getMilliseconds()
-		    };
-		    if (/(y+)/.test(format))
-		        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-		    for (var i in args) {
-		        var n = args[i];
-		        if (new RegExp("(" + i + ")").test(format))
-		            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
-		    }
-		    return format;
-		};
-		
+		Date.prototype.format = function (format,str) {
+				var strsss = changstr(str);
+				
+			    var args = {
+			        "M+": this.getMonth() + 1,
+			        "d+": this.getDate(),
+			        "h+": strsss[0],
+			        "m+": strsss[1],
+			        "s+": strsss[2],
+			        "q+": Math.floor((this.getMonth() + 3) / 3), 
+			        "S": this.getMilliseconds()
+			    };
+			    
+			    if (/(y+)/.test(format))
+			        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+			    for (var i in args) {
+			        var n = args[i];
+			        if (new RegExp("(" + i + ")").test(format)){
+			            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
+			        }
+			        
+			    }
+			    return format;
+			};
+			
 		
 		$.post("orders/find.action",{osid:osid},function(date){
 			var data=date.rows;
@@ -573,13 +611,15 @@ $(function(){
 			$("#orders_update_orectel").val(item.orders.orectel);
 			$("#orders_update_orecaddress").val(item.orders.orecaddress);
 			$("#orders_update_oreccode").val(item.orders.oreccode);
-			$("#orders_update_otime").datebox('setValue',(new Date(item.orders.otime).format("yyyy-MM-dd")));
+			$("#orders_update_otime").datebox('setValue',(new Date(item.orders.otime).format("yyyy-MM-dd hh:mm:ss",item.orders.otime)));
 			
 			$("#orders_update_oprice").val(item.orders.oprice);
 			$("#orders_update_oinsureprice").val(item.orders.oinsureprice);
 			$("#orders_update_otype").val(item.orders.otype);
-			$("#orders_update_ostarttime").datebox('setValue',(new Date(item.orders.ostarttime).format("yyyy-MM-dd")));
-			$("#orders_update_oendtime").datebox('setValue',(new Date(item.orders.oendtime).format("yyyy-MM-dd")));
+			
+			
+			$("#orders_update_ostarttime").datebox('setValue',(new Date(item.orders.ostarttime).format("yyyy-MM-dd hh:mm:ss",item.orders.ostarttime)));
+			$("#orders_update_oendtime").datebox('setValue',(new Date(item.orders.oendtime).format("yyyy-MM-dd hh:mm:ss",item.orders.oendtime)));
 			$("#orders_update_spid").val(item.orders.spid);
 			$("#orders_update_usid").val(item.orders.usid);
 			$("#orders_update_oremark").val(item.orders.oremark);
@@ -590,7 +630,7 @@ $(function(){
 			$("#orders_orderinfo").html("").append(orderinfo);
 			
 			$('#orders_update').dialog({
-				title:"查看配送点信息",
+				title:"查看订单信息",
 				iconCls:'icon-user-edit',
 				buttons:[{
 					text:'确定',
@@ -651,7 +691,7 @@ function addElement(rvias){
     		}
     }
     
-    function orser_route_showAddroute(start,end){
+    function order_route_showAddroute(start,end){
     	$("#form_order_route_update")[0].reset();
     	$("#order_route_update_rid").val("");
     	freshDataRoute('');
@@ -730,9 +770,51 @@ function addElement(rvias){
     			}
     		}
     	});
+    }  
+
+    //添加货物
+    function order_goods_showAddgoods(){
+    	$("#form_orders_goods_update")[0].reset();
+    	$('#orders_goods_update').dialog({
+    		title:"添加货物信息",
+    		iconCls:'icon-user-add',
+    		buttons:[{
+    			text:'确定',
+    			iconCls:'icon-user-add',
+    			handler:function(){
+    				var gname=$.trim( $("#orders_goods_update_gname").val() );
+    				var gtype=$.trim( $("#orders_goods_update_gtype").val() );
+    				var res1=$.trim( $("#orders_goods_update_res1").val() );
+    				
+    				if(gname=="" || gtype=="" || res1==-1){
+    					alert("请填入完整信息");
+    					return ;
+    				}
+    				
+    				$.ajax({
+    					url:"goods/add.action",
+    					secureuri:false,
+    					type:"POST",
+    					data: $('#form_orders_goods_update').serialize(),  
+    					success:function(data,status){
+    						if(data.code>0){
+    							$("#form_orders_goods_update")[0].reset();
+    							alert("货物信息添加成功");
+    							$('#orders_goods_update').dialog("close");
+    							freshData();
+    						}else{
+    							alert("货物信息添加失败");
+    						}
+    					},
+    					error:function(data,status,e){
+    						alert("货物信息添加失败");
+    					}
+    				});
+    			}
+    		}]
+    	});
+    	$('#orders_goods_update').dialog("open");
     }
-
-
 </script>
 
 

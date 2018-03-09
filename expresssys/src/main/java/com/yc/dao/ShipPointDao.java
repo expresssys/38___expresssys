@@ -11,6 +11,9 @@ public interface ShipPointDao {
 	//根据id查询
 	public List<Shippoint> findById(Shippoint s,Integer start, Integer pagesize);
 	
+	//根据地址查询
+	public List<Shippoint> findByAddr(Shippoint s);
+	
 	//添加配送点
 	public int add(Shippoint s);
 	

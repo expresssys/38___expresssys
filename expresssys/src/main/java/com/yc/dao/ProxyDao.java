@@ -23,4 +23,7 @@ public interface ProxyDao {
 	
 	//查询所有配送点
 	public List<Proxy> selectpoint();
+	
+	public List<Proxy> findByAddr(Proxy proxy);
+	
 }

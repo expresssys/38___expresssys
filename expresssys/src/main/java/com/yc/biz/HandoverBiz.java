@@ -36,4 +36,10 @@ public interface HandoverBiz {
 
 	//根据收寄地查询
 	public List<Handover> selecttoaddr(Map<String,Object> map);
+	
+	//条件查询
+	public List<Handover> findBy(Handover handover);
+	
+	//修改
+	public int update(Handover handover);
 }
