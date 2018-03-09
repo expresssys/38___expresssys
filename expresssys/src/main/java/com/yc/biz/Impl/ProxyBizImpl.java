@@ -58,5 +58,11 @@ public class ProxyBizImpl implements ProxyBiz {
 		return this.proxyDao.selectpoint();
 	}
 
+	//根据addr查询代理点
+	@Override
+	public List<Proxy> findByAddr(Proxy proxy) {
+		return this.proxyDao.findByAddr(proxy);
+	}
+
 
 }

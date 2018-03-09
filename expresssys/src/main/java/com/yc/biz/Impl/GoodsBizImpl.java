@@ -25,8 +25,6 @@ public class GoodsBizImpl implements GoodsBiz {
 
 	@Override
 	public int addGoods(Goods goods) {
-		
-		
 		int status = this.goodsDao.addGoods(goods);
 		return status;
 	}

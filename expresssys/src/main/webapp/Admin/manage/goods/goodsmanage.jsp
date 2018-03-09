@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
+
 <meta charset="UTF-8">
 <table id="table_goods_manager" data-options="fit:true" ></table>
 <div id="goods_search">
@@ -15,11 +19,9 @@
 	<label>货物状态：</label>
 	<select id="goods_search_res1" name="res1">
 		<option value="-1">--请选择--</optionv>
-		<option value="0">已签收</option>
-		<option value="1">等待揽件</option>
-		<option value="2">已发货</option>
-		<option value="3">运输中</option>
-		<option value="4">派送中</option>
+		<c:forEach items="${ALLCONST.goodsStatus}" varStatus="i" var="item" > 
+ 			<option value="${item.cstatus}">${item.cname}</option>
+		</c:forEach>
 	</select>
 	<a href="javascript:goods_searchgoods()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
 </div>
@@ -38,7 +40,12 @@
 			</li>
 			<li>
 				<label>单位<span></span></label>
-				<input type="text" name="gunit" id="goods_update_gunit" class="goods_input"/>
+				<select id="goods_update_gunit" name="gunit" class="goods_input">
+					<option value="-1">--请选择--</optionv>
+					<c:forEach items="${ALLCONST.comUnit}" varStatus="i" var="item" > 
+ 						<option value="${item.cname}">${item.cname}</option>
+					</c:forEach>
+				</select>
 			</li>
 			<li>
 				<label>货物价值<span></span></label>
@@ -46,11 +53,11 @@
 			</li>
 			<li>
 				<label>货物重量<span></span></label>
-				<input type="text" name="gweight" id="goods_update_gweight" class="goods_input" placeholder="单位：kg"/>
+				<input type="text" name="gweight" id="goods_update_gweight" class="goods_input" placeholder="单位：${ALLCONST.goodsWUnit[0].cname}" />
 			</li>
 			<li>
 				<label>货物体积<span></span></label>
-				<input type="text" name="gvolume" id="goods_update_gvolume" class="goods_input" placeholder="单位：m³"/>
+				<input type="text" name="gvolume" id="goods_update_gvolume" class="goods_input" placeholder="单位： ${ALLCONST.goodsVUnit[0].cname}" />
 			</li>
 			<li>
 				<label>货物类别<span></span></label>
@@ -60,11 +67,9 @@
 				<label>货物状态：</label>
 				<select id="goods_update_res1" name="res1" class="goods_input">
 					<option value="-1">--请选择--</optionv>
-					<option value="0">已签收</option>
-					<option value="1">等待揽件</option>
-					<option value="2">已发货</option>
-					<option value="3">运输中</option>
-					<option value="4">派送中</option>
+					<c:forEach items="${ALLCONST.goodsStatus}" varStatus="i" var="item" > 
+ 						<option value="${item.cstatus}">${item.cname}</option>
+					</c:forEach>
 				</select>
 			</li>
 			<li>
@@ -93,11 +98,11 @@
 			</li>
 			<li>
 				<label>货物重量：<span></span></label>
-				<label  id="goods_show_gweight" class="label"  > kg</label>
+				<label  id="goods_show_gweight" class="label"  > ${ALLCONST.goodsWUnit[0].cname}</label>
 			</li>
 			<li>
 				<label>货物体积：<span></span></label>
-				<label   id="goods_show_gvolume" class="label" > m³</label>
+				<label   id="goods_show_gvolume" class="label" > ${ALLCONST.goodsVUnit[0].cname}</label>
 			</li>
 			<li>
 				<label>货物类别：<span></span></label>
@@ -167,6 +172,8 @@
 </style>
 
 <script type="text/javascript">
+var goodsWUnit = "${ALLCONST.goodsWUnit[0].cname}"; 
+var goodsVUnit = "${ALLCONST.goodsVUnit[0].cname}";
 var goodsEditRow = undefined;
 var dataSelect =[{"status":"已签收"},{"status":"等待揽件"},{"status":"已发货"},{"status":"运输中"},{"status":"派送中"}];
 
@@ -367,8 +374,8 @@ function users_update_ustatus(gid){
     			$("#goods_show_gname").html(data.rows[0].gname);
     			$("#goods_show_gcount").html(data.rows[0].gcount + " " + data.rows[0].gunit);
     			$("#goods_show_gprice").html(data.rows[0].gprice);
-    			$("#goods_show_gweight").html(data.rows[0].gweight+" kg");
-    			$("#goods_show_gvolume").html(data.rows[0].gvolume + " m³");
+    			$("#goods_show_gweight").html(data.rows[0].gweight+" " + goodsWUnit);
+    			$("#goods_show_gvolume").html(data.rows[0].gvolume +" " + goodsVUnit);
     			$("#goods_show_gtype").html(data.rows[0].gtype);
     			$("#goods_show_gremark").html(data.rows[0].gremark);
     			$("#goods_show_res1").html(dataSelect[data.rows[0].res1].status);

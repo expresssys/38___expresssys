@@ -19,7 +19,7 @@
 </div>
 
 <div id="singer_update" class="easyui-dialog" title="添加代理点信息"
-	style="width: 340px; height: 400px;"
+	style="width: 400px; height: 500px;"
 	data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
 	<form id="proxyInfo">
 		<ul>
@@ -32,6 +32,8 @@
 				id="etime" class="easyui-timespinner" style="width:80px;"></li>
 			<li><label>价&nbsp;&nbsp;格：</label> <input type="text" name="prprice"
 				id="prprice" class="singer_input"></li>
+			<li><label>地&nbsp;&nbsp;址：</label> <input type="text" name="res2"
+				id="res2" class="singer_input"></li>	
 			<li><label>备&nbsp;&nbsp;注：</label> 
 				<textarea rows="3" cols="20" name="prremark" id="prremark"> 
 				</textarea>
@@ -128,6 +130,7 @@ var proxyObject=$('#proxy_data').datagrid({
         {field:'prname',title:'代理点名称',width:100,align:'center',editor:{type:"text",options:{required:true}}},
         {field:'prtime',title:'代理点工作时间',width:100,align:'center',editor:{type:"text",options:{required:true}}},
         {field:'prprice',title:'代理点价格',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'res2',title:'地址',width:100,align:'center'},
         {field:'spid',title:'所属单位',width:100,align:'center',formatter:function(val,row,index){
         	return row.spname;
         }},
@@ -186,6 +189,7 @@ function proxyUpdate(){
 		$("#prprice").val(row.prprice);
 		$("#prremark").val(row.prremark);
 		$("#prid").val(row.prid);
+		$("#res2").val(row.res2);
 		document.getElementById("spid").value=row.spid;
 	}
 	$('#singer_update').dialog({

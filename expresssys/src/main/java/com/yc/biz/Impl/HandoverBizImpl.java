@@ -81,5 +81,15 @@ public class HandoverBizImpl implements HandoverBiz {
 	public List<Handover> selecttoaddr(Map<String,Object> map) {
 		return this.handoverDao.selecttoaddr(map);
 	}
+
+	@Override
+	public List<Handover> findBy(Handover handover) {
+		return this.handoverDao.findBy(handover);
+	}
+
+	@Override
+	public int update(Handover handover) {
+		return this.handoverDao.update(handover);
+	}
 	
 }

@@ -48,13 +48,13 @@
     <result column="orecAddress" property="orecaddress" jdbcType="VARCHAR" />
     <result column="orecCode" property="oreccode" jdbcType="VARCHAR" />
     <result column="orecPhone" property="orecphone" jdbcType="VARCHAR" />
-    <result column="otime" property="otime" jdbcType="DATE" />
+    <result column="otime" property="otime" jdbcType="TIMESTAMP" />
     <result column="oprice" property="oprice" jdbcType="DOUBLE" />
     <result column="oinsurePrice" property="oinsureprice" jdbcType="DOUBLE" />
     <result column="otype" property="otype" jdbcType="INTEGER" />
     <result column="ostatus" property="ostatus" jdbcType="INTEGER" />
-    <result column="ostartTime" property="ostarttime" jdbcType="DATE" />
-    <result column="oendTime" property="oendtime" jdbcType="DATE" />
+    <result column="ostartTime" property="ostarttime" jdbcType="TIMESTAMP" />
+    <result column="oendTime" property="oendtime" jdbcType="TIMESTAMP" />
     <result column="orecSpname" property="orecspname" jdbcType="VARCHAR" />
     <result column="oremark" property="oremark" jdbcType="VARCHAR" />
     <result column="usId" property="usid" jdbcType="INTEGER" />

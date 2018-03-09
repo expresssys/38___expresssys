@@ -70,5 +70,10 @@ public class ShippointBizImpl implements ShippointBiz {
 		
 		return this.shipDao.selectAll();
 	}
+	
+	@Override
+	public List<Shippoint> findByAddr(Shippoint s) {
+		return this.shipDao.findByAddr(s);
+	}
 
 }

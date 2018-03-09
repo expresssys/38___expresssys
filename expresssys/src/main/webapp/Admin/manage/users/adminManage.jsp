@@ -1,12 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <meta charset="UTF-8">
-
 <table id="table_users_manager" data-options="fit:true" ></table>
 <div id="users_search">
 	<a id="btn" href="javascript:users_showAddusers()" class="easyui-linkbutton" data-options="iconCls:'icon-script-add',plain:true" style="float:left">添加</a>  
 	<div class="datagrid-btn-separator"></div>
 	<a id="btn" href="javascript:users_showUpdateusers()" class="easyui-linkbutton" data-options="iconCls:'icon-server-edit',plain:true" style="float:left">修改</a>  
 	<div class="datagrid-btn-separator"></div>
-	
 	<label>管理员姓名：</label>
 	<input type="text" name="uname" id="users_search_uname"/>
 	
@@ -15,9 +16,10 @@
 	
 	<label>身份：</label>
 	<select id="users_search_res1" name="res1">
-		<option value="0">--请选择--</optionv>
-		<option value="1">物流公司管理员</option>
-		<option value="2">配送点管理员</option>
+		<option value="0">--请选择--</option>
+		<c:forEach items="${ALLCONST.userStatus}" varStatus="i" var="item" >  
+			<option value="${item.cstatus}">${item.cname}</option>
+		</c:forEach>
 	</select>
 	
 	<a href="javascript:users_searchusers(1)" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
@@ -63,8 +65,9 @@
 				<label>身份<span></span></label>
 				<select id="users_update_res1" name="res1">
 					<option value="0">--请选择--</optionv>
-					<option value="1">物流公司管理员</option>
-					<option value="2">配送点管理员</option>
+					<c:forEach items="${ALLCONST.userStatus}" varStatus="i" var="item" >  
+						<option value="${item.cstatus}">${item.cname}</option>
+					</c:forEach>
 				</select>
 			</li>
 		</ul>

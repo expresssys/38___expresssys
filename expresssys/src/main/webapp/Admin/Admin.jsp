@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" isELIgnored="true"%>
+	pageEncoding="UTF-8" isELIgnored="false"%>
+	<%@ page import="java.util.*" %> 
+	<%@ page import="com.yc.bean.Const" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,11 +16,18 @@
 <script type="text/javascript" src="easyui/js/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="easyui/js/echarts.js"></script>
 <script type="text/javascript" src="easyui/js/china.js"></script>
+<script src="easyui/js/common.js"></script>
+<script src="easyui/js/Popt.js"></script>
+<script src="easyui/js/cityJson.js"></script>
+<script src="easyui/js/citySet.js"></script>
 <script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/api?v=2.0&ak=fHrNQj6DHTjZtfTvfqbsuvTzKc5V9SBl"></script>
 </head>
+
 <body class="easyui-layout">
-<input type="hidden" value="${SessionScope.user.usid}" name="usid" id="order_usid"/>
+	<input type="hidden" value="${SessionScope.user.usid}" name="usid"
+		id="order_usid" />
 	<!-- begin of header -->
 	<div class="wu-header"
 		data-options="region:'north',border:false,split:true">
@@ -43,7 +53,7 @@
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-user"><a href="javascript:void(0)"
-						data-icon="icon-user" data-link="manage/users/adminManage.html"
+						data-icon="icon-user" data-link="manage/users/adminManage.jsp"
 						iframe="0">管理员管理</a></li>
 					<li iconCls="icon-group"><a href="javascript:void(0)"
 						data-icon="icon-group" data-link="manage/users/userManage.html"
@@ -67,6 +77,9 @@
 					<li iconCls="icon-search"><a href="javascript:void(0)"
 						data-icon="icon-search" data-link="manage/point/pointmanage.html"
 						iframe="0">配送点管理</a></li>
+					<li iconCls="icon-search"><a href="javascript:void(0)"
+						data-icon="icon-search" data-link="manage/point/mapSearch.html"
+						iframe="0">地图查询</a></li>
 				</ul>
 			</div>
 
@@ -79,7 +92,7 @@
 						iframe="0">代理点管理</a></li>
 				</ul>
 			</div>
-			
+
 			<div title="价格管理" data-options="iconCls:'icon-note'"
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
@@ -116,11 +129,11 @@
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/order/ordermanage.html"
+						data-icon="icon-car" data-link="manage/order/ordermanage.jsp"
 						iframe="0">订单管理</a></li>
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/order/shouhuo.html"
-						iframe="0">收货查询</a></li>
+						data-icon="icon-car" data-link="manage/order/orderSerch.jsp"
+						iframe="0">订单查询</a></li>
 					<li iconCls="icon-car"><a href="javascript:void(0)"
 						data-icon="icon-car" data-link="manage/order/maintenance.html"
 						iframe="0">新增订单维护</a></li>
@@ -134,16 +147,16 @@
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/car/carmanage.html"
+						data-icon="icon-car" data-link="manage/car/carmanage.jsp"
 						iframe="0">车辆管理</a></li>
 				</ul>
 			</div>
-			
+
 			<div title="货物管理" data-options="iconCls:'icon-car'"
 				style="padding: 5px;">
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/goods/goodsmanage.html"
+						data-icon="icon-car" data-link="manage/goods/goodsmanage.jsp"
 						iframe="0">货物管理</a></li>
 				</ul>
 			</div>
@@ -153,7 +166,7 @@
 				<ul class="easyui-tree wu-side-tree">
 					<li iconCls="icon-car"><a href="javascript:void(0)"
 						data-icon="icon-car"
-						data-link="manage/handover/handovermanage.html" iframe="0">交接单管理</a>
+						data-link="manage/handover/handovermanage.jsp" iframe="0">交接单管理</a>
 					</li>
 				</ul>
 			</div>

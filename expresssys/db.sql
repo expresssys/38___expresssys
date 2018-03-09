@@ -87,7 +87,7 @@ create table proxy(
  prprice  double(10,2),    --价格
  prremark  varchar(5000),   --备注
 spid int ,--所属单位id                                         --
- res1  varchar(2000),    --备用字段
+ res1  varchar(2000),    --备用字段   
  res2  varchar(2000),    --备用字段
  res3  varchar(2000)    --备用字段
 )
@@ -114,7 +114,6 @@ create table route(
 select rvia as res4 from route where rid=1
 
 select * from route
-<<<<<<< HEAD
 delete from route
 insert into route(rname,rvia) values('测试','1-2-3-4')
 insert into route(rname,rvia,res1) values('广州常德线','常德-衡阳-广州',1)
@@ -123,9 +122,7 @@ update shipPoint set res1=0 where spid=2
 
 select * from  shipPoint where res1=0;
 
-=======
 
->>>>>>> branch 'master' of git@github.com:expresssys/38___expresssys.git
 --司机信息
 create table driver(
     did   int primary key auto_increment, 
@@ -186,23 +183,11 @@ create  table handover(
    htoSpname varchar(50),    --到达配送点名称
    hstartTime Date,    --起始时间
    hendTime　Date ,  --到达时间
-<<<<<<< HEAD
    hstatus  int ,   --交接单状态(0未发车，  1已发车，   2已完成)   默认0
-cid int ,   --运输车辆id                                                           --
-did  int ,-- 司机id                                                          --
-osid int ,-- 订单id                                                             --
-rid int ,--线路  id                                                        --
-=======
-   hstatus  int ,   --交接单状态(0未发车，  1已发车，   2已完成)   默认0
-   cid int ,   --运输车辆id                                                           --
-   did  int ,-- 司机id                                                          --
-   osid int ,-- 订单id                                                             --
-   rid int ,--线路  id                                                        --
 	cid int ,   --运输车辆id                                                           --
 	did  int ,-- 司机id                                                          --
 	osid int ,-- 订单id                                                             --
 	rid int ,--线路  id                                                        --
->>>>>>> branch 'master' of git@github.com:expresssys/38___expresssys.git
    hremark   varchar(5000),  --备注
    res1  varchar(2000),    --备用字段
    res2  varchar(2000) ,
@@ -272,7 +257,33 @@ create table orders(
       res4  varchar(2000)   --备用字段
 )
 
+create table orders(
+     osid  int primary key auto_increment,   
+     osendName varchar(20),   
+     osendTel  varchar(20) , 
+     osendAddress  varchar(50),  
+     orecName varchar(20),  
+     orecTel  varchar(20),   
+      orecAddress varchar(50),   
+      orecCode varchar(20)  ,
+      orecPhone  varchar(20),
+      otime datetime ,   
+      oprice   double(10,2),  
+       oinsurePrice  double(10,2),    
+      otype  int , 
+      ostatus  int ,
+      ostartTime  datetime,   
+      oendTime  datetime,    
+      orecSpname   varchar(50),   
+      oremark  varchar(5000), 
 
+      usId  int,                                       
+      spid  int ,                                      
+      res1 varchar(2000),   
+      res2 varchar(2000),    
+      res3 varchar(2000),   
+      res4  varchar(2000)  
+)
 
 select osid,orecName from orders;
 
@@ -338,3 +349,9 @@ foreign key(osid) references order(osid);
 alter table order
 add constraint FK_goods_order  
 foreign key(gid) references goods(gid);
+
+
+
+
+
+

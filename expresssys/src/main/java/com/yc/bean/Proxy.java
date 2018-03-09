@@ -15,7 +15,7 @@ public class Proxy {
 
     private String res1;
 
-    private String res2;
+    private String res2; //地址
 
     private String res3;
     

@@ -31,7 +31,7 @@ public class Orders implements Serializable{
 
     private String orecphone;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")  
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")  
     private Date otime=new Date(new java.util.Date().getTime());
 
     private Double oprice;
@@ -42,10 +42,10 @@ public class Orders implements Serializable{
 
     private Integer ostatus;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")  
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")  
     private Date ostarttime=new Date(new java.util.Date().getTime());
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd") 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
     private Date oendtime=new Date(new java.util.Date().getTime());
 
     private String orecspname;
@@ -69,18 +69,17 @@ public class Orders implements Serializable{
     private String oendtimeString;
 
     public String getOtimeString() {
-    	DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+    	DateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		this.otimeString=df.format(new Date(this.otime.getTime()));
 		return otimeString;
 	}
 
 	public void setOtimeString(String otimeString) {
-		
 		this.otimeString=otimeString;
 	}
 
 	public String getOstarttimeString() {
-		DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		this.ostarttimeString=df.format(new Date(this.ostarttime.getTime()));
 		return ostarttimeString;
 	}
@@ -132,7 +131,7 @@ public class Orders implements Serializable{
 	}
 
 	public String getOendtimeString() {
-		DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		this.oendtimeString=df.format(new Date(this.oendtime.getTime()));
 		return oendtimeString;
 	}
@@ -225,6 +224,7 @@ public class Orders implements Serializable{
         this.orecphone = orecphone == null ? null : orecphone.trim();
     }
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  
     public Date getOtime() {
         return otime;
     }
@@ -265,6 +265,7 @@ public class Orders implements Serializable{
         this.ostatus = ostatus;
     }
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  
     public Date getOstarttime() {
         return ostarttime;
     }
@@ -272,7 +273,8 @@ public class Orders implements Serializable{
     public void setOstarttime(Date ostarttime) {
         this.ostarttime = ostarttime;
     }
-
+    
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  
     public Date getOendtime() {
         return oendtime;
     }

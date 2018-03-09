@@ -63,42 +63,5 @@
 
 	<tx:annotation-driven transaction-manager="txManager" />
 	
-	<!-- ##########################定时任务调度####################### 
-	<bean id="myJob" class=""></bean>
-	
-	<bean id="jobDetail"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">   
-		<property name="targetObject" ref="myJob" />                       
-		<property name="targetMethod" value="doTask" />                                    
-	</bean>
-
-	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-	    <property name="jobDetail" ref="jobDetail" />
-	    <property name="cronExpression" value="0,10,20,30,40,50 * * * * ?" />  
-	</bean>
-	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-	    <property name="triggers">
-	        <list>
-	            <ref bean="cronTrigger" />
-	        </list>
-	    </property>
-	</bean>
--->
-
-
-	<!-- #############邮件配置， 以aop方案实现############################## -->
-
-    <!-- 创建一个邮件的发送类 -->
-	<!--
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${mail.host}"/>
-	</bean>
-	-->
-	
-	<!-- 以aop方式来发送邮件-->
-	<!--
-	<bean id="emailAdvice" class="邮件的业务类的全路径">
-		<property name="mailSender" ref="mailSender"/>
-	</bean>-->
 
 </beans>

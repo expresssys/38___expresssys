@@ -20,17 +20,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yc.Util.ComMethod;
 import com.yc.Util.ExportExcel;
 import com.yc.bean.Excel;
 import com.yc.bean.Handover;
+import com.yc.bean.JsonModel;
+import com.yc.bean.Orders;
+import com.yc.biz.GoodsBiz;
 import com.yc.biz.HandoverBiz;
+import com.yc.biz.OrdersBiz;
 
 @Controller
 @Scope(value="prototype")
-@RequestMapping(value="Admin/")
+@RequestMapping(value="Admin/handover")
 public class HandoverController {
 	@Resource(name="handoverBizImpl")
 	private HandoverBiz handoverBiz;
+	
+	@Resource(name="ordersBizImpl")
+	private OrdersBiz ordersBiz;
+	
+	@Resource(name="goodsBizImpl")
+	private GoodsBiz goodsBiz;
 
 	//查询线路
 	@RequestMapping(value="selectddByid.action")
@@ -84,27 +95,39 @@ public class HandoverController {
 	//添加交接单
 	@RequestMapping(value="insertHandover.action")
 	@ResponseBody
-	public Map<String,Object> insertHandover(Integer osid,String htoSpname,String hfromSpname,String hstartTime,String hendTime,Integer hstatus,
-			Integer cid,Integer did,String hremark){
-		Handover handover=new Handover();
-		handover.setOsid(osid);
-		handover.setHtoSpname(htoSpname);
-		handover.setHfromSpname(hfromSpname);
-		handover.setHstartTime(hstartTime);
-		handover.setHendTime(hendTime);
-		handover.setHstatus(hstatus);
-		handover.setCid(cid);
-		handover.setDid(did);
-		handover.setHremark(hremark);
+	public Map<String,Object> insertHandover(Handover handover){
 		Map<String,Object> map=new HashMap<String,Object>();
 		List<Handover> list=handoverBiz.selectCopy(handover);
-		if(list.size()>0 && list!=null){
+		
+		Handover h = new Handover();
+		h.setOsid(handover.getOsid());
+		
+		//查找当前交接单关联的订单的已存在交接单
+		List<Handover> handovers = this.handoverBiz.findBy(h);
+		
+		Orders orders = new Orders();
+		orders.setOsid(handover.getOsid());
+		
+		if(list!=null && list.size()>0 ){
 			map.put("code", 0);	//有重复的交接单
 		}else{
 			List<Handover> list1=handoverBiz.selectddByid(handover.getOsid());
 			handover.setRid(list1.get(0).getRid());
 			int result=handoverBiz.insertHandover(handover);
 			if(result>0){
+				//修改订单状态
+				if(handovers!=null && handovers.size()>0){
+					orders.setOstatus(3);
+					ordersBiz.updateStatus(orders);
+				}else{
+					if(handover.getHstatus()!=0){
+						orders.setOstatus(2);
+						ordersBiz.updateStatus(orders);
+					}else{
+						orders.setOstatus(1);
+						ordersBiz.updateStatus(orders);
+					}
+				}
 				map.put("code", 1);
 			}else{
 				map.put("code", 2);
@@ -183,10 +206,8 @@ public class HandoverController {
         list.add(excel);
         try {
         	ExportExcel<Excel> ex=new ExportExcel<Excel>();
-        	System.out.println("1111");
 			OutputStream  out = new BufferedOutputStream(response.getOutputStream());
 			ex.exportExcel("交接单",headers, list, out);
-			System.out.println("2222");
 			out.flush();
 			out.close();
 		} catch (FileNotFoundException e) {
@@ -195,5 +216,34 @@ public class HandoverController {
             e.printStackTrace();
         }
 	}
+	
+	@RequestMapping(value="findBy.action")
+	public @ResponseBody JsonModel findBy(Handover h,Orders r,HttpServletRequest request){
+		JsonModel jm = new JsonModel();
+		Map<String,String> consts = ComMethod.getConst(request, "goodsStatus");
+		r.setOsid(h.getOsid());
+		
+		List<Handover> handovers = this.handoverBiz.findBy(h);
+		List<Orders> orders = (List<Orders>) this.ordersBiz.findById(r,0,1).get("rows");
+		
+		jm.setCode(orders.get(0).getOstatus());
+		jm.setMsg(consts.get(orders.get(0).getOstatus().toString()));
+		jm.setObj(handovers);
+		
+		return jm;
+	}
+	
+	@RequestMapping(value="updateHandover.action")
+	@ResponseBody
+	public Map<String,Object> updateHandover(Handover handover){
+		Map<String,Object> map=new HashMap<String,Object>();
+		int result=handoverBiz.update(handover);
+		if(result>0){
+			map.put("code", 1);
+		}else{
+			map.put("code", 2);
+		}
+		return map;
+	} 
 	
 }

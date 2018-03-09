@@ -1,5 +1,8 @@
 package com.yc.bean;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Handover {
     private Integer hid;
@@ -7,10 +10,13 @@ public class Handover {
     private String hfromSpname;
 
     private String htoSpname;
+    
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date hstartTime =new Date(new java.util.Date().getTime());;
 
-    private String hstartTime;
-
-    private String hendTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date hendTime =new Date(new java.util.Date().getTime());;
 
     private Integer hstatus;
 
@@ -52,36 +58,6 @@ public class Handover {
 		super();
 	}
 
-	public Handover(Integer hid, String hfromSpname, String htoSpname, String hstartTime, String hendTime,
-			Integer hstatus, Integer cid, Integer did, Integer osid, Integer rid, String hremark, String res1,
-			String res2, String res3, String res4, String rname, Integer spid, String spname, String nextd,
-			String dname, String ctype, String cnumber, String orecName) {
-		super();
-		this.hid = hid;
-		this.hfromSpname = hfromSpname;
-		this.htoSpname = htoSpname;
-		this.hstartTime = hstartTime;
-		this.hendTime = hendTime;
-		this.hstatus = hstatus;
-		this.cid = cid;
-		this.did = did;
-		this.osid = osid;
-		this.rid = rid;
-		this.hremark = hremark;
-		this.res1 = res1;
-		this.res2 = res2;
-		this.res3 = res3;
-		this.res4 = res4;
-		this.rname = rname;
-		this.spid = spid;
-		this.spname = spname;
-		this.nextd = nextd;
-		this.dname = dname;
-		this.ctype = ctype;
-		this.cnumber = cnumber;
-		this.orecName = orecName;
-	}
-
 	@Override
 	public String toString() {
 		return "Handover [hid=" + hid + ", hfromSpname=" + hfromSpname + ", htoSpname=" + htoSpname + ", hstartTime="
@@ -90,30 +66,6 @@ public class Handover {
 				+ ", res3=" + res3 + ", res4=" + res4 + ", rname=" + rname + ", spid=" + spid + ", spname=" + spname
 				+ ", nextd=" + nextd + ", dname=" + dname + ", ctype=" + ctype + ", cnumber=" + cnumber + ", orecName="
 				+ orecName + "]";
-	}
-
-	public String getOrecName() {
-		return orecName;
-	}
-
-	public void setOrecName(String orecName) {
-		this.orecName = orecName;
-	}
-
-	public String getCnumber() {
-		return cnumber;
-	}
-
-	public void setCnumber(String cnumber) {
-		this.cnumber = cnumber;
-	}
-
-	public String getCtype() {
-		return ctype;
-	}
-
-	public void setCtype(String ctype) {
-		this.ctype = ctype;
 	}
 
 	public Integer getHid() {
@@ -140,19 +92,19 @@ public class Handover {
 		this.htoSpname = htoSpname;
 	}
 
-	public String getHstartTime() {
+	public Date getHstartTime() {
 		return hstartTime;
 	}
 
-	public void setHstartTime(String hstartTime) {
+	public void setHstartTime(Date hstartTime) {
 		this.hstartTime = hstartTime;
 	}
 
-	public String getHendTime() {
+	public Date getHendTime() {
 		return hendTime;
 	}
 
-	public void setHendTime(String hendTime) {
+	public void setHendTime(Date hendTime) {
 		this.hendTime = hendTime;
 	}
 
@@ -275,6 +227,31 @@ public class Handover {
 	public void setDname(String dname) {
 		this.dname = dname;
 	}
-    
+
+	public String getCtype() {
+		return ctype;
+	}
+
+	public void setCtype(String ctype) {
+		this.ctype = ctype;
+	}
+
+	public String getCnumber() {
+		return cnumber;
+	}
+
+	public void setCnumber(String cnumber) {
+		this.cnumber = cnumber;
+	}
+
+	public String getOrecName() {
+		return orecName;
+	}
+
+	public void setOrecName(String orecName) {
+		this.orecName = orecName;
+	}
+
+	
 	
 }
