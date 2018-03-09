@@ -269,7 +269,7 @@ create table orders(
       oprice   double(10,2),   --配送费
        oinsurePrice  double(10,2),    --保价金额
       otype  int ,  --订单类型(0快件, 1慢件,  2大宗)
-      ostatus  int ,--订单状态(0未发件, 1已发件, 2已送达,3 已取消)
+      ostatus  int ,--订单状态(0未发件, 1已发件, 2已送达,3 已取消  100前台下单)
       ostartTime  Date,   --要求启程时间
       oendTime  Date,    --要求到达时间
       orecSpname   varchar(50),   --备用字段

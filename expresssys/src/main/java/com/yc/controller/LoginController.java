@@ -27,7 +27,7 @@ public class LoginController {
 	private UsersBiz ad;
 	@Resource(name="logininfoBizImpl")
 	private LoginInfoBiz lb;
-	
+
 	@RequestMapping(value="back/login.action")
 	public @ResponseBody JsonModel Login(Users users,String code,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
 		//从application中取出所有tag 
@@ -39,7 +39,7 @@ public class LoginController {
 			jm.setMsg("验证码错误");
 		}else{
 			Users c=this.ad.adminlogin(users);
-			
+
 			if(c!=null){
 				if(c.getUstatus()!=0){
 					jm.setCode(3);
@@ -67,18 +67,55 @@ public class LoginController {
 		}
 		return jm;
 	}
-	
+
 	@RequestMapping(value="Admin/loginout.action")
 	public void LoginOut(Users admin,String code,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
-		
+
 		session.removeAttribute("user");
 		try {
 			resp.sendRedirect("../back/login.html");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
+
+	@RequestMapping(value="back/userlogin.action")
+	public @ResponseBody JsonModel userLogin(Users users,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+		//从application中取出所有tag 
+		JsonModel jm=new JsonModel();
+		Logininfo l=new Logininfo();
+		String codes=String.valueOf(session.getAttribute("rand"));
+
+		Users c=this.ad.adminlogin(users);
+
+		if(c!=null){
+			if(c.getUstatus()!=0){
+				jm.setCode(3);
+				jm.setObj(c);
+				l.setLstatus("1");//登录成功
+				l.setLname(c.getUname());
+				session.setAttribute("user", c);
+			}else{
+				jm.setCode(0);
+				jm.setMsg("该用户权限不足");
+			}
+		} else{
+			l.setLstatus("0");//登录失败
+			l.setLname(c.getUname());
+			jm.setCode(2);
+			jm.setMsg("用户名或密码错误");
+		}
+		l.setLip(request.getRemoteAddr());
+		Calendar calendar = Calendar.getInstance();
+		Date time = calendar.getTime();
+		l.setLtime(time);
+		if(l.getLname()!=null&&l.getLname()!=""){
+			this.lb.addLoginInfo(l);
+		}
+
+		return jm;
+	}
 
 }

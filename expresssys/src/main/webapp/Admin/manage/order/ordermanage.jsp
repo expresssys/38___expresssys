@@ -92,6 +92,7 @@
 			<li>
 				<label>路线名称<span></span></label>
 				<input type="text" name="rname" id="order_route_update_rname" class="route_input"/>
+				
 			</li>
 			<li id="start">
 				<label>路线起点<span></span></label>
@@ -114,7 +115,7 @@
 				<select name="res1" id="orders_update_gid" >
 				</select>
 				<input id="addGoods" type="button" value="添加" onclick="javascript:order_goods_showAddgoods()" />
-				
+				<input type="hidden" name="ostatus" value="0"/>
 				<label>所属路线：</label>
 				<select name="res2"  id="orders_update_rid">
 				</select>
