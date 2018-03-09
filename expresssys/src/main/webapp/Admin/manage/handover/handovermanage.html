@@ -10,7 +10,7 @@
 	<input type="text" name="osid" id="orders_search_osid"/>
 	<a href="javascript:orders_searchorders()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
 </div>
-<div id="handover_orders_update" class="easyui-dialog" title="添加配送点信息" style="width:600px;height:400px;align:center"
+<div id="handover_orders_update" class="easyui-dialog" title="添加交接单信息" style="width:600px;height:400px;align:center"
 		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
 	<form id="handover_orders_update_orders">
 		<ul>
@@ -414,7 +414,7 @@ $(function(){
 			        }}, 
 			        
 			        {field:'_operate',title:'操作',width:100,align:'center',formatter:function(val,row,index){
-			        	return "<a href='javascript:orders_findorders("+row.osid+")'> 详情</a>"  //配送点详情查看
+			        	return "<a href='javascript:orders_findorders("+row.osid+")'> 详情</a>"  //交接单详情查看
 			        }}
 			    ]],
 			    toolbar:"#orders_search"
@@ -431,7 +431,7 @@ $(function(){
 		$("#handover_orders_update_orders")[0].reset();
 		var rows=$('#handover_manager').datagrid("getChecked");
 		if(rows.length<=0){
-			$.messager.show({title:"温馨提示",msg:"请选择您要修改的配送点信息...",timeout:2000,showType:"slide"});
+			$.messager.show({title:"温馨提示",msg:"请选择您要修改的交接单信息...",timeout:2000,showType:"slide"});
 		}else{
 			var row=rows[0];
 			var osid=row.osid;
@@ -459,7 +459,7 @@ $(function(){
 			})
 			
 		$('#handover_orders_update').dialog({
-			title:"查看配送点信息",
+			title:"查看交接单信息",
 			iconCls:'icon-user-edit',
 			buttons:[{
 				text:'确定',
