@@ -79,4 +79,19 @@ public class LoginController {
 	}
 
 
+	//添加
+		@RequestMapping("add.action")
+		public @ResponseBody JsonModel addUsers(Users users,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+			JsonModel jm = new JsonModel();
+			users.setUstatus(1);
+			int status = this.ad.addUsers(users);
+			if(status==1){
+				jm.setCode(1);
+			}else{
+				jm.setCode(0);
+				jm.setMsg("添加失败");
+			}
+
+			return jm;
+		} 
 }

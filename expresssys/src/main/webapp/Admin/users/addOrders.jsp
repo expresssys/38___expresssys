@@ -18,8 +18,8 @@ ul>.addorders{
 padding-top: 15px;
     padding-bottom: 15px;
     list-style-type: none;
-	
-font-size: 18px;
+	color: #888;
+	font-size: 16px;
 	line-height: 18px;
 	list-style:none;
 	
@@ -153,7 +153,7 @@ border:none;
 			<ul>
 			<li  class="addorders">
 			<label>商品编号名称：</label>
-				<select name="res1" id="orders_update_gid" >
+				<select name="res1" id="orders_update_gid"  class="orders_input">
 				</select>
 			</li>
 			<li  class="addorders">
