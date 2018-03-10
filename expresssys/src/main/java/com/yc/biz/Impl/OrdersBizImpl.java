@@ -20,10 +20,10 @@ import com.yc.dao.OrdersDao;
 public class OrdersBizImpl implements OrdersBiz {
 	@Resource(name="orderinfoBizImpl")
 	private OrderinfoBiz  orderinfoBiz;
-	
-	
+
+
 	private OrdersDao ordersDao;
-	
+
 	@Resource(name="ordersDaoImpl")
 	public void setordersDao(OrdersDao ordersDao) {
 		this.ordersDao = ordersDao;
@@ -43,7 +43,7 @@ public class OrdersBizImpl implements OrdersBiz {
 	@Override
 	public Map<String, Object> findById(Orders s,Integer start, Integer pagesize) {
 		Map<String, Object> result=new  HashMap<String, Object>();
-		
+
 		List<Orders> rows=this.ordersDao.findById(s,start,pagesize);
 		if(rows.size()==1){
 			rows.get(0).setOendtimeString(rows.get(0).getOendtimeString());
@@ -58,30 +58,37 @@ public class OrdersBizImpl implements OrdersBiz {
 
 	@Override
 	public int add(Orders s) {
-		
-	
-	
+
+
+
 		int a= this.ordersDao.add(s);
-		
+
 		//添加订单详细表
+
+		Orderinfo orderinfo=new Orderinfo();
+		orderinfo.setOsid(s.getOsid());
 		
-	Orderinfo orderinfo=new Orderinfo();
-	orderinfo.setOsid(s.getOsid());
-	System.out.println(s.getOsid()+"这是订单编号");
-	orderinfo.setGid(Integer.valueOf(s.getRes1()));
-	orderinfo.setRid(Integer.valueOf(s.getRes2()));
-	orderinfo.setOstatus(1);
-	try {
-		orderinfoBiz.addOrderInfo(orderinfo);
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-	return a;
+
+		//前台下单不需要路线
+		if(s.getOstatus()==100 ){
+			//商品
+			orderinfo.setGid(Integer.valueOf(s.getRes1()));
+		}else{
+			orderinfo.setGid(Integer.valueOf(s.getRes1()));
+			orderinfo.setRid(Integer.valueOf(s.getRes2()));
+		}
+		
+		try {
+			orderinfoBiz.addOrderInfo(orderinfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return a;
 	}
 
 	@Override
 	public int update(Orders s) {
-		
+
 		return this.ordersDao.update(s);
 	}
 
@@ -89,7 +96,7 @@ public class OrdersBizImpl implements OrdersBiz {
 	public int delete(Orders s) {
 		return this.ordersDao.delete(s);
 	}
-	
+
 	public int updateStatus(Orders s){
 		return this.ordersDao.updateStatus(s);
 	}
