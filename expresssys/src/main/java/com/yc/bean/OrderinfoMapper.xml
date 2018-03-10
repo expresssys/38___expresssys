@@ -12,6 +12,7 @@
     <result column="res3" property="res3" jdbcType="VARCHAR" />
     <result column="res4" property="res4" jdbcType="VARCHAR" />
     <result column="res5" property="res5" jdbcType="VARCHAR" />
+    
      <association property="goods" javaType="com.yc.bean.Goods"> 
       <id column="gid" property="gid" jdbcType="INTEGER" />
     <result column="gname" property="gname" jdbcType="VARCHAR" />
@@ -40,30 +41,30 @@
       
        <association property="orders" javaType="com.yc.bean.Orders"> 
         <id column="osid" property="osid" jdbcType="INTEGER" />
-    <result column="osendName" property="osendname" jdbcType="VARCHAR" />
-    <result column="osendTel" property="osendtel" jdbcType="VARCHAR" />
-    <result column="osendAddress" property="osendaddress" jdbcType="VARCHAR" />
-    <result column="orecName" property="orecname" jdbcType="VARCHAR" />
-    <result column="orecTel" property="orectel" jdbcType="VARCHAR" />
-    <result column="orecAddress" property="orecaddress" jdbcType="VARCHAR" />
-    <result column="orecCode" property="oreccode" jdbcType="VARCHAR" />
-    <result column="orecPhone" property="orecphone" jdbcType="VARCHAR" />
-    <result column="otime" property="otime" jdbcType="TIMESTAMP" />
-    <result column="oprice" property="oprice" jdbcType="DOUBLE" />
-    <result column="oinsurePrice" property="oinsureprice" jdbcType="DOUBLE" />
-    <result column="otype" property="otype" jdbcType="INTEGER" />
-    <result column="ostatus" property="ostatus" jdbcType="INTEGER" />
-    <result column="ostartTime" property="ostarttime" jdbcType="TIMESTAMP" />
-    <result column="oendTime" property="oendtime" jdbcType="TIMESTAMP" />
-    <result column="orecSpname" property="orecspname" jdbcType="VARCHAR" />
-    <result column="oremark" property="oremark" jdbcType="VARCHAR" />
-    <result column="usId" property="usid" jdbcType="INTEGER" />
-    <result column="spid" property="spid" jdbcType="INTEGER" />
-    <result column="res1" property="res1" jdbcType="VARCHAR" />
-    <result column="res2" property="res2" jdbcType="VARCHAR" />
-    <result column="res3" property="res3" jdbcType="VARCHAR" />
-    <result column="res4" property="res4" jdbcType="VARCHAR" />
-       
+	    <result column="osendName" property="osendname" jdbcType="VARCHAR" />
+	    <result column="osendTel" property="osendtel" jdbcType="VARCHAR" />
+	    <result column="osendAddress" property="osendaddress" jdbcType="VARCHAR" />
+	    <result column="orecName" property="orecname" jdbcType="VARCHAR" />
+	    <result column="orecTel" property="orectel" jdbcType="VARCHAR" />
+	    <result column="orecAddress" property="orecaddress" jdbcType="VARCHAR" />
+	    <result column="orecCode" property="oreccode" jdbcType="VARCHAR" />
+	    <result column="orecPhone" property="orecphone" jdbcType="VARCHAR" />
+	    <result column="otime" property="otime" jdbcType="TIMESTAMP" />
+	    <result column="oprice" property="oprice" jdbcType="DOUBLE" />
+	    <result column="oinsurePrice" property="oinsureprice" jdbcType="DOUBLE" />
+	    <result column="otype" property="otype" jdbcType="INTEGER" />
+	    <result column="ostatus" property="ostatus" jdbcType="INTEGER" />
+	    <result column="ostartTime" property="ostarttime" jdbcType="TIMESTAMP" />
+	    <result column="oendTime" property="oendtime" jdbcType="TIMESTAMP" />
+	    <result column="orecSpname" property="orecspname" jdbcType="VARCHAR" />
+	    <result column="oremark" property="oremark" jdbcType="VARCHAR" />
+	    <result column="usId" property="usid" jdbcType="INTEGER" />
+	    <result column="spid" property="spid" jdbcType="INTEGER" />
+	    <result column="res1" property="res1" jdbcType="VARCHAR" />
+	    <result column="res2" property="res2" jdbcType="VARCHAR" />
+	    <result column="res3" property="res3" jdbcType="VARCHAR" />
+	    <result column="res4" property="res4" jdbcType="VARCHAR" />
+	       
        </association>
       
   </resultMap>
@@ -108,7 +109,7 @@ left join route on orderInfo.rid=route.rid
       res2, res3, res4, res5
       )
     values (#{orderid,jdbcType=INTEGER}, #{osid,jdbcType=INTEGER}, #{gid,jdbcType=INTEGER}, 
-      #{rid,jdbcType=INTEGER}, #{ostatus,jdbcType=INTEGER}, #{res1,jdbcType=VARCHAR}, 
+      #{rid,jdbcType=INTEGER}, 1, #{res1,jdbcType=VARCHAR}, 
       #{res2,jdbcType=VARCHAR}, #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR}, #{res5,jdbcType=VARCHAR}
       )
   </insert>
@@ -210,7 +211,16 @@ left join route on orderInfo.rid=route.rid
         res5 = #{res5,jdbcType=VARCHAR},
       </if>
     </set>
-    where orderId = #{orderid,jdbcType=INTEGER}
+    
+    <where>
+  		1=1
+  		<if test="orderid != null and orderid != '' ">
+  			and orderId  #{orderid,jdbcType=INTEGER}
+  		</if>
+  		<if test="osid != null and osid != '' ">
+  			and osid = #{osid,jdbcType=INTEGER}
+  		</if>
+  	</where>
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yc.bean.Orderinfo" >
     update orderinfo

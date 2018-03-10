@@ -49,9 +49,13 @@ public class OrdersController {
 		Map<String,Object> m=this.ordersBiz.findById(s, 0, 1);	
 		return m;
 	}
-	//添加配送点
+	//添加订单
 	@RequestMapping(value="add.action")
 	public @ResponseBody int add(Orders s,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+		Users us=(Users) session.getAttribute("user");
+		int usid=us.getUsid();
+		s.setUsid(usid);
+		
 		int result=0;
 		this.ordersBiz.add(s);
 		result=1;
@@ -61,7 +65,6 @@ public class OrdersController {
 	//修改配送点
 	@RequestMapping(value="update.action")
 	public @ResponseBody int update(Orders s,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
-		System.out.println(s);
 		Users us=(Users) session.getAttribute("user");
 		int usid=us.getUsid();
 		s.setUsid(usid);

@@ -56,28 +56,25 @@ public class OrdersBizImpl implements OrdersBiz {
 		return result;			
 	}
 
+	@Transactional
 	@Override
 	public int add(Orders s) {
-
-
-
-		int a= this.ordersDao.add(s);
-
 		//添加订单详细表
-
 		Orderinfo orderinfo=new Orderinfo();
-		orderinfo.setOsid(s.getOsid());
-		
 
 		//前台下单不需要路线
-		if(s.getOstatus()==100 ){
+		if(s.getOstatus()!=null && s.getOstatus()==100 ){
 			//商品
 			orderinfo.setGid(Integer.valueOf(s.getRes1()));
 		}else{
+			s.setOstatus(1);
 			orderinfo.setGid(Integer.valueOf(s.getRes1()));
 			orderinfo.setRid(Integer.valueOf(s.getRes2()));
 		}
-		
+
+		int a= this.ordersDao.add(s);
+		orderinfo.setOsid(s.getOsid());
+
 		try {
 			orderinfoBiz.addOrderInfo(orderinfo);
 		} catch (Exception e) {
@@ -86,9 +83,28 @@ public class OrdersBizImpl implements OrdersBiz {
 		return a;
 	}
 
+	@Transactional
 	@Override
 	public int update(Orders s) {
-
+		Orderinfo orderinfo=new Orderinfo();
+		orderinfo.setOsid(s.getOsid());
+		
+		//前台下单修改不需要路线
+		if(s.getOstatus()!=null && s.getOstatus()==100 ){
+			//商品
+			orderinfo.setGid(Integer.valueOf(s.getRes1()));
+		}else{
+			orderinfo.setGid(Integer.valueOf(s.getRes1()));
+			orderinfo.setRid(Integer.valueOf(s.getRes2()));
+		}
+		System.out.println(orderinfo);
+		System.out.println(s);
+		try {
+			orderinfoBiz.updateOrderInfo(orderinfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return this.ordersDao.update(s);
 	}
 

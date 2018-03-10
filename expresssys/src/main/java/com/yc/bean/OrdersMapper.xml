@@ -131,7 +131,7 @@
       #{osendaddress,jdbcType=VARCHAR}, #{orecname,jdbcType=VARCHAR}, #{orectel,jdbcType=VARCHAR}, 
       #{orecaddress,jdbcType=VARCHAR}, #{oreccode,jdbcType=VARCHAR}, #{orecphone,jdbcType=VARCHAR}, 
       #{otime}, #{oprice,jdbcType=DOUBLE}, #{oinsureprice,jdbcType=DOUBLE}, 
-      #{otype,jdbcType=INTEGER}, 0, #{ostarttime}, 
+      #{otype,jdbcType=INTEGER}, #{ostatus,jdbcType=INTEGER}, #{ostarttime}, 
       #{oendtime}, #{orecspname,jdbcType=VARCHAR}, #{oremark,jdbcType=VARCHAR}, 
       #{usid,jdbcType=INTEGER}, #{spid,jdbcType=INTEGER}, #{res1,jdbcType=VARCHAR}, #{res2,jdbcType=VARCHAR}, 
       #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR})
