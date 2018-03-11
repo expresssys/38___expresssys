@@ -135,7 +135,7 @@
 						data-icon="icon-car" data-link="manage/order/orderSerch.jsp"
 						iframe="0">订单查询</a></li>
 					<li iconCls="icon-car"><a href="javascript:void(0)"
-						data-icon="icon-car" data-link="manage/order/maintenance.html"
+						data-icon="icon-car" data-link="manage/order/maintenance.jsp"
 						iframe="0">新增订单维护</a></li>
 					<li iconCls="icon-car"><a href="javascript:void(0)"
 						data-icon="icon-car" data-link="manage/order/count.html"

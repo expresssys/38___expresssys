@@ -389,11 +389,15 @@ $(function(){
 			        {field:'orecaddress',title:'收件人地址',width:100,align:'center'}, 
 			        {field:'ostatus',title:'订单状态',width:100,align:'center',formatter:function(val,row,index){
 			        	if(val==0){
-			        		return '未发件';
+			        		return '已签收';
 			        	} else if(val==1){
-			        		return '已发件';
-			        	}   else if(val==3){
-			        		return '已送达';
+			        		return '等待揽件';
+			        	}   else if(val==2){
+			        		return '已发货';
+			        	}else if(val==3){
+			        		return '运输中';
+			        	}else if(val==4){
+			        		return '派送中';
 			        	}
 			        }}, 
 			        
@@ -492,9 +496,12 @@ $(function(){
 			$.post("orders/find.action",{osid:osid},function(date){
 				var data=date.rows;
 			$.each(data,function(index,item){
-				$("#orders_update_gid").html("<option>"+item.goods.gid+"_"+item.goods.gname+"</option>");
+				freshData();
+				$("#orders_update_gid").append("<option value='"+item.goods.gid+"'>"+item.goods.gid+"_"+item.goods.gname+"</option>");
+				$("#orders_update_gid").val(item.goods.gid);
 				$("#orders_update_rid").val(item.route.rid);
 				$("#orders_update_osendname").val(item.orders.osendname);
+				
 				$("#orders_update_osendtel").val(item.orders.osendtel);
 				$("#orders_update_osendaddress").val(item.orders.osendaddress);
 				$("#orders_update_orecname").val(item.orders.orecname);
