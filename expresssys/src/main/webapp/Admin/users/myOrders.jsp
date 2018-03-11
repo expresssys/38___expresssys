@@ -123,9 +123,68 @@ $(function(){
         data:{usid:usid,rows:12,page:1},
         type: 'post',
         success: function (data){  
-        	console.info(data);
-       		orderInfo+="<li class='list-item'><span onclick='javascript:showPages('addOrders')'>我要寄件</span></li>";
-        }
+        	
+        	$.each(data.rows,function(index,value){
+        		orderInfo+="<li class='list-item'><span onclick='javascript:showOrders("+value.osid+")'>收件人："+value.orecname+"</span></li>";
+
+        	});
+        	$("#listinfo").append($(orderInfo));
+         }
     });
 })
+
+function showOrders(osid){
+	$.ajax({   
+        url: 'users/OrdersInfo.jsp',
+        data:'{}',
+        type: 'post',
+        dataType: 'text',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data){                           
+       		$("#content").html(data);
+       		$.ajax({   
+       	        url: 'orders/findByCondition.action',
+       	        data:{osid:osid,rows:1,page:1},
+       	        type: 'post',
+       	        success: function (data){  
+       	        	
+       	        	$("#orecName").html(data.rows[0].orecname);
+       	        	$("#osid").html(data.rows[0].osid);
+       	        	$("#orecTel").html(data.rows[0].orectel);
+       	        	$("#orecCode").html(data.rows[0].oreccode);
+       	        	$("#orecAddress").html(data.rows[0].orecaddress);
+       	        	$("#sendName").html(data.rows[0].osendname);
+       	        	$("#osendTel").html(data.rows[0].osendtel);
+       	        	$("#orecName").html(data.rows[0].orecname);
+       	        	$("#osendAddress").html(data.rows[0].osendaddress);
+       	        	$("#res1").html(data.rows[0].res1);
+       	         }
+       	    });
+        }
+    });
+	
+}
+
+function updateorders(osid){
+	
+	$.ajax({   
+	        url: 'orders/findByCondition.action',
+	        data:{osid:osid,rows:1,page:1},
+	        type: 'post',
+	        success: function (data){  
+					$("#updateorders_osendname").val(data.rows[0].osendname);
+					$("#updateorders_osid").val(data.rows[0].osid);
+					$("#updateorders_orectel").val(data.rows[0].orectel);
+					$("#updateorders_oreccode").val(data.rows[0].oreccode);
+					$("#updateorders_orecname").val(data.rows[0].orecname);
+					$("#updateorders_orecaddress").val(data.rows[0].orecaddress);
+					$("#updateorders_osendtel").val(data.rows[0].osendtel);
+					$("#updateorders_orecname").val(data.rows[0].orecname);
+					$("#updateorders_osendaddress").val(data.rows[0].osendaddress);
+					
+					$("#updateorders_oremark").val(data.rows[0].oremark);
+				
+	        }
+	    });
+}
 </script>

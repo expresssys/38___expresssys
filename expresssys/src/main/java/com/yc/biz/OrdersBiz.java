@@ -22,5 +22,7 @@ public interface OrdersBiz {
 		
 		//修改订单状态
 		public int updateStatus(Orders s);
+		
+		public int findTotal(Orders s);
 
 }

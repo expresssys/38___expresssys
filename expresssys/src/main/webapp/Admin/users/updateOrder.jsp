@@ -8,13 +8,13 @@ ul{
 	border:none;
 	list-style-type:none;
 }
-ul>.addorders>input{
+ul>.updateorders>input{
     height:30px;
 }
-ul>.addorders>.orders_input2{
+ul>.updateorders>.updateorders_input2{
 	width:400px;
 }
-ul>.addorders{
+ul>.updateorders{
 padding-top: 15px;
     padding-bottom: 15px;
     list-style-type: none;
@@ -27,7 +27,7 @@ padding-top: 15px;
 	
 border:none;
 }
-.exp-container {
+.update-container {
 	width: 550px;
 	height: 400px;
 	margin: 0 auto;
@@ -44,7 +44,7 @@ border:none;
 .exp-check {
 	background: url(images/users/exCheck_icon.png) left center no-repeat;
 }
-.exp-container .search-input {
+.update-container .search-input {
 	width: 550px;
 	height: 100px;
 	font-size: 14px;
@@ -57,7 +57,7 @@ border:none;
 	border: 1px solid #0099d9;
 	position: relative;
 }
-.exp-container .search-box .search-btn {
+.update-container .search-box .updateOrders {
 	display: block;
 	width: 140px;
 	line-height: 40px;
@@ -68,15 +68,15 @@ border:none;
 	border-radius: 4px;
 	cursor: pointer;
 }
-.exp-container .result-list {
+.update-container .result-list {
 	position: relative;
 	z-index: 1;
 }
-.exp-container .result-top {
+.update-container .result-top {
 	margin-bottom: 10px;
 	position: relative;
 }
-.exp-container .result-top .numbers {
+.update-container .result-top .numbers {
 	display: block;
 	width: 530px;
 	font-size: 20px;
@@ -84,7 +84,7 @@ border:none;
 	border-bottom: 1px solid #f3f3f3;
 	margin-bottom: 30px;
 }
-.exp-container .result-top .result-status {
+.update-container .result-top .result-status {
 	position: absolute;
 	right: 0;
 	top: 18px;
@@ -107,60 +107,61 @@ border:none;
 </style>
 <meta charset="UTF-8">
 
-<div class="exp-container">
+<div class="update-container">
 	
-	<form id="ordersinformation">
+	<form id="updateordersinformation">
 	<h2 class="exp-title exp-check">寄件人信息</h2>
 		<ul>
 		    
-			<li  class="addorders">
+			<li  class="updateorders">
 				<label>寄件人姓名：</label>
 				<input type="hidden" name="ostatus" value="100"/>
-				<input type="text" name="osendname" id="orders_update_osendname" class="orders_input" placeholder="请输入寄件人姓名"/>
+				<input type="text" name="osendname" id="updateorders_osendname" class="updateorders_input" placeholder="请输入寄件人姓名"/>
 				<input type="hidden" name="usid" value="${user.usid }"/>
+				<input type="hidden" name="osid" id="updateorders_osid"/>
 	
 			</li>
-			<li class="addorders">
+			<li class="updateorders">
 				<label>寄件人电话：</label>
-				<input type="text" name="osendtel" id="orders_update_osendtel" class="orders_input"placeholder="请输入寄件人电话"/>
+				<input type="text" name="osendtel" id="updateorders_osendtel" class="updateorders_input"placeholder="请输入寄件人电话"/>
 			</li>
-			<li class="addorders">
+			<li class="updateorders">
 				<label>寄件人地址：</label>
-				<input type="text" name="osendaddress" id="orders_update_osendaddress" class="orders_input2" placeholder="请输入寄件人地址"/>
+				<input type="text" name="osendaddress" id="updateorders_osendaddress" class="updateorders_input2" placeholder="请输入寄件人地址"/>
 			</li>
 			</ul>
 			<h2 class="exp-title exp-check">收件人信息</h2>
 			<ul>
-			<li class="addorders">
+			<li class="updateorders">
 				<label>收件人姓名：</label>
-				<input type="text" name="orecname" id="orders_update_orecname" class="orders_input" placeholder="请输入收件人姓名"/>
+				<input type="text" name="orecname" id="updateorders_orecname" class="updateorders_input" placeholder="请输入收件人姓名"/>
 			</li>
-			<li class="addorders">
+			<li class="updateorders">
 				<label>收件人电话：</label>
-				<input type="text" name="orectel" id="orders_update_orectel" class="orders_input" placeholder="请输入收件人电话"/>
+				<input type="text" name="orectel" id="updateorders_orectel" class="updateorders_input" placeholder="请输入收件人电话"/>
 				
 			</li>
-			<li class="addorders">
+			<li class="updateorders">
 			<label>收件人邮编：</label>
-				<input type="text" name="oreccode" id="orders_update_oreccode" class="orders_input" placeholder="请输入收件人邮编"/>
+				<input type="text" name="oreccode" id="updateorders_oreccode" class="updateorders_input" placeholder="请输入收件人邮编"/>
 			</li>
-			<li class="addorders">
+			<li class="updateorders">
 				<label>收件人地址：</label>
-				<input type="text" name="orecaddress" id="orders_update_orecaddress" class="orders_input2" placeholder="请输入收件人地址"/>
+				<input type="text" name="orecaddress" id="updateorders_orecaddress" class="updateorders_input2" placeholder="请输入收件人地址"/>
 			</li>
 			
 			
 			</ul>
 			<h2 class="exp-title exp-check">物品信息</h2>
 			<ul>
-			<li  class="addorders">
-			<label>商品编号名称：</label>
-				<select name="res1" id="orders_update_gid"  class="orders_input">
+			<li  class="updateorders">
+			<label>商品类型：</label>
+				<select name="res1" id="updateorders_gid"  class="updateorders_input">
 				</select>
 			</li>
-			<li  class="addorders">
+			<li  class="updateorders">
 				<label>备注：</label>
-				<textarea  rows="5" cols="20"  id="orders_update_oremark" name="oremark">
+				<textarea  rows="5" cols="20"  id="updateorders_oremark" name="oremark">
 				</textarea>
 			</li>
 			
@@ -169,7 +170,7 @@ border:none;
 		
 	</form>
 	<div class="search-box">
-		<input class="search-btn" value="提交" type="button" id="search-btn">
+		<input class="updateOrders" value="提交修改" type="button" id="updateOrders_btn">
 	</div>
 
 </div>
@@ -181,23 +182,22 @@ $(function(){
 	 			$.each(datas.rows,function(index,item){
 	 				gidandname+="<option value='"+item.gid+"'>"+item.gid+"_"+item.gname+"</option>";
 	 			})
-	 			$("#orders_update_gid").append($(gidandname));
+	 			$("#updateorders_gid").append($(gidandname));
 	 		},"json");
 	
 })
-$("#search-btn").click(function(){
-	var gid=$.trim($("#orders_update_gid").val());
+$("#updateOrders_btn").click(function(){
 	$.ajax({
-		url:"orders/add.action",
+		url:"orders/update.action",
 		secureuri:false,
 		type : "POST",
-		dataType:"text",
-		data:$("#ordersinformation").serialize(),
+		data:$("#updateordersinformation").serialize(),
 		success:function(data,status){
 			if(data>0){
-			
-				$("#ordersinformation")[0].reset();
-				alert("提交成功")
+				//订单添加成功时  将所对应商品状态改为已发货
+				$("#updateordersinformation")[0].reset();
+				alert("修改成功");
+				showPages("myOrders");
 			}else{
 				alert("失败提示","提交失败...","error");
 			}

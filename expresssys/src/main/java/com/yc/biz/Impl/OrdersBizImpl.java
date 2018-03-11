@@ -63,15 +63,18 @@ public class OrdersBizImpl implements OrdersBiz {
 		Orderinfo orderinfo=new Orderinfo();
 
 		//前台下单不需要路线
-		if(s.getOstatus()!=null||s.getOstatus()==100 ){
-		//商品
+		if(s.getOstatus()!=null && s.getOstatus()==100 ){
+			//商品
 			orderinfo.setGid(Integer.valueOf(s.getRes1()));
 		}else{
 			s.setOstatus(1);
 			orderinfo.setGid(Integer.valueOf(s.getRes1()));
 			orderinfo.setRid(Integer.valueOf(s.getRes2()));
 		}
-		
+
+		int a= this.ordersDao.add(s);
+		orderinfo.setOsid(s.getOsid());
+
 		try {
 			orderinfoBiz.addOrderInfo(orderinfo);
 		} catch (Exception e) {
@@ -94,8 +97,6 @@ public class OrdersBizImpl implements OrdersBiz {
 			orderinfo.setGid(Integer.valueOf(s.getRes1()));
 			orderinfo.setRid(Integer.valueOf(s.getRes2()));
 		}
-		System.out.println(orderinfo);
-		System.out.println(s);
 		try {
 			orderinfoBiz.updateOrderInfo(orderinfo);
 		} catch (Exception e) {
@@ -112,6 +113,11 @@ public class OrdersBizImpl implements OrdersBiz {
 
 	public int updateStatus(Orders s){
 		return this.ordersDao.updateStatus(s);
+	}
+
+	@Override
+	public int findTotal(Orders s) {
+		return this.ordersDao.total(s);
 	}
 
 }
