@@ -108,6 +108,7 @@
 		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
 	<form id="orders_update_orders">
 		<input type="hidden" name="osid" id="orders_update_osid" value="">
+		
 		<ul>
 		    <li>
 		        <label>商品编号名称：</label>

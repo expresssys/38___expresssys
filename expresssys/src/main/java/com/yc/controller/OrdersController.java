@@ -37,8 +37,8 @@ public class OrdersController {
 	
 	//条件查询
 	@RequestMapping(value="findByCondition.action")
-	public @ResponseBody Map<String,Object> findByCondition(Orders s,int rows,int page,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
-
+	public @ResponseBody Map<String,Object> findByCondition(Orders s,Integer rows,Integer page,HttpServletRequest request,HttpServletResponse resp,HttpSession session){
+		System.out.println(rows);
 		Map<String,Object> m=this.ordersBiz.findById(s, page-1, rows);
 		session.setAttribute("AllOrders", s);
 		return m;

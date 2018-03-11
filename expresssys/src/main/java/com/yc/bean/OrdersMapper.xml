@@ -54,6 +54,9 @@
      <if test="orders.osid != null and orders.osid!=''" >
    		 and osid = #{orders.osid,javaType=Integer}
     </if>
+    <if test="orders.usid != null and orders.usid!=''" >
+   		 and usid = #{orders.usid,javaType=Integer}
+    </if>
     <if test="orders.otype != null and orders.otype!=''" >
         and otype = #{orders.otype,javaType=Integer}
      
@@ -131,7 +134,7 @@
       #{osendaddress,jdbcType=VARCHAR}, #{orecname,jdbcType=VARCHAR}, #{orectel,jdbcType=VARCHAR}, 
       #{orecaddress,jdbcType=VARCHAR}, #{oreccode,jdbcType=VARCHAR}, #{orecphone,jdbcType=VARCHAR}, 
       #{otime}, #{oprice,jdbcType=DOUBLE}, #{oinsureprice,jdbcType=DOUBLE}, 
-      #{otype,jdbcType=INTEGER}, 0, #{ostarttime}, 
+      #{otype,jdbcType=INTEGER}, #{ostatus}, #{ostarttime}, 
       #{oendtime}, #{orecspname,jdbcType=VARCHAR}, #{oremark,jdbcType=VARCHAR}, 
       #{usid,jdbcType=INTEGER}, #{spid,jdbcType=INTEGER}, #{res1,jdbcType=VARCHAR}, #{res2,jdbcType=VARCHAR}, 
       #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR})

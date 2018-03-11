@@ -16,10 +16,27 @@
 	src="http://api.map.baidu.com/api?v=2.0&ak=fHrNQj6DHTjZtfTvfqbsuvTzKc5V9SBl"></script>
 </head>
 <body>
+<input type="hidden" value="${user.usid}" name="usid"
+		id="order_usid" />
+	<!-- begin of header -->
+	<div class="wu-header"
+		data-options="region:'north',border:false,split:true">
+		<div class="wu-header-left">
+			
+		</div>
+		<div class="wu-header-right">
+			<p>
+				<strong class="easyui-tooltip" id="userName">${user.uname }</strong>，欢迎您！
+			</p>
+			<p>
+				<a href="javascript:showPages('myOrders')" style="color: #888;text-decoration: none">我的订单</a>|<a href="loginout.action" style="color: #888;text-decoration: none">安全退出</a>
+			</p>
+		</div>
+	</div>
 		<div class="container">
 			 <div class="row">
 			 	<div class="list">
-			 		<div class="list-content">
+			 		<div class="list-content" id="listinfo">
 			 			<h3>服务支持</h3>
 			 			<ul>
 			 				<li class="list-item">

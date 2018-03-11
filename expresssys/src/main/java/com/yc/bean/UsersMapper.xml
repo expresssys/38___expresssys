@@ -205,6 +205,9 @@
 		from users 
 		<where>
 			1=1
+			<if test="users.usid != null and users.usid != '' ">
+				and usid =#{users.usid,javaType=INTEGER}
+			</if>
 			<if test="users.uname != null and users.uname != '' ">
 				and uname like CONCAT('%', #{users.uname,jdbcType=VARCHAR},'%') 
 			</if>

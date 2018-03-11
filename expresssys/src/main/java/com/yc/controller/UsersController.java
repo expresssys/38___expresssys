@@ -43,7 +43,6 @@ public class UsersController {
 		return results;
 	}
 
-
 	//更新
 	@RequestMapping("update.action")
 	public @ResponseBody JsonModel updateUsers(Users users,HttpServletRequest request,HttpServletResponse resp,HttpSession session){

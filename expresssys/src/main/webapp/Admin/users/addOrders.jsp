@@ -117,6 +117,8 @@ border:none;
 				<label>寄件人姓名：</label>
 				<input type="hidden" name="ostatus" value="100"/>
 				<input type="text" name="osendname" id="orders_update_osendname" class="orders_input" placeholder="请输入寄件人姓名"/>
+				<input type="hidden" name="usid" value="${user.usid }"/>
+	
 			</li>
 			<li class="addorders">
 				<label>寄件人电话：</label>

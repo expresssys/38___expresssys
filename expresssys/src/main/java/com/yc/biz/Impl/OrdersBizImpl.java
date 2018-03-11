@@ -70,10 +70,11 @@ public class OrdersBizImpl implements OrdersBiz {
 		
 
 		//前台下单不需要路线
-		if(s.getOstatus()==100 ){
+		if(s.getOstatus()!=null||s.getOstatus()==100 ){
 			//商品
 			orderinfo.setGid(Integer.valueOf(s.getRes1()));
 		}else{
+			s.setOstatus(1);
 			orderinfo.setGid(Integer.valueOf(s.getRes1()));
 			orderinfo.setRid(Integer.valueOf(s.getRes2()));
 		}
