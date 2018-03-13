@@ -46,7 +46,6 @@ public class LoginController {
 					jm.setObj(c);
 					l.setLstatus("1");//登录成功
 					l.setLname(c.getUname());
-					System.out.println(c);
 					session.setAttribute("user", c);
 				}else{
 					jm.setCode(0);
