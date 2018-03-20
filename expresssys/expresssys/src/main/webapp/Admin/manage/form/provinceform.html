@@ -1,0 +1,565 @@
+<meta charset="UTF-8">
+<script src="../../../js/echarts.js"></script>
+<body>
+	<!-- closed="true" -->
+	<table id="from_data" data-options="fit:true" closed="true"></table>
+	
+	<!-- 报表类型选择1 -->
+	<div id="baobiao1">
+		<div style="padding: 10px">
+			<a href="javascript:ckbg()" class="easyui-linkbutton"
+				iconCls="icon-print">查看表格</a>
+			<a href="javascript:cktx()" class="easyui-linkbutton"
+				iconCls="icon-print">查看图形</a>
+			<a href="javascript:daochu()" class="easyui-linkbutton"
+				iconCls="icon-print" style="float: right">导出</a>
+		</div>
+		<div class="datagrid-toolbar"></div>
+	</div>
+	
+	<!-- 报表类型选择 -->
+	<div id="baobiao">
+		<div id="biaogekuang" style="padding: 10px">
+			<a href="javascript:ckbg()" class="easyui-linkbutton"
+				iconCls="icon-print">查看表格</a>
+			<a href="javascript:cktx()" class="easyui-linkbutton"
+				iconCls="icon-print">查看图形</a>
+			<label>报表类型：</label>
+			<select name="baobiaoleixing" id="baobiaoleixing" style="width: 100px; height: 30px;">
+				<option value="0">--请选择--</option>
+				<option value="1">--年报表--</option>
+				<option value="2">--季度报表--</option>
+				<option value="3">--月报表--</option>
+			</select>
+			<label>年份选择：</label>
+			<select name="baobiaonian" id="baobiaonian" style="width:100px; height: 30px;">
+				
+			</select>
+			<label>季度选择：</label>
+			<select name="baobiaojidu" id="baobiaojidu" style="width:100px; height: 30px;">
+				
+			</select>
+			<label>月份选择：</label>
+			<select name="baobiaoyue" id="baobiaoyue" style="width:100px; height: 30px;">
+				
+			</select>
+			<a href="javascript:daochu()" class="easyui-linkbutton"
+				iconCls="icon-print" style="float: right">导出</a>
+		</div>
+		<div class="datagrid-toolbar"></div>
+	</div>
+
+	<!-- 为ECharts准备一个具备大小（宽高）的Dom  -->
+	<div align="center"> 
+		<div id="main" style="width:900px;height:400px;text-align: center;"></div>
+	</div>
+	<script type="text/javascript">
+		var myChart = echarts.init(document.getElementById('main'));
+		option = {
+			    title: {
+			        text: '省公司各年收入'
+			    },
+			    tooltip: {
+			        trigger: 'axis'
+			    },
+			    legend: {
+			    },
+			    grid: {
+			        left: '3%',
+			        right: '4%',
+			        bottom: '3%',
+			        containLabel: true
+			    },
+			    toolbox: {
+			        feature: {
+			            saveAsImage: {}
+			        }
+			    },
+			    xAxis: {
+			        type: 'category',
+			        boundaryGap: false,
+			        data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+			    },
+			    yAxis: {
+			        type: 'value'
+			    },
+			    series: []
+			};
+		$.ajax({
+			type: 'POST',
+			url: "findFrombaobiao.action",
+			dataType: 'JSON',
+			success:function(jsons){  
+	            var Item = function(){  
+	                return {  
+	                    name:'',  
+	                    type:'line',  
+	                    }  
+	                };  
+	            var legends = [];  
+	            var Series = [];  
+	            var json = jsons.data;  
+	            for(var i=0;i < json.length;i++){  
+	                var it = new Item();  
+	                it.name = json[i].name;  
+	                legends.push(json[i].name);  
+	                it.data = json[i].data;  
+	                Series.push(it);  
+	            }  
+	            option.legend.data = legends;  
+	            option.series = Series; // 设置图表  
+	            myChart.setOption(option);// 重新加载图表  
+	        },  
+	        error:function(){  
+	            alert("数据加载失败！请检查数据链接是否正确");  
+	        }
+		});
+		
+		
+		
+	//报表格式
+	var fromObject=$('#from_data').datagrid({   
+    url:'findAllFrom.action',
+    queryParams:{fromtime:null},
+    fitColumns:true,
+    pagination:true,	//设置true将在数据表格底部显示分页工具栏。
+    striped:true,	//交替显示行背景
+    loadMesg:'数据加载中',
+    rownumbers:true,
+    //singleSelect:true,
+    pageNumber:1,
+    pageSize:20,
+    pageList:[5,10,20,30,40,50],
+    //sortName:'prid',
+    remoteSort:false,	//升序降序排列
+    columns:[[   
+        {checkbox:true},
+        //{field:'prid',title:'代理点编号',width:100,align:'center',sortable:true},   
+        {field:'fromtime',title:'报表时间',width:50,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'sfromtime',title:'报表生成时间',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'spid',title:'配送点名称',width:50,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'countweight',title:'配送货物总重量',width:50,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'counttj',title:'总体积',width:50,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'countprice',title:'配送收入',width:50,align:'center',editor:{type:"text",options:{required:true}}},
+        {field:'spid',title:'所属单位',width:100,align:'center',formatter:function(val,row,index){
+        	return row.spname;
+        }},
+    ]],
+    toolbar:"#baobiao",
+});
+	
+	//查看表格	
+	function ckbg(){
+		$("#main").css('display','none');
+		$("#baobiao1").css('display','none');
+		//$("#proxy_data").removeAttr("closed");
+		$("#from_data").datagrid({
+			closed:open
+		});
+	}	
+	
+	//查看图形
+	function cktx(){
+		$("#main").css('display','block');
+		$("#baobiao1").css('display','block');
+		$("#from_data").datagrid({
+			closed:true
+		});
+	}
+		
+	//报表类型选择改变
+	var xuanzes;
+	$("select#baobiaoleixing").change(function(){
+		$("#baobiaonian").find("option").remove();
+		$("#baobiaojidu").find("option").remove();
+		$("#baobiaoyue").find("option").remove();
+		var nows=$(this).val()
+		xuanzes=nows;
+		if(nows==1){
+			$.ajax({
+				type: 'POST',
+				url: "findFromYear.action",
+				dataType: 'JSON',
+			 	success: function( data ){
+			 		var str="<option value='0'>--年份选择--</option>";
+					for(var i=0;i<data.length;i++){
+						str+="<option value="+data[i].fromtime+">"+data[i].fromtime+"</option>";
+					}
+					str+="</select>";
+					$("#baobiaonian").append(str);
+				}
+			});
+		}else if(nows==2){
+			$.ajax({
+				type: 'POST',
+				url: "findFromYear.action",
+				dataType: 'JSON',
+			 	success: function( data ){
+			 		var str="<option value='0'>--年份选择--</option>";
+					for(var i=0;i<data.length;i++){
+						str+="<option value="+data[i].fromtime+">"+data[i].fromtime+"</option>";
+					}
+					str+="</select>";
+					$("#baobiaonian").append(str);
+				}
+			});
+		}else if(nows==3){
+			$.ajax({
+				type: 'POST',
+				url: "findFromYear.action",
+				dataType: 'JSON',
+			 	success: function( data ){
+			 		var str="<option value='0'>--年份选择--</option>";
+					for(var i=0;i<data.length;i++){
+						str+="<option value="+data[i].fromtime+">"+data[i].fromtime+"</option>";
+					}
+					$("#baobiaonian").append(str);
+				}
+			});
+		}else{
+			alert(0)
+		}
+	 });
+	
+		//年份选择
+		var fromtimes;
+		$("select#baobiaonian").change(function() {
+			$("#baobiaojidu").find("option").remove();
+			$("#baobiaoyue").find("option").remove();
+			var xuanze=xuanzes;
+			var fromtime = $(this).val()
+			fromtimes=fromtime;
+			//是年报表
+			if(xuanze==1){
+				$('#from_data').datagrid({
+					url : 'findAllFrom.action',
+					queryParams : {
+						fromtime : fromtime
+					},
+					fitColumns : true,
+					pagination : true, //设置true将在数据表格底部显示分页工具栏。
+					striped : true, //交替显示行背景
+					loadMesg : '数据加载中',
+					rownumbers : true,
+					//singleSelect:true,
+					pageNumber : 1,
+					pageSize : 20,
+					pageList : [ 5, 10, 20, 30, 40, 50 ],
+					//sortName:'prid',
+					remoteSort : false, //升序降序排列
+					columns : [ [ {
+						checkbox : true
+					},
+					//{field:'prid',title:'代理点编号',width:100,align:'center',sortable:true},   
+					{
+						field : 'fromtime',
+						title : '报表时间',
+						width : 50,
+						align : 'center',
+						editor : {
+							type : "text",
+							options : {
+								required : true
+							}
+						}
+					}, {
+						field : 'sfromtime',
+						title : '报表生成时间',
+						width : 100,
+						align : 'center',
+						editor : {
+							type : "text",
+							options : {
+								required : true
+							}
+						}
+					}, {
+						field : 'spid',
+						title : '配送点名称',
+						width : 50,
+						align : 'center',
+						editor : {
+							type : "text",
+							options : {
+								required : true
+							}
+						}
+					}, {
+						field : 'countweight',
+						title : '配送货物总重量',
+						width : 50,
+						align : 'center',
+						editor : {
+							type : "text",
+							options : {
+								required : true
+							}
+						}
+					}, {
+						field : 'counttj',
+						title : '总体积',
+						width : 50,
+						align : 'center',
+						editor : {
+							type : "text",
+							options : {
+								required : true
+							}
+						}
+					}, {
+						field : 'countprice',
+						title : '配送收入',
+						width : 50,
+						align : 'center',
+						editor : {
+							type : "text",
+							options : {
+								required : true
+							}
+						}
+					}, {
+						field : 'spid',
+						title : '所属单位',
+						width : 100,
+						align : 'center',
+						formatter : function(val, row, index) {
+							return row.spname;
+						}
+					}, ] ],
+					toolbar : "#baobiao",
+				});
+			}else if(xuanze==2){	//季度报表
+				var str="<option value='0'>--季度选择--</option>";
+				str+="<option value='1'>"+fromtime+"第一季度</option>";
+				str+="<option value='2'>"+fromtime+"第二季度</option>";
+				str+="<option value='3'>"+fromtime+"第三季度</option>";
+				str+="<option value='4'>"+fromtime+"第四季度</option>";
+				$("#baobiaojidu").append(str);
+			}else if(xuanze==3){	//月报表
+				var str="<option value='0'>--月份选择--</option>";
+				str+="<option value='1'>"+fromtime+"年1月</option>";
+				str+="<option value='2'>"+fromtime+"年2月</option>";
+				str+="<option value='3'>"+fromtime+"年3月</option>";
+				str+="<option value='4'>"+fromtime+"年4月</option>";
+				str+="<option value='5'>"+fromtime+"年5月</option>";
+				str+="<option value='6'>"+fromtime+"年6月</option>";
+				str+="<option value='7'>"+fromtime+"年7月</option>";
+				str+="<option value='8'>"+fromtime+"年8月</option>";
+				str+="<option value='9'>"+fromtime+"年9月</option>";
+				str+="<option value='10'>"+fromtime+"年10月</option>";
+				str+="<option value='11'>"+fromtime+"年11月</option>";
+				str+="<option value='12'>"+fromtime+"年12月</option>";
+				$("#baobiaoyue").append(str);
+			}
+		});
+		
+		//季度报表选择
+		$("select#baobiaojidu").change(function() {
+			var jidu = $(this).val();
+			var fromtime=fromtimes;
+			$('#from_data').datagrid({
+				url : 'findFromJidu.action',
+				queryParams : {
+					fromtime : fromtime,
+					jidu:jidu
+				},
+				fitColumns : true,
+				pagination : true, //设置true将在数据表格底部显示分页工具栏。
+				striped : true, //交替显示行背景
+				loadMesg : '数据加载中',
+				rownumbers : true,
+				//singleSelect:true,
+				pageNumber : 1,
+				pageSize : 20,
+				pageList : [ 5, 10, 20, 30, 40, 50 ],
+				//sortName:'prid',
+				remoteSort : false, //升序降序排列
+				columns : [ [ {
+					checkbox : true
+				},
+				//{field:'prid',title:'代理点编号',width:100,align:'center',sortable:true},   
+				{
+					field : 'fromtime',
+					title : '报表时间',
+					width : 50,
+					align : 'center',
+					editor : {
+						type : "text",
+						options : {
+							required : true
+						}
+					}
+				}, {
+					field : 'sfromtime',
+					title : '报表生成时间',
+					width : 100,
+					align : 'center',
+					editor : {
+						type : "text",
+						options : {
+							required : true
+						}
+					}
+				}, {
+					field : 'spid',
+					title : '配送点名称',
+					width : 50,
+					align : 'center',
+					editor : {
+						type : "text",
+						options : {
+							required : true
+						}
+					}
+				}, {
+					field : 'countweight',
+					title : '配送货物总重量',
+					width : 50,
+					align : 'center',
+					editor : {
+						type : "text",
+						options : {
+							required : true
+						}
+					}
+				}, {
+					field : 'counttj',
+					title : '总体积',
+					width : 50,
+					align : 'center',
+					editor : {
+						type : "text",
+						options : {
+							required : true
+						}
+					}
+				}, {
+					field : 'countprice',
+					title : '配送收入',
+					width : 50,
+					align : 'center',
+					editor : {
+						type : "text",
+						options : {
+							required : true
+						}
+					}
+				}, {
+					field : 'spid',
+					title : '所属单位',
+					width : 100,
+					align : 'center',
+					formatter : function(val, row, index) {
+						return row.spname;
+					}
+				}, ] ],
+				toolbar : "#baobiao",
+			});
+		});
+		
+		//月份选择数据
+		//季度报表选择
+		$("select#baobiaoyue").change(function() {
+			var month = $(this).val();
+			var fromtime=fromtimes;
+			$('#from_data').datagrid({
+				url : 'findFromMonth.action',
+				queryParams : {
+					fromtime : fromtime,
+					month:month
+				},
+				fitColumns : true,
+				pagination : true, //设置true将在数据表格底部显示分页工具栏。
+				striped : true, //交替显示行背景
+				loadMesg : '数据加载中',
+				rownumbers : true,
+				//singleSelect:true,
+				pageNumber : 1,
+				pageSize : 20,
+				pageList : [ 5, 10, 20, 30, 40, 50 ],
+				//sortName:'prid',
+				remoteSort : false, //升序降序排列
+				columns : [ [ {
+					checkbox : true
+				},
+				//{field:'prid',title:'代理点编号',width:100,align:'center',sortable:true},   
+				{
+					field : 'fromtime',
+					title : '报表时间',
+					width : 50,
+					align : 'center',
+					editor : {
+						type : "text",
+						options : {
+							required : true
+						}
+					}
+				}, {
+					field : 'sfromtime',
+					title : '报表生成时间',
+					width : 100,
+					align : 'center',
+					editor : {
+						type : "text",
+						options : {
+							required : true
+						}
+					}
+				}, {
+					field : 'spid',
+					title : '配送点名称',
+					width : 50,
+					align : 'center',
+					editor : {
+						type : "text",
+						options : {
+							required : true
+						}
+					}
+				}, {
+					field : 'countweight',
+					title : '配送货物总重量',
+					width : 50,
+					align : 'center',
+					editor : {
+						type : "text",
+						options : {
+							required : true
+						}
+					}
+				}, {
+					field : 'counttj',
+					title : '总体积',
+					width : 50,
+					align : 'center',
+					editor : {
+						type : "text",
+						options : {
+							required : true
+						}
+					}
+				}, {
+					field : 'countprice',
+					title : '配送收入',
+					width : 50,
+					align : 'center',
+					editor : {
+						type : "text",
+						options : {
+							required : true
+						}
+					}
+				}, {
+					field : 'spid',
+					title : '所属单位',
+					width : 100,
+					align : 'center',
+					formatter : function(val, row, index) {
+						return row.spname;
+					}
+				}, ] ],
+				toolbar : "#baobiao",
+			});
+		});
+	</script>
+</body>

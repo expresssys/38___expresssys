@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.bean.Logininfo" >
+  <resultMap id="BaseResultMap" type="com.yc.bean.Logininfo" >
+    <id column="lid" property="lid" jdbcType="INTEGER" />
+    <result column="ltime" property="ltime" jdbcType="TIMESTAMP" />
+    <result column="lname" property="lname" jdbcType="VARCHAR" />
+    <result column="lip" property="lip" jdbcType="VARCHAR" />
+    <result column="lstatus" property="lstatus" jdbcType="VARCHAR" />
+    <result column="res1" property="res1" jdbcType="VARCHAR" />
+    <result column="res2" property="res2" jdbcType="VARCHAR" />
+    <result column="res3" property="res3" jdbcType="VARCHAR" />
+    <result column="res4" property="res4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    lid, ltime, lname, lip, lstatus, res1, res2, res3, res4
+  </sql>
+  
+  
+  <!-- 条件查询 -->
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select 
+    <include refid="Base_Column_List" />
+    from logininfo
+     <where>
+     1=1
+     <if test="Logininfo.lname!=null and Logininfo.lname!='' ">
+     	and   lname = #{Logininfo.lname}
+     </if>
+     
+      
+      </where>
+      limit ${start},${pagesize} 
+  </select>
+  
+  
+   <!-- 总条数 -->
+  <select id="selectTotal" resultType="java.lang.Integer"  parameterType="com.yc.bean.Logininfo">
+  
+  	select count(lid) from Logininfo
+  	<where>
+     1=1
+     <if test="lname!=null and lname!='' ">
+     	and   lname = #{lname}
+     </if>
+     
+     
+      </where>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from logininfo
+    where lid = #{lid,jdbcType=INTEGER}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from logininfo
+    where lid = #{lid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yc.bean.Logininfo" useGeneratedKeys="true" keyColumn="lid" keyProperty="lid">
+    insert into logininfo ( ltime, lname, 
+      lip, lstatus, res1, 
+      res2, res3, res4)
+    values (#{ltime,jdbcType=TIMESTAMP}, #{lname,jdbcType=VARCHAR}, 
+      #{lip,jdbcType=VARCHAR}, #{lstatus,jdbcType=VARCHAR}, #{res1,jdbcType=VARCHAR}, 
+      #{res2,jdbcType=VARCHAR}, #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR})
+  </insert>
+
+ 
+  <update id="update" parameterType="com.yc.bean.Logininfo" >
+    update logininfo
+    set ltime = #{ltime,jdbcType=TIMESTAMP},
+      lname = #{lname,jdbcType=VARCHAR},
+      lip = #{lip,jdbcType=VARCHAR},
+      lstatus = #{lstatus,jdbcType=VARCHAR},
+      res1 = #{res1,jdbcType=VARCHAR},
+      res2 = #{res2,jdbcType=VARCHAR},
+      res3 = #{res3,jdbcType=VARCHAR},
+      res4 = #{res4,jdbcType=VARCHAR}
+    where lid = #{lid,jdbcType=INTEGER}
+  </update>
+</mapper>

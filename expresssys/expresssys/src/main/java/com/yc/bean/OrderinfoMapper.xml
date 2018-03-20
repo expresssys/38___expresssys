@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.bean.Orderinfo" >
+  <resultMap id="BaseResultMap" type="com.yc.bean.Orderinfo" >
+    <id column="orderId" property="orderid" jdbcType="INTEGER" />
+    <result column="osid" property="osid" jdbcType="INTEGER" />
+    <result column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="ostatus" property="ostatus" jdbcType="INTEGER" />
+    <result column="res1" property="res1" jdbcType="VARCHAR" />
+    <result column="res2" property="res2" jdbcType="VARCHAR" />
+    <result column="res3" property="res3" jdbcType="VARCHAR" />
+    <result column="res4" property="res4" jdbcType="VARCHAR" />
+    <result column="res5" property="res5" jdbcType="VARCHAR" />
+    
+     <association property="goods" javaType="com.yc.bean.Goods"> 
+      <id column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="gname" property="gname" jdbcType="VARCHAR" />
+    <result column="gcount" property="gcount" jdbcType="INTEGER" />
+    <result column="gunit" property="gunit" jdbcType="VARCHAR" />
+    <result column="gprice" property="gprice" jdbcType="DOUBLE" />
+    <result column="gweight" property="gweight" jdbcType="DOUBLE" />
+    <result column="gvolume" property="gvolume" jdbcType="DOUBLE" />
+    <result column="gtype" property="gtype" jdbcType="VARCHAR" />
+    <result column="gremark" property="gremark" jdbcType="VARCHAR" />
+    <result column="res1" property="res1" jdbcType="VARCHAR" />
+    <result column="res2" property="res2" jdbcType="VARCHAR" />
+    <result column="res3" property="res3" jdbcType="VARCHAR" />
+    <result column="res4" property="res4" jdbcType="VARCHAR" />
+     </association>
+     
+      <association property="route" javaType="com.yc.bean.Route"> 
+      <id column="rid" property="rid" jdbcType="INTEGER" />
+		<result column="rname" property="rname" jdbcType="VARCHAR" />
+		<result column="rvia" property="rvia" jdbcType="VARCHAR" />
+		<result column="res1" property="res1" jdbcType="VARCHAR" />
+		<result column="res2" property="res2" jdbcType="VARCHAR" />
+		<result column="res3" property="res3" jdbcType="VARCHAR" />
+		<result column="res4" property="res4" jdbcType="VARCHAR" />
+      </association>
+      
+       <association property="orders" javaType="com.yc.bean.Orders"> 
+        <id column="osid" property="osid" jdbcType="INTEGER" />
+	    <result column="osendName" property="osendname" jdbcType="VARCHAR" />
+	    <result column="osendTel" property="osendtel" jdbcType="VARCHAR" />
+	    <result column="osendAddress" property="osendaddress" jdbcType="VARCHAR" />
+	    <result column="orecName" property="orecname" jdbcType="VARCHAR" />
+	    <result column="orecTel" property="orectel" jdbcType="VARCHAR" />
+	    <result column="orecAddress" property="orecaddress" jdbcType="VARCHAR" />
+	    <result column="orecCode" property="oreccode" jdbcType="VARCHAR" />
+	    <result column="orecPhone" property="orecphone" jdbcType="VARCHAR" />
+	    <result column="otime" property="otime" jdbcType="TIMESTAMP" />
+	    <result column="oprice" property="oprice" jdbcType="DOUBLE" />
+	    <result column="oinsurePrice" property="oinsureprice" jdbcType="DOUBLE" />
+	    <result column="otype" property="otype" jdbcType="INTEGER" />
+	    <result column="ostatus" property="ostatus" jdbcType="INTEGER" />
+	    <result column="ostartTime" property="ostarttime" jdbcType="TIMESTAMP" />
+	    <result column="oendTime" property="oendtime" jdbcType="TIMESTAMP" />
+	    <result column="orecSpname" property="orecspname" jdbcType="VARCHAR" />
+	    <result column="oremark" property="oremark" jdbcType="VARCHAR" />
+	    <result column="usId" property="usid" jdbcType="INTEGER" />
+	    <result column="spid" property="spid" jdbcType="INTEGER" />
+	    <result column="res1" property="res1" jdbcType="VARCHAR" />
+	    <result column="res2" property="res2" jdbcType="VARCHAR" />
+	    <result column="res3" property="res3" jdbcType="VARCHAR" />
+	    <result column="res4" property="res4" jdbcType="VARCHAR" />
+	       
+       </association>
+      
+  </resultMap>
+  <sql id="Base_Column_List" >
+    orderId, osid, gid, rid, ostatus, res1, res2, res3, res4, res5
+  </sql>
+  
+   <select id="selectTotal" resultType="java.lang.Integer"  parameterType="com.yc.bean.Orders">
+	select count(orderId) from orderinfo left join orders 
+	on orderinfo.osid=orders.osid where orderinfo.osid=#{osid,jdbcType=INTEGER}
+
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.yc.bean.Orders" >
+   select 
+ orders.osid, osendName, osendTel, osendAddress, orecName, orecTel, orecAddress, orecCode, 
+    orecPhone, otime, oprice, oinsurePrice, otype, orders.ostatus, ostartTime, oendTime, orecSpname, 
+    oremark, orders.usId, orders.spid, orders.res1, orders.res2, orders.res3, orders.res4,
+      goods.gid,gname,gcount,gunit,gprice,gweight,gvolume,gtype,gremark, goods.res1, goods.res2, goods.res3,goods.res4,
+      route.rid, rname, rvia, route.res1, route.res2, route.res3, route.res4  
+    from orderInfo 
+left join orders on orderInfo.osid=orders.osid 
+left join  goods on orderInfo.gid=goods.gid
+left join route on orderInfo.rid=route.rid 
+
+    where orderinfo.osid=#{osid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByosid" resultMap="BaseResultMap" parameterType="com.yc.bean.Orderinfo" >
+   select * from orderinfo
+    where osid=#{osid,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+   update orderinfo
+   set ostatus=2
+  where orderId = #{orderid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yc.bean.Orderinfo" >
+    insert into orderinfo (orderId, osid, gid, 
+      rid, ostatus, res1, 
+      res2, res3, res4, res5
+      )
+    values (#{orderid,jdbcType=INTEGER}, #{osid,jdbcType=INTEGER}, #{gid,jdbcType=INTEGER}, 
+      #{rid,jdbcType=INTEGER}, 1, #{res1,jdbcType=VARCHAR}, 
+      #{res2,jdbcType=VARCHAR}, #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR}, #{res5,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yc.bean.Orderinfo" >
+    insert into orderinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        orderId,
+      </if>
+      <if test="osid != null" >
+        osid,
+      </if>
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="ostatus != null" >
+        ostatus,
+      </if>
+      <if test="res1 != null" >
+        res1,
+      </if>
+      <if test="res2 != null" >
+        res2,
+      </if>
+      <if test="res3 != null" >
+        res3,
+      </if>
+      <if test="res4 != null" >
+        res4,
+      </if>
+      <if test="res5 != null" >
+        res5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="osid != null" >
+        #{osid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="ostatus != null" >
+        #{ostatus,jdbcType=INTEGER},
+      </if>
+      <if test="res1 != null" >
+        #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="res4 != null" >
+        #{res4,jdbcType=VARCHAR},
+      </if>
+      <if test="res5 != null" >
+        #{res5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Orderinfo" >
+    update orderinfo
+    <set >
+      <if test="osid != null" >
+        osid = #{osid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null" >
+        rid = #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="ostatus != null" >
+        ostatus = #{ostatus,jdbcType=INTEGER},
+      </if>
+      <if test="res1 != null" >
+        res1 = #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        res2 = #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        res3 = #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="res4 != null" >
+        res4 = #{res4,jdbcType=VARCHAR},
+      </if>
+      <if test="res5 != null" >
+        res5 = #{res5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    
+    <where>
+  		1=1
+  		<if test="orderid != null and orderid != '' ">
+  			and orderId  #{orderid,jdbcType=INTEGER}
+  		</if>
+  		<if test="osid != null and osid != '' ">
+  			and osid = #{osid,jdbcType=INTEGER}
+  		</if>
+  	</where>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Orderinfo" >
+    update orderinfo
+    set osid = #{osid,jdbcType=INTEGER},
+      gid = #{gid,jdbcType=INTEGER},
+      rid = #{rid,jdbcType=INTEGER},
+      ostatus = #{ostatus,jdbcType=INTEGER},
+      res1 = #{res1,jdbcType=VARCHAR},
+      res2 = #{res2,jdbcType=VARCHAR},
+      res3 = #{res3,jdbcType=VARCHAR},
+      res4 = #{res4,jdbcType=VARCHAR},
+      res5 = #{res5,jdbcType=VARCHAR}
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </update>
+</mapper>

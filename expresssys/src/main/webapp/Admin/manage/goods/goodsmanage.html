@@ -1,0 +1,390 @@
+<meta charset="UTF-8">
+<table id="table_goods_manager" data-options="fit:true" ></table>
+<div id="goods_search">
+	<a id="btn" href="javascript:goods_showAddgoods()" class="easyui-linkbutton" data-options="iconCls:'icon-script-add',plain:true" style="float:left">添加</a>  
+	<div class="datagrid-btn-separator"></div>
+	<a id="btn" href="javascript:goods_showUpdategoods()" class="easyui-linkbutton" data-options="iconCls:'icon-server-edit',plain:true" style="float:left">修改</a>  
+	<div class="datagrid-btn-separator"></div>
+	
+	<label>货物名称：</label>
+	<input type="text" name="gname" id="goods_search_gname"/>
+	
+	<label>货物类型：</label>
+	<input type="text" name="gtype" id="goods_search_gtype"/>
+	
+	<label>货物状态：</label>
+	<select id="goods_search_res1" name="res1">
+		<option value="-1">--请选择--</optionv>
+		<option value="0">已签收</option>
+		<option value="1">等待揽件</option>
+		<option value="2">已发货</option>
+		<option value="3">运输中</option>
+		<option value="4">派送中</option>
+	</select>
+	<a href="javascript:goods_searchgoods()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+</div>
+<div id="goods_update" class="easyui-dialog" title="添加货物信息" style="width:400px;height:500px;align:center"
+		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
+	<form id="form_goods_update">
+		<input type="hidden"  name="gid" id="goods_update_gid"  />
+		<ul>
+			<li>
+				<label>货物名称<span></span></label>
+				<input type="text" name="gname" id="goods_update_gname" class="goods_input"/>
+			</li>
+			<li>
+				<label>货物数量<span></span></label>
+				<input type="text" name="gcount" id="goods_update_gcount" class="goods_input"/>
+			</li>
+			<li>
+				<label>单位<span></span></label>
+				<input type="text" name="gunit" id="goods_update_gunit" class="goods_input"/>
+			</li>
+			<li>
+				<label>货物价值<span></span></label>
+				<input type="text" name="gprice" id="goods_update_gprice" class="goods_input"/>
+			</li>
+			<li>
+				<label>货物重量<span></span></label>
+				<input type="text" name="gweight" id="goods_update_gweight" class="goods_input" placeholder="单位：kg"/>
+			</li>
+			<li>
+				<label>货物体积<span></span></label>
+				<input type="text" name="gvolume" id="goods_update_gvolume" class="goods_input" placeholder="单位：m³"/>
+			</li>
+			<li>
+				<label>货物类别<span></span></label>
+				<input type="text" name="gtype" id="goods_update_gtype" class="goods_input"/>
+			</li>
+			<li>
+				<label>货物状态：</label>
+				<select id="goods_update_res1" name="res1" class="goods_input">
+					<option value="-1">--请选择--</optionv>
+					<option value="0">已签收</option>
+					<option value="1">等待揽件</option>
+					<option value="2">已发货</option>
+					<option value="3">运输中</option>
+					<option value="4">派送中</option>
+				</select>
+			</li>
+			<li>
+				<label>备注<span></span></label>
+				<textarea rows="5" cols="23" name="gremark" id="goods_update_gremark" class="goods_input"></textarea>
+			</li>
+		</ul>
+	</form>
+</div>
+
+<div id="goods_show" class="easyui-dialog" title="查看货物信息" style="width:400px;height:500px;align:center"
+		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
+	<form id="form_goods_show">
+		<ul>
+			<li>
+				<label>货物名称：<span></span></label>
+				<label id="goods_show_gname" class="label" ></label>
+			</li>
+			<li>
+				<label>货物数量：<span></span></label>
+				<label  id="goods_show_gcount" class="label"  ></label>
+			</li>
+			<li>
+				<label>货物价值：<span></span></label>
+				<label  id="goods_show_gprice" class="label"  ></label>
+			</li>
+			<li>
+				<label>货物重量：<span></span></label>
+				<label  id="goods_show_gweight" class="label"  > kg</label>
+			</li>
+			<li>
+				<label>货物体积：<span></span></label>
+				<label   id="goods_show_gvolume" class="label" > m³</label>
+			</li>
+			<li>
+				<label>货物类别：<span></span></label>
+				<label  id="goods_show_gtype" class="label" ></label>
+			</li>
+			<li>
+				<label>货物状态：<span></span></label>
+				<label  id="goods_show_res1" class="label" ></label>
+			</li>
+			<li>
+				<label>备注：<span></span></label>
+				<label id="goods_show_gremark" class="label" ></label>
+			</li>
+		</ul>
+	</form>
+</div>
+
+<style>
+
+#goods_search label{
+	margin-left:20px;
+}
+
+#goods_update label{
+	display:inline-block;
+	width:66px;	
+	text-align:justify;
+	margin-top: 15px;
+	margin-right: 10px;
+	margin-left:10px;
+}
+#goods_update label span{
+  display:inline-block;
+  width:100%;
+}
+
+#goods_update li{
+	list-style-type:none;
+}
+
+#goods_update .goods_input{
+	width:160px;
+	border:1px solid #95B8E7;
+	line-height:20px;
+}
+
+#goods_show label{
+	display:inline-block;
+	width:66px;	
+	text-align:justify;
+	margin-top: 15px;
+	margin-right: 10px;
+	margin-left:10px;
+}
+#goods_show ul .label{
+	margin-top:3px;
+}
+#goods_show label span{
+  display:inline-block;
+  width:100%;
+}
+
+#goods_show li{
+	list-style-type:none;
+}
+
+</style>
+
+<script type="text/javascript">
+var goodsEditRow = undefined;
+var dataSelect =[{"status":"已签收"},{"status":"等待揽件"},{"status":"已发货"},{"status":"运输中"},{"status":"派送中"}];
+
+var goodsObject=$('#table_goods_manager').datagrid({   
+    url:'goods/find.action',
+    fitColumns:true,
+    pagination:true,	//设置true将在数据表格底部显示分页工具栏。
+    striped:true,	//交替显示行背景
+    loadMesg:'数据加载中',
+    rownumbers:true,
+    pageNumber:1,
+    pageSize:50,
+    pageList:[10,20,40,50,100],
+    sortName:'gid',
+    remoteSort:false,	//升序降序排列
+    columns:[[   
+			{checkbox:true},  
+	        {field:'gid',title:'货物编号',width:100,align:'center',sortable:true},   
+	        {field:'gname',title:'货物名称',width:100,align:'center'},   
+	        {field:'gcount',title:'货物数量',width:100,align:'center'},   
+	        {field:'gunit',title:'单位',width:100,align:'center'},   
+	        {field:'gprice',title:'货物价值',width:100,align:'center'},   
+	        {field:'gweight',title:'货物重量',width:100,align:'center'},   
+	        {field:'gvolume',title:'货物体积',width:100,align:'center'},   
+	        {field:'gtype',title:'货物类别',width:100,align:'center'}, 
+	        {field:'res1',title:'货物状态',width:100,align:'center', formatter:function(val,row,index){
+	        	if(val==0) return "已签收";
+	        	else if(val==1) return "等待揽件";
+	        	else if(val==2) return "已发货";
+	        	else if(val==3) return "运输中";
+	        	else if(val==4) return "派送中";
+	        	//editor: { type: 'combobox', options: { data: dataSelect, valueField: "value", textField: "text" } },
+	        }},
+	        {field:'_operate',title:'操作',width:100,align:'center',formatter:function(val,row,index){
+	        	return "<a href='javascript:goods_show("+row.gid+")'> 详情</a>"  //详情查看
+	        }}
+        ]],
+        toolbar:"#goods_search"
+}); 
+
+function goods_showAddgoods(){
+	$("#form_goods_update")[0].reset();
+	$('#goods_update').dialog({
+		title:"添加货物信息",
+		iconCls:'icon-user-add',
+		buttons:[{
+			text:'确定',
+			iconCls:'icon-user-add',
+			handler:function(){
+				var gname=$.trim( $("#goods_update_gname").val() );
+				var gtype=$.trim( $("#goods_update_gtype").val() );
+				var res1=$.trim( $("#goods_update_res1").val() );
+				
+				if(gname=="" || gtype=="" || res1==-1){
+					alert("请填入完整信息");
+					return ;
+				}
+				
+				$.ajax({
+					url:"goods/add.action",
+					secureuri:false,
+					type:"POST",
+					data: $('#form_goods_update').serialize(),  
+					success:function(data,status){
+						if(data.code>0){
+							goodsObject.datagrid("reload");
+							$("#form_goods_update")[0].reset();
+							$.messager.show({title:"成功提示",msg:"货物信息添加成功...",timeout:2000,showType:"slide"});
+							$('#goods_update').dialog("close");
+						}else{
+							$.messager.alert("失败提示","货物信息添加失败...","error");
+						}
+					},
+					error:function(data,status,e){
+						$.messager.alert("失败提示","货物员信息添加失败...\n"+e,"error");
+					}
+				});
+			}
+		}]
+	});
+	$('#goods_update').dialog("open");
+}
+
+//修改
+function goods_showUpdategoods(){
+	var rows=$('#table_goods_manager').datagrid("getChecked");
+	
+	if(rows.length<=0){
+		$.messager.show({title:"温馨提示",msg:"请选择您要修改的货物信息...",timeout:2000,showType:"slide"});
+	}else{
+		var row = rows[0];
+		
+		$("#goods_update_gname").val(row.gname);
+		$("#goods_update_gcount").val(row.gcount);
+		$("#goods_update_gunit").val(row.gunit);
+		$("#goods_update_gprice").val(row.gprice);
+		$("#goods_update_gweight").val(row.gweight);
+		$("#goods_update_gvolume").val(row.gvolume);
+		$("#goods_update_gtype").val(row.gtype);
+		$("#goods_update_gremark").val(row.gremark);
+		$("#goods_update_gid").val(row.gid);
+		$("#goods_update_res1").val(row.res1);
+		
+		
+		$('#goods_update').dialog({
+			title:"修改货物信息",
+			iconCls:'icon-user-add',
+			buttons:[{
+				text:'确定',
+				iconCls:'icon-user-add',
+				handler:function(){
+					var gname=$.trim( $("#goods_update_gname").val() );
+					var gtype=$.trim( $("#goods_update_gtype").val() );
+					
+					if(gname=="" || gtype==""){
+						alert("请填入完整的修改信息");
+						return ;
+					}
+					
+					$.ajax({
+						url:"goods/update.action",
+						secureuri:false,
+						type:"POST",
+						data: $('#form_goods_update').serialize(),  
+						success:function(data,status){
+							if(data.code>0){
+								goodsObject.datagrid("reload");
+								$("#form_goods_update")[0].reset();
+								$.messager.show({title:"成功提示",msg:"货物信息修改成功...",timeout:2000,showType:"slide"});
+								$('#goods_update').dialog("close");
+							}else{
+								$.messager.alert("失败提示","货物信息修改失败...","error");
+							}
+						},
+						error:function(data,status,e){
+							$.messager.alert("失败提示","货物员信息修改失败...\n"+e,"error");
+						}
+					});
+				}
+			}]
+		});
+		$('#goods_update').dialog("open");
+	}
+}
+
+//条件查询
+function goods_searchgoods(){
+	var gname = $.trim( $("#goods_search_gname").val() );
+	var gtype=$.trim( $("#goods_search_gtype").val() );
+	var res1=$.trim( $("#goods_search_res1").val() );
+	
+	if(res1==-1){
+		res1='';
+	}	
+	
+	$('#table_goods_manager').datagrid({
+		url:"goods/find.action",
+		queryParams:{gname:gname,gtype:gtype,res1:res1}
+	});
+}
+
+//货物状态修改
+function users_update_ustatus(gid){
+	$.post("goods/update.action",{gid:gid},function(data){
+		if(data.code>0){
+			$.messager.show({title:"成功提示",msg:"该货物状态已修改",timeout:2000,showType:"slide"});
+			usersObject.datagrid("reload");
+		}else{
+			$.messager.alert("失败提示","该货物状态修改失败...","error");
+			usersObject.datagrid("reload");
+		}
+	})
+}
+
+
+    /* $("#table_goods_manager").datagrid({  
+        //双击事件  
+        onDblClickRow: function (index, row) {  
+                if(goodsEditRow!=undefined){
+                	goodsObject.datagrid('rejectChanges');//结束编辑
+                	goodsEditRow=undefined;
+                }
+                if(row==undefined){
+					$.messager.show({title:'温馨提示',msg:'请选择或编辑您要修改的数据',timeout:2000,showType:'slide'});
+				}else{
+					goodsEditRow = goodsObject.datagrid('getRowIndex',row);
+					goodsObject.datagrid("beginEdit",goodsEditRow);
+					
+				}
+        }
+    });   */
+
+    
+    function goods_show(gid){
+    	
+    	$.post("goods/find.action",{gid:gid,page:1,rows:1},function(data){
+    		if(data.total>0){
+    			$("#goods_show_gname").html(data.rows[0].gname);
+    			$("#goods_show_gcount").html(data.rows[0].gcount + " " + data.rows[0].gunit);
+    			$("#goods_show_gprice").html(data.rows[0].gprice);
+    			$("#goods_show_gweight").html(data.rows[0].gweight+" kg");
+    			$("#goods_show_gvolume").html(data.rows[0].gvolume + " m³");
+    			$("#goods_show_gtype").html(data.rows[0].gtype);
+    			$("#goods_show_gremark").html(data.rows[0].gremark);
+    			$("#goods_show_res1").html(dataSelect[data.rows[0].res1].status);
+    			
+    			
+    		}
+    	})
+    	
+    	
+    	
+    	$('#goods_show').dialog({
+    		title:"查看货物信息",
+    		iconCls:'icon-user-add',
+    		
+    	});
+    	$('#goods_show').dialog("open");
+    }
+</script>
+

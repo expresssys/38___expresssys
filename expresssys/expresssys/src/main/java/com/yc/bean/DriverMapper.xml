@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.bean.Driver" >
+  <resultMap id="BaseResultMap" type="com.yc.bean.Driver" >
+    <id column="did" property="did" jdbcType="INTEGER" />
+    <result column="dname" property="dname" jdbcType="VARCHAR" />
+    <result column="dnumber" property="dnumber" jdbcType="VARCHAR" />
+    <result column="dphone" property="dphone" jdbcType="VARCHAR" />
+    <result column="didCard" property="didcard" jdbcType="VARCHAR" />
+    <result column="ddage" property="ddage" jdbcType="INTEGER" />
+    <result column="dstatus" property="dstatus" jdbcType="INTEGER" />
+    <result column="spid" property="spid" jdbcType="INTEGER" />
+    <result column="res1" property="res1" jdbcType="VARCHAR" />
+    <result column="res2" property="res2" jdbcType="VARCHAR" />
+    <result column="res3" property="res3" jdbcType="VARCHAR" />
+    <result column="res4" property="res4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    did, dname, dnumber, dphone, didCard, ddage, dstatus, spid, res1, res2, res3, res4
+  
+  </sql>
+  
+  <!-- 查询所有 -->
+   <select id="findAll" resultMap="BaseResultMap" parameterType="java.util.Map" >
+   
+    select 
+    <include refid="Base_Column_List" />
+    from driver
+    where dstatus!=3
+    limit ${start},${pagesize} 
+   </select>
+  
+  <!-- 条件查询 -->
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select 
+    <include refid="Base_Column_List" />
+    from driver
+     <where>
+     dstatus!=3
+     <if test="Driver.did!=null and Driver.did!='' ">
+     	and   did = #{Driver.did,javaType=Integer}
+     </if>
+     
+      <if test="Driver.spid!=null and Driver.spid!='' ">
+     	and   spid = #{Driver.spid,javaType=Integer}
+     </if>
+      </where>
+      limit ${start},${pagesize} 
+  </select>
+  
+  <!-- 总条数 -->
+  <select id="selectTotal" resultType="java.lang.Integer"  parameterType="com.yc.bean.Driver">
+  
+  	select count(did) from driver
+  	<where>
+     dstatus!=3
+     <if test="did!=null and did!='' ">
+     	and   did = #{did,javaType=Integer}
+     </if>
+     
+      <if test="spid!=null and spid!='' ">
+     	and   spid = #{spid,javaType=Integer}
+     </if>
+      </where>
+  </select>
+  
+  <!-- 删除 -->
+  <delete id="delete" parameterType="java.lang.Integer" >
+    update driver
+    set dstatus=3
+    where did = #{did,jdbcType=INTEGER}
+  </delete>
+  
+  
+  
+  <insert id="insert" parameterType="com.yc.bean.Driver" useGeneratedKeys="true" keyColumn="did" keyProperty="did">
+    insert into driver ( dname, dnumber, 
+      dphone, didCard, ddage, 
+      dstatus, spid, res1, 
+      res2, res3, res4)
+    values ( #{dname,jdbcType=VARCHAR}, #{dnumber,jdbcType=VARCHAR}, 
+      #{dphone,jdbcType=VARCHAR}, #{didcard,jdbcType=VARCHAR}, #{ddage,jdbcType=INTEGER}, 
+      0, #{spid,jdbcType=INTEGER}, #{res1,jdbcType=VARCHAR}, 
+      #{res2,jdbcType=VARCHAR}, #{res3,jdbcType=VARCHAR}, #{res4,jdbcType=VARCHAR})
+  </insert>
+ 
+
+  <update id="update" parameterType="com.yc.bean.Driver" >
+    update driver
+    set dname = #{dname,jdbcType=VARCHAR},
+      dnumber = #{dnumber,jdbcType=VARCHAR},
+      dphone = #{dphone,jdbcType=VARCHAR},
+      didCard = #{didcard,jdbcType=VARCHAR},
+      ddage = #{ddage,jdbcType=INTEGER},
+     
+      spid = #{spid,jdbcType=INTEGER},
+      res1 = #{res1,jdbcType=VARCHAR},
+      res2 = #{res2,jdbcType=VARCHAR},
+      res3 = #{res3,jdbcType=VARCHAR},
+      res4 = #{res4,jdbcType=VARCHAR}
+    where did = #{did,jdbcType=INTEGER}
+  </update>
+</mapper>

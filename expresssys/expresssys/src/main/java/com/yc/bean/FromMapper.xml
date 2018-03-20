@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.bean.From" >
+  <resultMap id="BaseResultMap" type="com.yc.bean.From" >
+    <result column="fromtime" property="fromtime"/>
+    <result column="sfromtime" property="sfromtime"/>
+    <result column="spid" property="spid"/>
+    <result column="countweight" property="countweight"/>
+    <result column="counttj" property="counttj"/>
+    <result column="countprice" property="countprice"/>
+    <result column="fspid" property="fspid"/>
+    <result column="sspid" property="sspid"/>
+    <result column="gtype" property="gtype"/>
+    <result column="count" property="count"/>
+    <result column="month" property="month"/>
+  </resultMap>
+  
+  <!-- 查询数据的总条数 -->
+  <select id="findAllFromCount" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select count(*) as count from orderInfo o join goods g on o.gid=g.gid 
+		join orders od on o.osid=od.osid where 1=1
+		<if test="fromtime!=null and fromtime!=''">
+			and year(otime) like CONCAT('%', #{fromtime}, '%')
+		</if>
+	</select>
+  
+  <!-- 查询省公司所有的报表 -->
+  <select id="findAllFrom" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select year(otime) as fromtime,NOW() as sfromtime,od.spid as spid,sum(gweight) as countweight,
+		sum(gvolume) as counttj,sum(oprice) as countprice
+		from orderInfo o join goods g on o.gid=g.gid join orders od on o.osid=od.osid
+		where 1=1
+		<if test="fromtime!=null and fromtime!=''">
+			and year(otime) like CONCAT('%', #{fromtime}, '%')
+		</if>
+		group by od.spid limit ${start},${pagesize}
+	</select>
+	
+  	<!-- 查询订单的所有年份 -->
+	<select id="findFromYear" resultMap="BaseResultMap">
+		select year(otime) as fromtime from orders group by year(otime)
+	</select>
+	
+	<!-- 查询第一季度数据  -->
+	<select id="findFromJidu1" parameterType="java.util.Map" resultType="com.yc.bean.From">
+		select year(otime) as fromtime,NOW() as sfromtime,od.spid as spid,sum(gweight) as countweight,
+		sum(gvolume) as counttj,sum(oprice) as countprice
+		from orderInfo o join goods g on o.gid=g.gid join orders od on o.osid=od.osid
+		where (month(otime)=1 or month(otime)=2 or month(otime)=3) and year(otime) like CONCAT('%', #{fromtime}, '%') 
+		group by od.spid limit ${start},${pagesize}
+	</select>
+	
+	<!-- 查询第二季度数据  -->
+	<select id="findFromJidu2" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select year(otime) as fromtime,NOW() as sfromtime,od.spid as spid,sum(gweight) as countweight,
+		sum(gvolume) as counttj,sum(oprice) as countprice
+		from orderInfo o join goods g on o.gid=g.gid join orders od on o.osid=od.osid
+		where (month(otime)=4 or month(otime)=5 or month(otime)=6) and year(otime) like CONCAT('%', #{fromtime}, '%') 
+		group by od.spid limit ${start},${pagesize}
+	</select>
+	
+	<!-- 查询第三季度数据  -->
+	<select id="findFromJidu3" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select year(otime) as fromtime,NOW() as sfromtime,od.spid as spid,sum(gweight) as countweight,
+		sum(gvolume) as counttj,sum(oprice) as countprice
+		from orderInfo o join goods g on o.gid=g.gid join orders od on o.osid=od.osid
+		where (month(otime)=7 or month(otime)=8 or month(otime)=9) and year(otime) like CONCAT('%', #{fromtime}, '%') 
+		group by od.spid limit ${start},${pagesize}
+	</select>
+	
+	<!-- 查询第四季度数据  -->
+	<select id="findFromJidu4" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select year(otime) as fromtime,NOW() as sfromtime,od.spid as spid,sum(gweight) as countweight,
+		sum(gvolume) as counttj,sum(oprice) as countprice
+		from orderInfo o join goods g on o.gid=g.gid join orders od on o.osid=od.osid
+		where (month(otime)=10 or month(otime)=11 or month(otime)=12) and year(otime) like CONCAT('%', #{fromtime}, '%') 
+		group by od.spid limit ${start},${pagesize}
+	</select>
+	
+	<!-- 查询某年某月的数据 -->
+	<select id="findFromMonth" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select year(otime) as fromtime,NOW() as sfromtime,sum(gweight) as countweight,
+		sum(gvolume) as counttj,sum(oprice) as countprice
+		from orderInfo o join goods g on o.gid=g.gid join orders od on o.osid=od.osid
+		where  year(otime) like CONCAT('%', #{fromtime}, '%') and month(otime) like CONCAT('%', #{month}, '%') group by od.spid limit ${start},${pagesize}
+	</select>
+	
+	<!-- 报表数据 -->
+	<select id="findFrombaobiao" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select sum(oprice) as countprice,month(otime) as month
+		from orderInfo o join goods g on o.gid=g.gid join orders od on o.osid=od.osid 
+		where year(otime)=#{year} group by month(otime)
+	</select>
+	
+</mapper>

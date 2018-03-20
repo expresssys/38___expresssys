@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.bean.Price" >
+  <resultMap id="BaseResultMap" type="com.yc.bean.Price" >
+    <id column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="pfrom" property="pfrom" jdbcType="VARCHAR" />
+    <result column="pto" property="pto" jdbcType="VARCHAR" />
+    <result column="pfirstwei" property="pfirstwei" jdbcType="DOUBLE" />
+    <result column="prestwei" property="prestwei" jdbcType="DOUBLE" />
+    <result column="pfirstvol" property="pfirstvol" jdbcType="DOUBLE" />
+    <result column="prestvol" property="prestvol" jdbcType="DOUBLE" />
+    <result column="pretime" property="pretime" jdbcType="VARCHAR" />
+    <result column="res1" property="res1" jdbcType="VARCHAR" />
+    <result column="res2" property="res2" jdbcType="VARCHAR" />
+    <result column="res3" property="res3" jdbcType="VARCHAR" />
+    <result column="res4" property="res4" jdbcType="VARCHAR" />
+    <result column="spname" property="spname" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 查询所有带条件查询   -->
+  <select id="selectPrice" parameterType="java.util.Map" resultMap="BaseResultMap">
+      select pid, pfrom, pto, pfirstwei, prestwei, pfirstvol, prestvol, pretime, res1 from price
+      where res1=0
+      <if test="pfrom!=null and pfrom!=''">
+			and pfrom like CONCAT('%', #{pfrom}, '%')
+	  </if>
+      <if test="pto!=null and pto!=''">
+			and pto like CONCAT('%', #{pto}, '%')
+	  </if>
+	  limit ${start},${pagesize}
+  </select>
+  
+  <!-- 查询总条数 -->
+  <select id="selectcount" parameterType="java.util.Map" resultMap="BaseResultMap">
+      select count(*) as res4 from price
+      where res1=0
+      <if test="pfrom!=null and pfrom!=''">
+			and pfrom like CONCAT('%', #{pfrom}, '%')
+	  </if>
+      <if test="pto!=null and pto!=''">
+			and pto like CONCAT('%', #{pto}, '%')
+	  </if>
+  </select>
+  
+  <!-- 查询配送点 -->
+  <select id="selectaddr" resultMap="BaseResultMap">
+      select spname from shipPoint where res1=0
+  </select>
+  
+  <!-- 添加价格 -->
+  <insert id="addprice" parameterType="com.yc.bean.Price">
+      insert into price(pfrom,pto,pfirstwei,prestwei,pfirstvol,prestvol,pretime,res1) 
+      values(#{pfrom},#{pto},#{pfirstwei},#{prestwei},#{pfirstvol},#{prestvol},#{pretime},0)
+  </insert>
+  
+  <!-- 修改价格 -->
+  <update id="updateprice" parameterType="com.yc.bean.Price">
+      update price
+		<set>
+			<if test="pfrom != null and pfrom!=''">
+				pfrom = #{pfrom},
+			</if>
+			<if test="pto != null and pto!=''">
+				pto = #{pto},
+			</if>
+			<if test="pfirstwei != null">
+				pfirstwei = #{pfirstwei},
+			</if>
+			<if test="prestwei != null">
+				prestwei = #{prestwei},
+			</if>
+			<if test="pfirstvol != null">
+				pfirstvol = #{pfirstvol},
+			</if>
+			<if test="prestvol != null">
+				prestvol = #{prestvol},
+			</if>
+			<if test="pretime != null and pretime!=''">
+				pretime = #{pretime},
+			</if>
+		</set>
+		where pid = #{pid}
+  </update>
+  
+  <update id="deleteprice" parameterType="java.lang.Integer">
+      update price set res1=1 where pid=#{pid}
+  </update>
+  
+  
+</mapper>

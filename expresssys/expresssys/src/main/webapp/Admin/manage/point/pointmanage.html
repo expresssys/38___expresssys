@@ -1,0 +1,414 @@
+<meta charset="UTF-8">
+
+<table id="point_manager" data-options="fit:true"></table>
+<div id="point_search">
+	<a id="btn" href="javascript:point_showAddpoint()" class="easyui-linkbutton" data-options="iconCls:'icon-script-add',plain:true" style="float:left">添加</a>  
+	<div class="datagrid-btn-separator"></div>
+	<a id="btn" href="javascript:point_showUpdatepoint()" class="easyui-linkbutton" data-options="iconCls:'icon-server-edit',plain:true" style="float:left">修改</a>  
+	<div class="datagrid-btn-separator"></div>
+	
+	<label>配送点名称：</label>
+	<input type="text" name="spname" id="point_search_spname"/>
+	
+	<label>配送点地址：</label>
+	<input type="text" name="spaddress" id="point_search_spaddress"/>
+	<a href="javascript:point_searchpoint()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+</div>
+<div id="point_update" class="easyui-dialog" title="添加配送点信息" style="width:400px;height:500px;align:center"
+		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
+	<form id="point_update_point">
+		<ul>
+		
+			<li>
+				<label>配送点名称<span></span></label>
+				<input type="text" name="spname" id="point_update_spname" class="point_input"/>
+			</li>
+			<li>
+				<label>联系人<span></span></label>
+				<input type="text" name="spperson" id="point_update_spperson" class="point_input"/>
+			</li>
+			<li>
+				<label>配送点电话<span></span></label>
+				<input type="text" name="sptel" id="point_update_sptel" class="point_input"/>
+			</li>
+			<li>
+				<label>联系邮件<span></span></label>
+				<input type="text" name="spemail" id="point_update_spemail" class="point_input"/>
+			</li>
+			
+			<li>
+				<label>配送点地址<span></span></label>
+				<input type="text" name="spaddress" id="point_update_spaddress" class="point_input"/>
+			</li>
+			<li>
+				<label>联系人电话<span></span></label>
+				<input type="text" name="sppersontel" id="point_update_sppersontel" class="point_input"/>
+			</li>
+			<li>
+				<label>配送点传真<span></span></label>
+				<input type="text" name="spfax" id="point_update_spfax" class="point_input"/>
+			</li>
+			<li>
+				<label>备注<span></span></label>
+				<textarea  rows="3" cols="25"  id="point_update_spremark" class="point_input">
+				</textarea>
+			</li>
+			
+			
+		</ul>
+	</form>
+</div>
+
+<div id="point_show" class="easyui-dialog" title="查看配送点信息" style="width:400px;height:450px;align:center"
+		data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true" >
+	<form id="point_show_point">
+		<ul>
+		
+			<li>
+				<label>配送点名称：<span></span></label>
+				<label id="point_show_spname" class="point_label"></label>
+			</li>
+			<li>
+				<label>联系人：<span></span></label>
+				<label  id="point_show_spperson" class="point_label"></label>
+			</li>
+			<li>
+				<label>配送点电话：<span></span></label>
+				<label  id="point_show_sptel" class="point_label"></label>
+			</li>
+			<li>
+				<label>联系邮件：<span></span></label>
+				<label   id="point_show_spemail" class="point_label"></label>
+			</li>
+			
+			<li>
+				<label>配送点地址：<span></span></label>
+				<label id="point_show_spaddress" class="point_label"></label>
+			</li>
+			<li>
+				<label>联系人电话：<span></span></label>
+				<label   id="point_show_sppersontel" class="point_label"></label>
+			</li>
+			<li>
+				<label>配送点传真：<span></span></label>
+				<label  id="point_show_spfax" class="point_label"></label>
+			</li>
+			<li>
+				<label>备注：<span></span></label>
+				<label  id="point_show_spremark" class="point_label">
+				</label>
+			</li>
+		</ul>
+	</form>
+</div>
+
+<style>
+#point_search label{
+	margin-left:20px;
+}
+
+#point_update li{
+	list-style-type:none;
+	margin-top:10px;
+}
+
+#point_update label{
+	display:inline-block;
+	width:66px;	
+	text-align:justify;
+	margin-top: 7px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+#point_update label span{
+  display:inline-block;
+  width:100%;
+}
+#point_update .point_input{
+	width:160px;
+	border:1px solid #95B8E7;
+	line-height:20px;
+}
+
+.point_delpic_show{
+	width:100px;
+	height:100px;
+	overflow:hidden;
+	position:relative;
+	float:left;
+	border:1px solid #fff;
+}
+
+.point_delpic_show>span{
+	margin:0px;
+	padding:0px;
+	background:url(../../images/cancel.png) no-repeat; center center;
+	width:16px;
+	height:16px;
+	display:none;
+	position:absolute;
+	top:2px;
+	right:2px;
+}
+
+.point_delpic_show:hover{
+	border-color:#f63;
+}
+
+.point_delpic_show:hover span{
+	display:block;
+	cursor:pointer;
+}
+
+.point_delsaddr_show{
+	width:300px;
+	height:30px;
+	overflow:hidden;
+	position:relative;
+	float:left;
+	border:1px solid #fff;
+}
+.point_delsaddr_show>span{
+	margin:0px;
+	padding:0px;
+	background:url(../../images/cancel.png) no-repeat; center center;
+	width:16px;
+	height:16px;
+	display:none;
+	position:absolute;
+	top:2px;
+	right:2px;
+}
+.point_delsaddr_show:hover{
+	border-color:#f63;
+}
+
+.point_delsaddr_show:hover span{
+	display:block;
+	cursor:pointer;
+}
+#point_show label{
+	display:inline-block;
+	width:75px;	
+	text-align:justify;
+	margin-top: 7px;
+	margin-right: 10px;
+	margin-left:10px;
+}
+#point_show ul .point_label{
+	margin-top:-6px;
+}
+#point_show label span{
+  display:inline-block;
+  width:100%;
+}
+
+#point_show li{
+	list-style-type:none;
+}
+
+</style>
+<script type="text/javascript">
+var pointEditRow=undefined;
+var pointOp;
+var pointFlag;
+var pointmark="";
+	var pointObject = $('#point_manager').datagrid({
+		url : "point/findAll.action",
+		fitColumns : true,
+		striped : true,//������ʾ�б���
+		loadMsg : '数据加载中...',
+		rownumbers : true,
+		pagination : true,
+		pageNumber : 1,
+		pageSize : 10,
+		pageList : [  10, 20, 30, 40, 50 ],
+		sortName:'spid',//������һ��������
+		remoteSort:false,
+		columns:[[   
+		        {checkbox:true},      
+		        {field:'spid',title:'配送id',width:100,align:'center',sortable:true},   
+		        {field:'spname',title:'配送点名称',width:100,align:'center'},   
+		        {field:'spperson',title:'联系人',width:100,align:'center'},
+		        {field:'sptel',title:'配送点电话',width:100,align:'center',sortable:true},   
+		        {field:'spaddress',title:'配送点地址ַ',width:100,align:'center'},
+		        {field:'sppersontel',title:'联系人电话',width:100,align:'center'},
+		        {field:'spfax',title:'配送点传真',width:100,align:'center'},
+		        {field:'_operate',title:'操作',width:100,align:'center',formatter:function(val,row,index){
+		        	return "<a href='javascript:point_findpoint("+row.spid+")'> 详情</a><a href='javascript:point_delpoint("+row.spid+")'> 删除</a>"  //配送点详情查看
+		        }}
+		    ]],
+		    toolbar:"#point_search"
+
+
+	});
+	
+	
+	function point_showAddpoint(){
+		$("#point_update_point")[0].reset();
+		$('#point_update').dialog({
+			title:"添加配送点信息",
+			iconCls:'icon-user-add',
+			buttons:[{
+				text:'确定',
+				iconCls:'icon-user-add',
+				handler:function(){
+				
+					var spname=$.trim( $("#point_update_spname").val() );
+					var spperson=$.trim( $("#point_update_spperson").val() );
+					var sptel=$.trim( $("#point_update_sptel").val() );
+					var spemail=$.trim( $("#point_update_spemail").val() );
+					var spaddress=$.trim( $("#point_update_spaddress").val() );
+					var sppersontel=$.trim( $("#point_update_sppersontel").val() );
+					var spfax=$.trim( $("#point_update_spfax").val() );
+					var spremark=$.trim( $("#point_update_spremark").val() );
+					if(spname==""){
+						return;
+					}
+					$.ajax({
+						url:"point/add.action",
+						secureuri:false,
+						dataType:"text",
+						data:{spname:spname,spperson:spperson,sptel:sptel,spemail:spemail,spaddress:spaddress,sppersontel:sppersontel,spfax:spfax,spremark:spremark},
+						success:function(data,status){
+							console.info(data);
+							if(data>0){
+								pointObject.datagrid("reload");
+								$("#point_update_point")[0].reset();
+			
+								$.messager.show({title:"成功提示",msg:"配送点信息添加成功...",timeout:2000,showType:"slide"});
+								$('#point_update').dialog("close");
+							}else{
+								$.messager.alert("失败提示","配送点信息添加失败...","error");
+							}
+							
+						},
+						error:function(data,status,e){
+							$.messager.alert("失败提示","配送点信息添加失败...\n"+e,"error");
+						}
+					});
+				}
+			}]
+		});
+		$('#point_update').dialog("open");
+	}
+	
+	function point_showUpdatepoint(){
+		var rows=$('#point_manager').datagrid("getChecked");
+		if(rows.length<=0){
+			$.messager.show({title:"温馨提示",msg:"请选择您要修改的配送点信息...",timeout:2000,showType:"slide"});
+		}else{
+			var row=rows[0];
+			var spid=row.spid;
+			$.post("point/findByID.action",{spid:spid},function(data){
+				
+				pointmark=data.rows[0].spremark;
+				$("#point_update_spname").val(data.rows[0].spname);
+				$("#point_update_spperson").val(data.rows[0].spperson);
+				$("#point_update_sptel").val(data.rows[0].sptel);
+				$("#point_update_spemail").val(data.rows[0].spemail);
+				$("#point_update_spaddress").val(data.rows[0].spaddress);
+				$("#point_update_sppersontel").val(data.rows[0].sppersontel);
+				$("#point_update_spfax").val(data.rows[0].spfax);
+				$("#point_update_spremark").val(data.rows[0].spremark);
+			})
+			
+		$('#point_update').dialog({
+			title:"修改配送点信息",
+			iconCls:'icon-user-edit',
+			buttons:[{
+				text:'修改',
+				iconCls:'icon-user-edit',
+				handler:function(){
+					var spname=$.trim( $("#point_update_spname").val() );
+					var spperson=$.trim( $("#point_update_spperson").val() );
+					var sptel=$.trim( $("#point_update_sptel").val() );
+					var spemail=$.trim( $("#point_update_spemail").val() );
+					var spaddress=$.trim( $("#point_update_spaddress").val() );
+					var sppersontel=$.trim( $("#point_update_sppersontel").val() );
+					var spfax=$.trim( $("#point_update_spfax").val() );
+					var spremark=$.trim( $("#point_update_spremark").val() );
+					if(spname==""){
+						return;
+					}
+					$.ajax({
+						url:"point/update.action",
+						secureuri:false,
+						dataType:"text",
+						data:{spid:spid,spname:spname,spperson:spperson,sptel:sptel,spemail:spemail,spaddress:spaddress,sppersontel:sppersontel,spfax:spfax,spremark:spremark},
+						success:function(data,status){
+							data=parseInt($.trim(data));
+							if(data>0){
+								$.messager.show({title:"成功提示",msg:"配送点信息修改成功...",timeout:2000,showType:"slide"});
+								$('#point_update').dialog("close");
+								pointObject.datagrid("reload");
+							}else{
+								$.messager.alert("失败提示","配送点信息修改失败...","error");
+							}
+							
+						},
+						error:function(data,status,e){
+							$.messager.alert("失败提示","配送点信息添加失败...\n"+e,"error");
+						}
+					});
+				
+				}
+			}]
+		})
+		$('#point_update').dialog("open");
+		}
+	}
+
+
+	//删除配送点
+	function point_delpoint(spid){
+		$.post("point/delete.action",{spid:spid},function(data){
+			data=parseInt($.trim(data));
+			if(data>0){
+				$.messager.show({title:"成功提示",msg:"配送点信息删除成功...",timeout:2000,showType:"slide"});
+				pointObject.datagrid("reload");
+			}else{
+				$.messager.alert("失败提示","配送点信息删除失败...","error");
+				pointObject.datagrid("reload");
+			}
+		})
+	}
+
+	//详情查询
+	function point_findpoint(spid){
+
+		$.post("point/findByID.action",{spid:spid},function(data){
+			
+			pointmark=data.rows[0].spremark;
+			$("#point_show_spname").html(data.rows[0].spname);
+			$("#point_show_spperson").html(data.rows[0].spperson);
+			$("#point_show_sptel").html(data.rows[0].sptel);
+			$("#point_show_spemail").html(data.rows[0].spemail);
+			$("#point_show_spaddress").html(data.rows[0].spaddress);
+			$("#point_show_sppersontel").html(data.rows[0].sppersontel);
+			$("#point_show_spfax").html(data.rows[0].spfax);
+			$("#point_show_spremark").html(data.rows[0].spremark);
+		});
+		$('#point_show').dialog("open");
+	}
+	
+	//条件查询
+	function point_searchpoint(){
+		var spname=$.trim( $("#point_search_spname").val() );
+		var spaddress=$.trim( $("#point_search_spaddress").val() );
+		
+		$('#point_manager').datagrid({
+			url:"point/findByCondition.action",
+			queryParams:{spname:spname,spaddress:spaddress}
+		});
+		
+		$("#point_search_spname").val("");
+		 $("#point_search_spaddress").val("");
+	}
+
+
+</script>
+
+
+
+<meta charset="UTF-8">

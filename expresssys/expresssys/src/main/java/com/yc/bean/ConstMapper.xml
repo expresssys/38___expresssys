@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.bean.Const">
+	<resultMap id="BaseResultMap" type="com.yc.bean.Const">
+		<id column="cid" property="cid" jdbcType="INTEGER" />
+		<result column="ctid" property="ctid" jdbcType="INTEGER" />
+		<result column="cname" property="cname" jdbcType="VARCHAR" />
+		<result column="ctname" property="ctname" jdbcType="VARCHAR" />
+		<result column="cstatus" property="cstatus" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		cid, ctid, cname, cstatus
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from const
+		where cid = #{cid,jdbcType=INTEGER}
+	</select>
+
+	<select id="findBy" parameterType="com.yc.bean.Const" resultMap="BaseResultMap">
+		select cid, c.ctid as ctid, cname, cstatus,ctname from const c join
+		consttype
+		ct on c.ctid = ct.ctid where 1=1
+		and c.cstatus >=0 and ct.ctstatus = 1
+		<if test="ctid!=null and ctid!=''">
+			and c.ctid = #{ctid,jdbcType=INTEGER}
+		</if>
+		
+	</select>
+
+	<select id="selectTotal" parameterType="com.yc.bean.Const"
+		resultType="java.lang.Integer">
+		select count(*) from const
+		<where>
+			1=1 and cstatus >=0
+			<if test="ctid!=null and ctid!=''">
+				and ctid = #{ctid,jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+
+
+	<insert id="insert" parameterType="com.yc.bean.Const">
+		insert into const (cid, ctid,
+		cname,
+		cstatus)
+		values (#{cid,jdbcType=INTEGER},
+		#{ctid,jdbcType=INTEGER},
+		#{cname,jdbcType=VARCHAR},
+		#{cstatus,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="com.yc.bean.Const">
+		insert into const
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				cid,
+			</if>
+			<if test="ctid != null">
+				ctid,
+			</if>
+			<if test="cname != null">
+				cname,
+			</if>
+			<if test="cstatus != null">
+				cstatus,
+			</if>
+			
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=INTEGER},
+			</if>
+			<if test="ctid != null">
+				#{ctid,jdbcType=INTEGER},
+			</if>
+			<if test="cname != null">
+				#{cname,jdbcType=VARCHAR},
+			</if>
+			<if test="cstatus != null">
+				#{cstatus,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Const">
+		update const
+		<set>
+			<if test="ctid != null">
+				ctid = #{ctid,jdbcType=INTEGER},
+			</if>
+			<if test="cname != null">
+				cname = #{cname,jdbcType=VARCHAR},
+			</if>
+			<if test="cstatus != null">
+				cstatus = #{cstatus,jdbcType=INTEGER},
+			</if>
+		</set>
+		where cid = #{cid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yc.bean.Const">
+		update const
+		set
+		ctid = #{ctid,jdbcType=INTEGER},
+		cname = #{cname,jdbcType=VARCHAR},
+		cstatus = #{cstatus,jdbcType=INTEGER}
+		where cid =
+		#{cid,jdbcType=INTEGER}
+	</update>
+
+	<delete id="deleteByPrimaryKey" parameterType="com.yc.bean.Const">
+		update const set
+		cstatus = -1
+		where cid = #{cid,jdbcType=INTEGER}
+	</delete>
+</mapper>
